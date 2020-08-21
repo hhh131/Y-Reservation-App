@@ -26,8 +26,17 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMsg();
+                if(i==0)
+                {
 
+
+                showMsg();
+                }
+                else
+                {
+                    Toast toast= Toast.makeText(getApplicationContext(),"이미 예약되어있는 자리입니다.",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
@@ -44,15 +53,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(i==0) {
+
                     btn.setBackgroundColor(Color.rgb(255, 0, 0));
                     i=1;
-                }
-                else
-                {
-                    Toast toast= Toast.makeText(getApplicationContext(),"이미 예약되어있는 자리입니다.",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+
             }
         });
 
