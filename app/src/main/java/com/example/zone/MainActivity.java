@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn;
     Button btn2;
     int i =0;
+    int j =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +35,34 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast toast= Toast.makeText(getApplicationContext(),"이미 예약되어있는 자리입니다.",Toast.LENGTH_SHORT);
-                    toast.show();
+                    showToast();
+                }
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(j==0)
+                {
+
+
+                    showMsg();
+                }
+                else
+                {
+                    showToast();
                 }
             }
         });
 
 
 
+    }
+    public void showToast()
+    {
+        Toast toast= Toast.makeText(getApplicationContext(),"이미 예약되어있는 자리입니다.",Toast.LENGTH_SHORT);
+        toast.show();
     }
     public void showMsg()
     {
@@ -56,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                     btn.setBackgroundColor(Color.rgb(255, 0, 0));
                     i=1;
+                    j=1;
 
             }
         });

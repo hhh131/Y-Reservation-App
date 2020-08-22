@@ -1,116 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp">
+    tools:context=".LoginActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="어벤져스 채팅"
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_marginBottom="20dp"
-        android:textSize="24sp">
-
-
-    </TextView>
-
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/iconfinder_google_talk_386715"
-        android:background="@null"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-
-        ></ImageView>
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
-
-        <EditText
-            android:id="@+id/id"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="아이디"/>
-
-
-
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
-
-        <EditText
-            android:id="@+id/pwd"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="비밀번호"/>
-
-
-
-
-
-
-    <Button
-        android:id="@+id/login"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/login_button1"
-        android:text="로그인"
-        android:drawableLeft="@drawable/drawable_buttonimg"
-        android:paddingStart="10dp"
-        android:paddingRight="30dp"
-        android:layout_marginBottom="15dp"
-        ></Button>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="OR"
-        android:layout_marginBottom="15dp"
-        ></TextView>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/login_button"
-        android:layout_marginBottom="15dp"
-        android:text="일단 버튼(네이버로 로그인)"
-        ></Button>
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:layout_marginBottom="15dp">
-        <TextView
-            android:id="@+id/pass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="5"
-            android:text="비밀번호 찾기"
-            android:textColor="@android:color/background_dark"
-            ></TextView>
+        android:layout_height="match_parent"
+        android:background="#143782"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/join"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:background="#143782"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/membership" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="유한대학교"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="도서관 좌석예약"
+                android:textColor="#ffffff"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
             android:gravity="center"
-            android:layout_weight="5"
-            android:text="회원가입"
-            android:textSize="24sp"
-            android:textColor="@android:color/holo_blue_dark"
-            ></TextView>
+            android:layout_weight="10"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/id"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="#002F66"
+                android:hint="    학번"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff" />
+
+            <EditText
+                android:id="@+id/pwd"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:background="#002F66"
+                android:hint="    비밀번호"
+                android:inputType="textPassword"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="2">
+                <Button
+                    android:id="@+id/loginbtn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#143782"
+                    android:text="로그인"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:id="@+id/joinbtn"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#143782"
+                    android:text="회원가입"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

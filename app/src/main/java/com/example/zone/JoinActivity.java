@@ -1,7 +1,6 @@
 package com.example.zone;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,11 +18,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Join extends AppCompatActivity {
+public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "Join";
     private FirebaseAuth mAuth;
     EditText id,pwd;
-    Button join,back;
+    Button Signbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +30,12 @@ public class Join extends AppCompatActivity {
         setContentView(R.layout.activity_join);
         id = (EditText)findViewById(R.id.id);
         pwd = (EditText)findViewById(R.id.pwd);
-        join = (Button) findViewById(R.id.join);
-        back = (Button) findViewById(R.id.back);
+        Signbtn = (Button) findViewById(R.id.Signbtn);
+        //back = (Button) findViewById(R.id.back);
         mAuth = FirebaseAuth.getInstance();
 
 
-        join.setOnClickListener(new View.OnClickListener() {
+        Signbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     showMsg();
@@ -44,12 +43,12 @@ public class Join extends AppCompatActivity {
         });
 
 
-        back.setOnClickListener(new View.OnClickListener(){
+   /*     back.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
     }
 
     @Override
@@ -72,7 +71,7 @@ public class Join extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 mAuth.createUserWithEmailAndPassword(id.getText().toString(), pwd.getText().toString())
-                        .addOnCompleteListener(Join.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(JoinActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
@@ -84,7 +83,7 @@ public class Join extends AppCompatActivity {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(Join.this, "회원가입에 실패했습니다..",
+                                    Toast.makeText(JoinActivity.this, "회원가입에 실패했습니다..",
                                             Toast.LENGTH_SHORT).show();
                                    // updateUI(null);
                                 }
