@@ -17,28 +17,37 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "Join";
     private FirebaseAuth mAuth;
-    EditText id,pwd;
+    EditText id,pwd,name;
     Button Signbtn;
+    String data;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    //1.Firebase 실시간 DB 관리 객체 얻어오기.
+    DatabaseReference myRef = database.getReference();
+    //2.저장시킬 노드 참조 객체 가져오기
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         id = (EditText)findViewById(R.id.id);
         pwd = (EditText)findViewById(R.id.pwd);
+        name= (EditText)findViewById(R.id.Name);
         Signbtn = (Button) findViewById(R.id.Signbtn);
         //back = (Button) findViewById(R.id.back);
         mAuth = FirebaseAuth.getInstance();
-
+        data=id.getText().toString();
 
         Signbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    showMsg();
+                myRef.setValue(data);
+                //showMsg();
             }
         });
 
