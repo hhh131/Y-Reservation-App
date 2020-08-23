@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".user.SignUp">
+    android:background="#009483"
+    tools:context=".JoinActivity">
 
 
     <LinearLayout
@@ -20,7 +21,7 @@
             android:layout_height="40dp"
             android:gravity="center"
             android:layout_weight="3"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:text="학번"
             android:textSize="17dp" />
 
@@ -29,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="7"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:hint="학번을 입력하세요"
             android:textSize="17dp" />
     </LinearLayout>
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="3"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:text="비밀번호"
             android:textSize="17dp" />
 
@@ -54,6 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
+            android:textColor="#ffffff"
             android:hint="비밀번호를 입력하세요"
             android:textSize="17dp" />
     </LinearLayout>
@@ -69,7 +71,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="3"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:text="이름"
             android:textSize="17dp" />
 
@@ -78,6 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
+            android:textColor="#ffffff"
             android:hint="이름을 입력하세요"
             android:textSize="17dp" />
     </LinearLayout>

@@ -47,6 +47,7 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 myRef.setValue(data);
+
                 //showMsg();
             }
         });

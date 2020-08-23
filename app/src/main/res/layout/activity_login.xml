@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#143782"
+        android:background="#009483"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
-            android:background="#143782"
+            android:background="#009483"
             android:orientation="vertical">
 
             <ImageView
@@ -29,7 +29,7 @@
                 android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/membership" />
+                android:src="@drawable/yuhanlogo"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                 android:layout_width="280dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:background="#002F66"
+                android:background="#65C0B5"
                 android:hint="    학번"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff" />
@@ -78,7 +78,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_marginTop="10dp"
-                android:background="#002F66"
+                android:background="#65C0B5"
                 android:hint="    비밀번호"
                 android:inputType="textPassword"
                 android:textColor="#ffffff"
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="#143782"
+                    android:background="#009483"
                     android:text="로그인"
                     android:textColor="#ffffff"
                     android:textSize="15dp" />
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="#143782"
+                    android:background="#009483"
                     android:text="회원가입"
                     android:textColor="#ffffff"
                     android:textSize="15dp" />
