@@ -29,7 +29,7 @@
                 android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/yuhanlogo"/>
+                android:src="@drawable/yuhanlogo2"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -66,6 +66,8 @@
                 android:layout_width="280dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
+                android:maxLength="9"
+                android:imeOptions="actionNext"
                 android:background="#65C0B5"
                 android:hint="    학번"
                 android:textColor="#ffffff"
