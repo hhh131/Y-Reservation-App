@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1035744197468:android:7a312ba8e400b343e09f99",
         "android_client_info": {
-          "package_name": "com.example.zone"
+          "package_name": "com.example.quietzone"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "1035744197468-iea0nkglgkap4oir64j3sc3ejubhfmio.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.zone",
+            "package_name": "com.example.quietzone",
             "certificate_hash": "688f406ae0ec7233b5369834e9a86471ec38fe3b"
           }
         },
@@ -51,6 +51,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1035744197468-96k5fcjh3crdp82ganeavcbbio4sogr0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zone",
+            "certificate_hash": "688f406ae0ec7233b5369834e9a86471ec38fe3b"
+          }
+        },
         {
           "client_id": "1035744197468-846270g9jdbmlrer35r5k9tt1dr8pd84.apps.googleusercontent.com",
           "client_type": 3

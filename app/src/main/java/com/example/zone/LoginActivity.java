@@ -1,5 +1,6 @@
 package com.example.zone;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
     private FirebaseAuth mAuth;
     private static final String TAG = "login";
     EditText id,pwd;

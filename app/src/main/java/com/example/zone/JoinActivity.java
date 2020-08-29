@@ -26,11 +26,7 @@ public class JoinActivity extends AppCompatActivity {
     EditText id,pwd,name;
     Button Signbtn;
     String data;
-    FirebaseDatabase database=FirebaseDatabase.getInstance();
 
-    //1.Firebase 실시간 DB 관리 객체 얻어오기.
-    DatabaseReference myRef = database.getReference();
-    //2.저장시킬 노드 참조 객체 가져오기
 
 
     @Override
@@ -47,13 +43,11 @@ public class JoinActivity extends AppCompatActivity {
 
 
 
-        myRef.child("User").push().setValue("asdf");
 
         Signbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myRef.child("User").push().setValue("asdf");
-            Toast.makeText(getApplicationContext(),"asdasd",Toast.LENGTH_LONG).show();
+
                 //showMsg();
             }
         });
