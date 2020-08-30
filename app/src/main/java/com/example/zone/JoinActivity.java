@@ -47,7 +47,10 @@ public class JoinActivity extends AppCompatActivity {
         Signbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("message");
 
+                myRef.setValue("Hello, World!");
                 //showMsg();
             }
         });
