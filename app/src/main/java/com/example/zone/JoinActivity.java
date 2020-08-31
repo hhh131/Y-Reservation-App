@@ -1,6 +1,7 @@
 package com.example.zone;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +18,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "Join";
@@ -26,8 +31,9 @@ public class JoinActivity extends AppCompatActivity {
     EditText id,pwd,name;
     Button Signbtn;
     String data;
-
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+    String sId,sPwd,sName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,13 @@ public class JoinActivity extends AppCompatActivity {
         Signbtn = (Button) findViewById(R.id.Signbtn);
         //back = (Button) findViewById(R.id.back);
         mAuth = FirebaseAuth.getInstance();
-        data=id.getText().toString();
+         sId=id.getText().toString();
+          sPwd= pwd.getText().toString();
+          sName=name.getText().toString();
+
+
+
+
 
 
 
@@ -47,11 +59,18 @@ public class JoinActivity extends AppCompatActivity {
         Signbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("message");
+                UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),name.getText().toString());//텍스트에 입력받은 정보로 UserVo생성
 
-                myRef.setValue("Hello, World!");
+            myRef.child("User").child(id.getText().toString()).setValue(userVO);//User아래에 userVO객체 정보로 DB에 정보 삽입
+
                 //showMsg();
+
+
+
+
+
+
+
             }
         });
 
@@ -64,12 +83,24 @@ public class JoinActivity extends AppCompatActivity {
         });*/
     }
 
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //updateUI(currentUser);
+
     }
 
     public void showMsg()

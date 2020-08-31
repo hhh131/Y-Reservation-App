@@ -13,7 +13,7 @@ public class UserVO {
 
 
     }
-    public UserVO(String ID,String Name,String pwd)
+    public UserVO(String ID,String pwd,String Name)
     {
         this.ID = ID;
         this.Name = Name;

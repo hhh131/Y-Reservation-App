@@ -13,14 +13,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Main extends AppCompatActivity {
 
-    Button loginbtn;
+    Button loginbtn,zone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         loginbtn = (Button)findViewById(R.id.loginButton);
-
+        zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
