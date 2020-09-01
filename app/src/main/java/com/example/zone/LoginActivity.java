@@ -125,18 +125,17 @@ public class LoginActivity extends Activity {
                             Log.e("loginCheck : ", id + "로그인되었습니다.");
                             loginStatus = true;
                             loginId = id;
-                            intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent = new Intent(getApplicationContext(), Main.class);
                             startActivity(intent);
                         } else {
                             Log.e("loginCheck : ", "비밀번호가 틀립니다.");
                             showToast("비밀번호가 틀립니다.");
                         }
-                    }
-                    else
+                    } else {
                         Log.e("loginCheck : ", "해당 아이디가 존재하지 않습니다.");
-                    showToast("해당아이디가 존재하지 않습니다.");
+                        showToast("해당아이디가 존재하지 않습니다.");
+                    }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Log.w("loadUser:onCancelled", databaseError.toException());

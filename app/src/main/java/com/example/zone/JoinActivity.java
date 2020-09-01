@@ -14,6 +14,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -60,13 +62,30 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),name.getText().toString());//텍스트에 입력받은 정보로 UserVo생성
+    if(!(id.getText().toString().equals("")&&pwd.getText().toString().equals("")&&name.getText().toString().equals(""))){
 
-            myRef.child("User").child(id.getText().toString()).setValue(userVO);//User아래에 userVO객체 정보로 DB에 정보 삽입
 
+            myRef.child("User").child(id.getText().toString()).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                            Log.e(TAG,"회원가입 성공");
+                            ShowToast("회원가입 성공");
+                            finish();
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG,"회원가입 실패");
+                                ShowToast("회원가입 실패");
+
+                            }
+                        });
                 //showMsg();
 
 
-
+    }
 
 
 
@@ -82,8 +101,11 @@ public class JoinActivity extends AppCompatActivity {
             }
         });*/
     }
-
-
+    public void ShowToast(String msg)
+    {
+        Toast toast = Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
+        toast.show();
+    }
 
 
 
