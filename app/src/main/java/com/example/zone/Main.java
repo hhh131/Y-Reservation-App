@@ -29,7 +29,7 @@ public class Main extends AppCompatActivity {
     zone.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+             Intent intent = new Intent(getApplicationContext(),List.class);
              startActivity(intent);
         }
     });
