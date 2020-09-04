@@ -26,6 +26,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "Join";
@@ -35,6 +40,7 @@ public class JoinActivity extends AppCompatActivity {
     String data;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     String sId,sPwd,sName;
 
     @Override
@@ -55,12 +61,38 @@ public class JoinActivity extends AppCompatActivity {
 
 
 
-
-
-
         Signbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+            /*    Map<String, Object> user = new HashMap<>();
+                user.put("first", "Ada");
+                user.put("last", "Lovelace");
+                user.put("born", 1815);
+                db.collection("users")
+                        .add(user)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error adding document", e);
+                            }
+                        });
+*/
+
+
+
+
+
+
+
+
                 UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),name.getText().toString());//텍스트에 입력받은 정보로 UserVo생성
     if(!(id.getText().toString().equals("")&&pwd.getText().toString().equals("")&&name.getText().toString().equals(""))){
 
@@ -83,9 +115,11 @@ public class JoinActivity extends AppCompatActivity {
                             }
                         });
                 //showMsg();
+                }
 
 
-    }
+
+
 
 
 

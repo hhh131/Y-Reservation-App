@@ -29,8 +29,8 @@ public class List extends AppCompatActivity {
         list.setAdapter(adapter);
 
 
-        midList.add("asd");
-        midList.add("as123d");
+        midList.add("콰이어트존");
+        midList.add("세미나실");
 
         adapter.notifyDataSetChanged();
 

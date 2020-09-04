@@ -13,7 +13,7 @@ TextView tv;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_info);
-
+        setTitle("상단바");
         tv=(TextView)findViewById(R.id.tv);
         tv.setText(LoginActivity.loginId);
 
