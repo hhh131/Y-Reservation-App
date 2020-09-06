@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="도서관 좌석예약"
+                android:text="좌석예약"
                 android:textColor="#ffffff"
                 android:textSize="13dp"
                 android:textStyle="bold" />

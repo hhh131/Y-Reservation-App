@@ -21,7 +21,7 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        setTitle("상단바");
+        setTitle("Main");
         loginbtn = (Button)findViewById(R.id.loginButton);
         my=(Button)findViewById(R.id.mainMyReadingRoomButton);
         zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
