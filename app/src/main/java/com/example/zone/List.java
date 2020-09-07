@@ -19,9 +19,10 @@ public class List extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+/*
        midList =
                 new ArrayList<String>();
-        ListView list = (ListView) findViewById(R.id.listView1);
+        ListView list = (ListView) findViewById(R.i);
 
         adapter =
                 new ArrayAdapter<String>(this,
@@ -34,6 +35,7 @@ public class List extends AppCompatActivity {
 
         adapter.notifyDataSetChanged();
 
+*/
 
 
 
