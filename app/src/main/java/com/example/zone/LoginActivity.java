@@ -7,16 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,8 +25,10 @@ public class LoginActivity extends Activity {
     EditText id,pwd;
     Button loginbtn,joinbtn;
     Intent intent;
-    static Boolean loginStatus = false;
-    static String loginId = "";
+
+    public static Boolean loginStatus = false;
+    public static String loginId = "";
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     @Override
@@ -54,13 +51,6 @@ public class LoginActivity extends Activity {
         });
 
 
-        joinbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), JoinActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +115,7 @@ public class LoginActivity extends Activity {
                             Log.e("loginCheck : ", id + "로그인되었습니다.");
                             loginStatus = true;
                             loginId = id;
-                            intent = new Intent(getApplicationContext(), Main.class);
+                            intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         } else {
                             Log.e("loginCheck : ", "비밀번호가 틀립니다.");

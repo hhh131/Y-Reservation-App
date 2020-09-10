@@ -16,8 +16,8 @@
         <activity android:name=".WaitActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Main">
+        <activity android:name=".SeatActivity" />
+        <activity android:name=".MainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

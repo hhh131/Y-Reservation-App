@@ -1,101 +1,94 @@
 package com.example.zone;
 
-import android.content.DialogInterface;
-import android.app.Activity;
-import android.graphics.Color;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import static com.example.zone.LoginActivity.loginStatus;
+import static com.example.zone.LoginActivity.loginId;
 
 public class MainActivity extends AppCompatActivity {
 
-    int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5};
-    int buttonIndex[] = new int[buttons.length];
-    private Button[] ButtonArray = new Button[buttons.length];
-
-    int a = 0;
-    int b = 0;
+    Button loginbtn,zone,my;
+    TextView loginTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
+        setTitle("Main");
+        loginbtn = (Button)findViewById(R.id.loginButton);
+        my=(Button)findViewById(R.id.mainMyReadingRoomButton);
+        zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
+        loginTv = (TextView)findViewById(R.id.loginText);
 
-        for (int i = 0; i < 5; i++) {
-            ButtonArray[i] = (Button) findViewById(buttons[i]);
-            buttonIndex[i] = i + 1;
-            ButtonArray[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Button Sbutton = (Button) view;
-                    Toast.makeText(getApplicationContext(), Sbutton.getText() + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT).show();
-                }
-            });
+
+        if(loginStatus==true)
+        {
+            loginTv.setText("로그아웃");
+
+        }
+        else{
+            loginTv.setText("로그인");
         }
 
-    }
 
-    /*private View.OnClickListener btnListener = new View.OnClickListener() {
+    zone.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Button newButton = (Button) v;
-            boolean check = false;
-            int i = 0;
-
-            while (check) {
-                if (ButtonArray[i].getId() == newButton.getId()) {
-                    check = true;
-                    i++;
-                }
-                i++;
-
+            if(loginStatus==true) {
+                Intent intent = new Intent(getApplicationContext(), SeatActivity.class);
+                startActivity(intent);
             }
-            check = false;
-            Toast toast = Toast.makeText(getApplicationContext(), buttonIndex[i] + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT);
-            toast.show();
-            i = 0;
+            else
+            {
+             showToast("로그인 해 주세요");
+            }
+        }
+    });
+
+
+    my.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+           Intent intent = new Intent(getApplicationContext(), MyInfoActivity.class);
+            startActivity(intent);
+
+
+
+
 
         }
-    };*/
+    });
+        loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    public void showToast() {
-        Toast toast = Toast.makeText(getApplicationContext(), a + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT);
+                if(loginStatus==true)
+                {
+                    loginStatus=false;
+                    loginId="";
+                    showToast("로그아웃 되었습니다.");
+                    loginTv.setText("로그인");
+
+                }
+                else {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+                }
+
+        });
+    }
+
+    public void showToast(String msg)
+    {
+        Toast toast = Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
         toast.show();
     }
-
-    public void showMsg() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("안내");
-        builder.setMessage("좌석을 선택하시겠습니까?");
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-
-        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                //ButtonArray[].setBackgroundColor(Color.rgb(255, 0, 0));
-                a = 1;
-                b = 1;
-
-            }
-        });
-
-        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 }
-
-
-
-

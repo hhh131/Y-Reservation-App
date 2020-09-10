@@ -20,7 +20,7 @@ public class WaitActivity extends Activity {
 
     private class splashandler implements Runnable {
         public void run() {
-            startActivity(new Intent(getApplication(), MainActivity.class)); // 로딩이 끝난 후, Main으로 이동
+            startActivity(new Intent(getApplication(), SeatActivity.class)); // 로딩이 끝난 후, Main으로 이동
             WaitActivity.this.finish();
         }
     }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="동의 하기"
+        android:background="#ffffff"/>
+
+
+
+    <TextView
+        android:id="@+id/ZoneName"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:gravity="center"
+        android:text="Quiet Zone"
+        android:textColor="#000000"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/SeatNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="n번"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+
+
+    <TextView
+        android:id="@+id/mesgase"
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
+        android:gravity="center"
+        android:hint=" 열람실 좌석은 학교의 사유물로 \n\n
+        파손,또는 훼손 할 경우 청구 할 수 있습니
+다. \n\n
+열람실 이용 중 다음의 경우에 퇴실 조
+치 될 수 있습니다.
+\n\n
+1. 문란한 행위를 하는 경우
+\n\n
+2. 열람실 파손,훼손의 경우
+\n\n
+3. 다른 이용자에게 방해가 되어 경고
+를 2번 이상 받을 경우"
+        android:textColor="#000000"
+        android:textSize="13dp" />
+
+    <CheckBox
+        android:id="@+id/AgreeCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="동의하기" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#000000" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="예약 완료"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:background="@color/colorAccent"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
+</LinearLayout>

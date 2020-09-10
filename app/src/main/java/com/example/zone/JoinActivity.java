@@ -41,6 +41,8 @@ public class JoinActivity extends Activity {
     String data;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
+
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String sId,sPwd,sName;
 
@@ -66,15 +68,15 @@ public class JoinActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-
-            /*    Map<String, Object> user = new HashMap<>();
-                user.put("first", "Ada");
-                user.put("last", "Lovelace");
-                user.put("born", 1815);
+                UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),name.getText().toString());//텍스트에 입력받은 정보로 UserVo생성
+          /*    Map<String, Object> user = new HashMap<>();
+                user.put("ID",userVO.getID());
+                user.put("PWD", userVO.getPwd());
+                user.put("Name",userVO.getName());
                 db.collection("users")
                         .add(user)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
+                                @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                             }
@@ -85,6 +87,9 @@ public class JoinActivity extends Activity {
                                 Log.w(TAG, "Error adding document", e);
                             }
                         });
+
+
+
 */
 
 
@@ -92,9 +97,6 @@ public class JoinActivity extends Activity {
 
 
 
-
-
-                UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),name.getText().toString());//텍스트에 입력받은 정보로 UserVo생성
     if(!(id.getText().toString().equals("")&&pwd.getText().toString().equals("")&&name.getText().toString().equals(""))){
 
 
