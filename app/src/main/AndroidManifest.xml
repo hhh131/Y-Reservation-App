@@ -17,8 +17,9 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".SeatActivity" />
-        <activity android:name=".MainActivity">
 
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

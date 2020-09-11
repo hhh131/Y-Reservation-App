@@ -45,7 +45,7 @@ public class SeatActivity extends AppCompatActivity {
 
                                 // 커스텀 다이얼로그를 호출한다.
                                 // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                    customDialog.callFunction("Quiet","1",Sbutton);
+                    customDialog.callFunction("Quiet",Sbutton.getText().toString(),Sbutton);
 
 
 

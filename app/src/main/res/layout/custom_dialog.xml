@@ -3,6 +3,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
 
     <TextView
         android:id="@+id/title"
@@ -15,7 +20,7 @@
         android:background="#ffffff"/>
 
 
-
+</LinearLayout>
     <TextView
         android:id="@+id/ZoneName"
         android:layout_width="match_parent"
@@ -64,23 +69,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="동의하기" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal">
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
 
+       
+       
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/okButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -91,8 +91,5 @@
             android:background="@color/colorAccent"/>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#000000"/>
+
 </LinearLayout>

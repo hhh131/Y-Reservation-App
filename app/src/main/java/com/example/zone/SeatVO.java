@@ -6,7 +6,7 @@ public class SeatVO {
   String ID;
   String Name;
   String Zone;
-
+//좌석 사용여부 추가하기
 
   public SeatVO()
   {

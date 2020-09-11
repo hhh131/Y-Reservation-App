@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.internal.$Gson$Preconditions;
 
 public class CustomDialog
 {
@@ -36,7 +35,7 @@ public class CustomDialog
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(String Zone, final String SeatNum, final Button btn) {
+    public void callFunction(final String Zone, final String SeatNum, final Button btn) {
 
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
@@ -67,7 +66,8 @@ public class CustomDialog
         final TextView message = (TextView) dlg.findViewById(R.id.mesgase);
         final TextView ZoneName = (TextView) dlg.findViewById(R.id.ZoneName);
         final TextView Seat = (TextView) dlg.findViewById(R.id.SeatNum);
-        final Button OKbtn = (Button) dlg.findViewById(R.id.cancelButton);
+        final Button OKbtn = (Button) dlg.findViewById(R.id.okButton);
+
         final CheckBox AgreeCB =(CheckBox)dlg.findViewById(R.id.AgreeCB);
 
         Seat.setText(SeatNum);
@@ -77,21 +77,21 @@ public class CustomDialog
             public void onClick(View view) {
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 final DatabaseReference myRef = database.getReference();
+
                 if(AgreeCB.isChecked()==true) {
 
 
                     Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
                     btn.setBackgroundColor(Color.rgb(255, 0, 0));
-                    btn.setTextColor(Color.rgb(255, 255, 255));
                     // 커스텀 다이얼로그를 종료한다.
 
-                    SeatVO seatVO = new SeatVO(1,loginId,"신희권","Quiet");
-                    myRef.child("Seat").child(seatVO.ID).setValue(seatVO)
+                    SeatVO seatVO = new SeatVO(Integer.parseInt(btn.getText().toString()),loginId,"권","Quiet");
+                    myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.e(TAG, "좌석예약 성공");
-                                   // ShowToast("회원가입 성공");
+                                    // ShowToast("회원가입 성공");
                                     //finish();
                                 }
                             })
@@ -104,6 +104,7 @@ public class CustomDialog
                                 }
                             });
                     //showMsg();
+                    btn.setTextColor(Color.rgb(255, 255, 255));
 
 
                     dlg.dismiss();
@@ -118,5 +119,13 @@ public class CustomDialog
 
             }
         });
+
     }
+
+    public void SeatReserve()
+    {
+
+
+    }
+
 }
