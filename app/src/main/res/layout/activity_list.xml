@@ -8,11 +8,10 @@
     android:background="@android:color/white">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="216dp" />
+
 
     <LinearLayout
+            android:id="@+id/QuietZoneLay"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center_vertical">

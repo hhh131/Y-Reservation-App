@@ -1,4 +1,4 @@
-package com.example.zone;
+package com.example.zone.Vo;
 
 public class UserVO {
 

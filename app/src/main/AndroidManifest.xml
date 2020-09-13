@@ -13,10 +13,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".List"/>
         <activity android:name=".MyInfoActivity" />
-        <activity android:name=".WaitActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".JoinActivity" />
-        <activity android:name=".SeatActivity" />
+        <activity android:name=".Room.QuietZone" />
 
         <activity android:name=".MainActivity"/>
         <activity android:name=".SplashActivity">

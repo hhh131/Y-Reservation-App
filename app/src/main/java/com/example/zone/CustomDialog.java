@@ -9,14 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import static com.example.zone.LoginActivity.loginStatus;
+
 import static com.example.zone.LoginActivity.loginId;
 
 import androidx.annotation.NonNull;
 
+import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -24,9 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CustomDialog
 {
-    //어떻게 식으로 예약할건지., 1일단위 예약은 좀 아니지 않나,,
-    // 시간을 둬서 예약을 해라,
-    // 그러면 시간단위,.?
+
     private static final String TAG = "CustomDialog";
     private Context context;
 

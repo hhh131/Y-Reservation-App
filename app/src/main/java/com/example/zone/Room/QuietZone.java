@@ -1,4 +1,4 @@
-package com.example.zone;
+package com.example.zone.Room;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,13 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.zone.CustomDialog;
+import com.example.zone.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static com.example.zone.LoginActivity.loginStatus;
-import static com.example.zone.LoginActivity.loginId;
-
-public class SeatActivity extends AppCompatActivity {
+public class QuietZone extends AppCompatActivity {
 
     int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5};
     int buttonIndex[] = new int[buttons.length];
@@ -28,7 +27,7 @@ public class SeatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_quiet);
 
                     for (int i = 0; i < 5; i++) {
                         ButtonArray[i] = (Button) findViewById(buttons[i]);
@@ -41,7 +40,7 @@ public class SeatActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), Sbutton.getText() + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT).show();
 
                                 // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                                CustomDialog customDialog = new CustomDialog(SeatActivity.this);
+                                CustomDialog customDialog = new CustomDialog(QuietZone.this);
 
                                 // 커스텀 다이얼로그를 호출한다.
                                 // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
@@ -94,9 +93,7 @@ public class SeatActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                //ButtonArray[].setBackgroundColor(Color.rgb(255, 0, 0));
-                a = 1;
-                b = 1;
+
 
             }
         });

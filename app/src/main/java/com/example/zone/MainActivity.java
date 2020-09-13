@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zone.Room.QuietZone;
+
 import static com.example.zone.LoginActivity.loginStatus;
 import static com.example.zone.LoginActivity.loginId;
 
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         setTitle("Main");
         loginbtn = (Button)findViewById(R.id.loginButton);
         my=(Button)findViewById(R.id.mainMyReadingRoomButton);
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(loginStatus==true) {
-                Intent intent = new Intent(getApplicationContext(), SeatActivity.class);
+                Intent intent = new Intent(getApplicationContext(), List.class);
                 startActivity(intent);
             }
             else
