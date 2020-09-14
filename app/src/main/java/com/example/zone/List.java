@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
-    LinearLayout QuietZoneLay;
+    LinearLayout QuietZoneLay,SeminarLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class List extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
-
+        SeminarLay = (LinearLayout)findViewById(R.id.seminarLay);
 
 
 
@@ -38,6 +38,14 @@ public class List extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        SeminarLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), seminar.class);
+                startActivity(intent);
+            }
+        });
+
 
 /*
        midList =
