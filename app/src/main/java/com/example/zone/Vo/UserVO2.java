@@ -4,17 +4,12 @@ public class UserVO2 {
 
     String ID;
     String PWD;
-    String Name;
-    String Zone;
-    String SeatNum;
+    int report;
 
-
-    public UserVO2(String ID, String PWD, String name, String zone, String seatNum) {
+    public UserVO2(String ID, String PWD, int report) {
         this.ID = ID;
         this.PWD = PWD;
-        Name = name;
-        Zone = zone;
-        SeatNum = seatNum;
+        this.report = report;
     }
 
     public String getID() {
@@ -33,27 +28,11 @@ public class UserVO2 {
         this.PWD = PWD;
     }
 
-    public String getName() {
-        return Name;
+    public int getReport() {
+        return report;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getZone() {
-        return Zone;
-    }
-
-    public void setZone(String zone) {
-        Zone = zone;
-    }
-
-    public String getSeatNum() {
-        return SeatNum;
-    }
-
-    public void setSeatNum(String seatNum) {
-        SeatNum = seatNum;
+    public void setReport(int report) {
+        this.report = report;
     }
 }

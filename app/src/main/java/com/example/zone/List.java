@@ -1,6 +1,5 @@
 package com.example.zone;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,11 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toolbar;
 
 import com.example.zone.Room.QuietZone;
-import com.example.zone.Vo.UserVO;
+import com.example.zone.Room.seminar;
 
 import java.util.ArrayList;
 
@@ -27,7 +24,7 @@ public class List extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
-        SeminarLay = (LinearLayout)findViewById(R.id.seminarLay);
+        SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
 
 
 

@@ -1,128 +1,320 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:gravity="center_vertical"
-    android:layout_marginBottom="8dp"
-    android:background="@android:color/white">
-
-
-
+    android:orientation="vertical">
 
     <LinearLayout
-            android:id="@+id/QuietZoneLay"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical">
-
-            <LinearLayout
-
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="4F Quiet ZOne"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:includeFontPadding="false"
-                    android:text="4층 콰이어트 존"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="n"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18dp" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="/100"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/seminarLay"
+        android:id="@+id/QuietZoneLay"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:clickable="true" >
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4F"
+            android:textColor="@android:color/holo_green_light"
+            android:textStyle="bold"
+            android:textSize="60dp" />
 
         <LinearLayout
-            android:layout_width="0dp"
+
+            android:layout_width="260dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/seminaTV"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_zone"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="6F Seminar"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:text="Quiet Study Zone"
+                android:textSize="27dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+
 
             <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="6F Seminar"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="13sp" />
+                android:id="@+id/tv_int"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="조용히 공부나 책을 읽을 수 있는 시설 "
+                android:gravity="center_vertical" />
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginRight="0dp">
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:text="n"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="130/150"
+                android:textSize="20dp"
+                android:gravity="center_vertical|center_horizontal" />
 
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:text="/100"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="18sp" />
+        </LinearLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:clickable="true">
 
+        <TextView
+            android:id="@+id/tv_position1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4F"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="60dp" />
+
+        <LinearLayout
+            android:id="@+id/PCZoneLay"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_zone1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PC Zone"
+                android:textSize="27dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+
+
+
+            <TextView
+                android:id="@+id/tv_int1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="유한대 PC Zone 중 최대 규모 시설 "
+                android:gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginRight="0dp">
+
+            <TextView
+                android:id="@+id/tv_status1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="28/150"
+                android:textSize="20dp"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/tv_position2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4F"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="60dp" />
+
+        <LinearLayout
+            android:id="@+id/WillowLay"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_zone2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WILLOW THEATER"
+                android:textSize="27dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+
+
+            <TextView
+                android:id="@+id/tv_int2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="영화 감상이 가능하며 매주 목요일마다
+                                최신영화를 상영 "
+                android:maxLines="2"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_status2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="28/150"
+                android:textSize="20dp"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/PCZone2Lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/tv_position3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5F"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="60dp" />
+
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_zone3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PC Zone"
+                android:textSize="27dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+
+
+            <TextView
+                android:id="@+id/tv_int3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="도서와 함께 PC를 사용할 수 있는 시설"
+                android:maxLines="2"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_status3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="28/150"
+                android:textSize="20dp"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/SeminarZoneLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/tv_position4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6F"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="60dp" />
+
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_zone4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seminar Zone"
+                android:textSize="27dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+
+
+
+            <TextView
+                android:id="@+id/tv_int4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="4명 부터 최대 8명의 인원이 함께 모여
+                                토의하고 연구할 수 있는 시설"
+                android:maxLines="2"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_status4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="28/150"
+                android:textSize="20dp"
+                android:gravity="center_vertical|center_horizontal" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
-
-

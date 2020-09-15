@@ -1,8 +1,10 @@
-package com.example.zone;
+package com.example.zone.Room;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.zone.R;
 
 public class seminar extends AppCompatActivity {
 
