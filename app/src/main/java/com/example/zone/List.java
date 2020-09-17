@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.zone.Room.DVDZone;
 import com.example.zone.Room.QuietZone;
 import com.example.zone.Room.seminar;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
-    LinearLayout QuietZoneLay,SeminarLay;
+    LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay;
     TextView quietTv;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -39,7 +40,7 @@ public class List extends AppCompatActivity {
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
         quietTv = (TextView)findViewById(R.id.tv_status);
-
+        DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
 
         QuietZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +56,16 @@ public class List extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        DvdZoneLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), DVDZone.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         final Query query = myRef.child("Seat").child("Quiet");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -97,4 +108,5 @@ public class List extends AppCompatActivity {
 
 
     }
+
 }

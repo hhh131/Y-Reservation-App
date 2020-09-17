@@ -18,6 +18,8 @@
         <activity android:name=".JoinActivity" />
         <activity android:name=".Room.QuietZone" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".Room.DVDZone" />
+
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

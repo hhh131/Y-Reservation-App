@@ -193,7 +193,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/PCZone2Lay"
+        android:id="@+id/DvdZoneLay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -216,7 +216,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tv_zone3"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DVD Zone"

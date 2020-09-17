@@ -16,6 +16,7 @@ import static com.example.zone.LoginActivity.loginId;
 
 import androidx.annotation.NonNull;
 
+import com.example.zone.Room.QuietZone;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +28,10 @@ public class CustomDialog
 
     private static final String TAG = "CustomDialog";
     private Context context;
-
+     CheckBox AgreeCB;
+    Dialog dlg;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
     public CustomDialog(Context context) {
         this.context = context;
     }
@@ -38,7 +42,7 @@ public class CustomDialog
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
 
-        final Dialog dlg = new Dialog(context);
+         dlg = new Dialog(context);
 
         // 액티비티의 타이틀바를 숨긴다.
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -66,63 +70,106 @@ public class CustomDialog
         final TextView Seat = (TextView) dlg.findViewById(R.id.SeatNum);
         final Button OKbtn = (Button) dlg.findViewById(R.id.okButton);
 
-        final CheckBox AgreeCB =(CheckBox)dlg.findViewById(R.id.AgreeCB);
+        AgreeCB =(CheckBox)dlg.findViewById(R.id.AgreeCB);
 
         Seat.setText(SeatNum);
         ZoneName.setText(Zone);
         OKbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Zone.equals("QuietZone")) {
-                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference myRef = database.getReference();
+                  database = FirebaseDatabase.getInstance();
+                  myRef = database.getReference();
+              if (Zone.equals("QuietZone")) {
 
-                    if (AgreeCB.isChecked() == true) {
+                  
+                  QuietZoneRe(btn,Zone);
 
-
-                        Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-                        btn.setBackgroundColor(Color.rgb(255, 0, 0));
-                        // 커스텀 다이얼로그를 종료한다.
-
-                        SeatVO seatVO = new SeatVO(Integer.parseInt(btn.getText().toString()), loginId, "권", "Quiet");
-                        myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.e(TAG, "좌석예약 성공");
-                                        // ShowToast("회원가입 성공");
-                                        //finish();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e(TAG, "좌석예약 실패");
-                                        //ShowToast("회원가입 실패");
-
-                                    }
-                                });
-                        //showMsg();
-                        btn.setTextColor(Color.rgb(255, 255, 255));
-
-
-                        dlg.dismiss();
-
-                    } else {
-                        Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
-                    }
 
 
                 }
+              else if(Zone.equals("DvdZone"))
+              {
+                  DvdZoneRe(btn,Zone);
+              }
             }
         });
 
     }
 
-    public void SeatReserve()
+    public void DvdZoneRe(Button btn,String Zone)
+    {
+        if (AgreeCB.isChecked() == true) {
+
+
+            Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
+            btn.setBackgroundColor(Color.rgb(255, 0, 0));
+            // 커스텀 다이얼로그를 종료한다.
+
+            SeatVO seatVO = new SeatVO(Integer.parseInt(btn.getText().toString()), loginId, "권", Zone);
+            myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e(TAG, "좌석예약 성공");
+                            // ShowToast("회원가입 성공");
+                            //finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "좌석예약 실패");
+                            //ShowToast("회원가입 실패");
+
+                        }
+                    });
+            //showMsg();
+            btn.setTextColor(Color.rgb(255, 255, 255));
+
+
+            dlg.dismiss();
+
+        } else {
+            Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void QuietZoneRe(Button btn,String Zone)
     {
 
+        if (AgreeCB.isChecked() == true) {
 
+
+            Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
+            btn.setBackgroundColor(Color.rgb(255, 0, 0));
+            // 커스텀 다이얼로그를 종료한다.
+
+            SeatVO seatVO = new SeatVO(Integer.parseInt(btn.getText().toString()), loginId, "권", Zone);
+            myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e(TAG, "좌석예약 성공");
+                            // ShowToast("회원가입 성공");
+                            //finish();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "좌석예약 실패");
+                            //ShowToast("회원가입 실패");
+
+                        }
+                    });
+            //showMsg();
+            btn.setTextColor(Color.rgb(255, 255, 255));
+
+
+            dlg.dismiss();
+
+        } else {
+            Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
