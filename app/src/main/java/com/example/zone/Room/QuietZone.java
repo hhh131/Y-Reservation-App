@@ -2,17 +2,23 @@ package com.example.zone.Room;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zone.CustomDialog;
 import com.example.zone.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class QuietZone extends AppCompatActivity {
 
@@ -29,24 +35,31 @@ public class QuietZone extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiet);
 
-                    for (int i = 0; i < 5; i++) {
+
+
+
+        for (int i = 0; i < 5; i++) {
                         ButtonArray[i] = (Button) findViewById(buttons[i]);
                         buttonIndex[i] = i + 1;
                         ButtonArray[i].setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Button Sbutton = (Button) view;
-
-                                Toast.makeText(getApplicationContext(), Sbutton.getText() + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT).show();
-
-                                // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                                CustomDialog customDialog = new CustomDialog(QuietZone.this);
-
-                                // 커스텀 다이얼로그를 호출한다.
-                                // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                    customDialog.callFunction("Quiet",Sbutton.getText().toString(),Sbutton);
+                               final Button Sbutton = (Button) view;
 
 
+
+
+                                            //Toast.makeText(getApplicationContext(), Sbutton.getText() + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT).show();
+
+
+
+
+                            // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
+                            CustomDialog customDialog = new CustomDialog(QuietZone.this);
+
+                            // 커스텀 다이얼로그를 호출한다.
+                            // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
+                                            customDialog.callFunction("QuietZone",Sbutton.getText().toString(),Sbutton);
 
 
                 }

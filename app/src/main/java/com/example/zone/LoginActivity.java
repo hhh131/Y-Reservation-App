@@ -64,16 +64,6 @@ public class LoginActivity extends Activity {
                 loginCheck(id.getText().toString(),pwd.getText().toString());
 
 
-
-
-
-
-
-
-
-
-
-
                   /*  mAuth.signInWithEmailAndPassword(id.getText().toString(), pwd.getText().toString())
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override

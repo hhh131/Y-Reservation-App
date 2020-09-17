@@ -59,7 +59,7 @@
                 android:id="@+id/tv_status"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="130/150"
+                android:text="n"
                 android:textSize="20dp"
                 android:gravity="center_vertical|center_horizontal" />
 
@@ -121,7 +121,7 @@
                 android:id="@+id/tv_status1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="28/150"
+                android:text="28/30"
                 android:textSize="20dp"
                 android:gravity="center_vertical|center_horizontal" />
 
@@ -184,7 +184,7 @@
                 android:id="@+id/tv_status2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="28/150"
+                android:text="0/1"
                 android:textSize="20dp"
                 android:gravity="center_vertical|center_horizontal" />
 
@@ -204,7 +204,7 @@
             android:id="@+id/tv_position3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5F"
+            android:text="4F"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="60dp" />
@@ -219,7 +219,7 @@
                 android:id="@+id/tv_zone3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PC Zone"
+                android:text="DVD Zone"
                 android:textSize="27dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
@@ -246,7 +246,7 @@
                 android:id="@+id/tv_status3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="28/150"
+                android:text="0/3"
                 android:textSize="20dp"
                 android:gravity="center_vertical|center_horizontal" />
 
@@ -309,7 +309,7 @@
                 android:id="@+id/tv_status4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="28/150"
+                android:text="1/9"
                 android:textSize="20dp"
                 android:gravity="center_vertical|center_horizontal" />
 

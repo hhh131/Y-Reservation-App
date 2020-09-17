@@ -73,7 +73,7 @@ public class CustomDialog
         OKbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Zone.equals("Quiet")) {
+                if (Zone.equals("QuietZone")) {
                     final FirebaseDatabase database = FirebaseDatabase.getInstance();
                     final DatabaseReference myRef = database.getReference();
 

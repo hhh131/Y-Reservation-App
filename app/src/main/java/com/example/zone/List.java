@@ -1,15 +1,26 @@
 package com.example.zone;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.zone.Room.QuietZone;
 import com.example.zone.Room.seminar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -17,7 +28,9 @@ public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
     LinearLayout QuietZoneLay,SeminarLay;
-
+    TextView quietTv;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +38,7 @@ public class List extends AppCompatActivity {
 
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
-
+        quietTv = (TextView)findViewById(R.id.tv_status);
 
 
         QuietZoneLay.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +55,25 @@ public class List extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        final Query query = myRef.child("Seat").child("Quiet");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot datasnapshot) {
+
+                   int i =(int) datasnapshot.getChildrenCount();
+
+                    quietTv.setText(Integer.toString(i));
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("loadUser:onCancelled", databaseError.toException());
+            }
+        });
+
 
 
 /*
