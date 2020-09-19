@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Room.seminar"></activity>
+        <activity android:name=".Room.Willow"></activity>
+        <activity android:name=".Room.PcZoneActivity" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".Room.seminar" />
         <activity android:name=".List" />
         <activity android:name=".MyInfoActivity" />
         <activity android:name=".LoginActivity" />
@@ -19,7 +22,6 @@
         <activity android:name=".Room.QuietZone" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Room.DVDZone" />
-
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -81,7 +81,7 @@ public class CustomDialog
                   myRef = database.getReference();
               if (Zone.equals("QuietZone")) {
 
-                  
+
                   QuietZoneRe(btn,Zone);
 
 
