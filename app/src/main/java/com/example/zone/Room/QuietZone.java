@@ -1,6 +1,7 @@
 package com.example.zone.Room;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import static com.example.zone.LoginActivity.loginStatus;
+import static com.example.zone.LoginActivity.loginId;
 
 public class QuietZone extends AppCompatActivity {
 
@@ -41,11 +45,73 @@ public class QuietZone extends AppCompatActivity {
         for (int i = 0; i < 5; i++) {
                         ButtonArray[i] = (Button) findViewById(buttons[i]);
                         buttonIndex[i] = i + 1;
+
+
+
+
+            Query query = myRef.child("Seat").child("QuietZone");
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot datasnapshot) {
+                    if (datasnapshot.hasChild("1")) {
+                        //ButtonArray[0].setBackgroundColor(Color.rgb(255,0,0));
+
+
+                       // nameTv.setText(datasnapshot.child(id).child("name").getValue().toString());
+
+
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("loadUser:onCancelled", databaseError.toException());
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
                         ButtonArray[i].setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                final Button Sbutton = (Button) view;
+                                final Query query = myRef.child("Seat").child("QuietZone");
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
 
+                                    @Override
+                                    public void onDataChange(DataSnapshot datasnapshot) {
+                                        if (datasnapshot.hasChild(Sbutton.getText().toString())) {
+                                                //Sbutton.setBackgroundColor(Color.rgb(255,0,0));
+
+                                            Toast toast = Toast.makeText(getApplicationContext(),"이미 예약된 좌석입니다.",Toast.LENGTH_SHORT);
+                                            toast.show();
+
+
+                                        }
+                                        else
+                                        {
+                                            // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
+                                            CustomDialog customDialog = new CustomDialog(QuietZone.this);
+
+                                            // 커스텀 다이얼로그를 호출한다.
+                                            // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
+                                            customDialog.callFunction("QuietZone",Sbutton.getText().toString(),Sbutton);
+
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                                        Log.w("loadUser:onCancelled", databaseError.toException());
+                                    }
+                                });
 
 
 
@@ -54,12 +120,6 @@ public class QuietZone extends AppCompatActivity {
 
 
 
-                            // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                            CustomDialog customDialog = new CustomDialog(QuietZone.this);
-
-                            // 커스텀 다이얼로그를 호출한다.
-                            // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                                            customDialog.callFunction("QuietZone",Sbutton.getText().toString(),Sbutton);
 
 
                 }
