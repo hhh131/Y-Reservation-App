@@ -4,8 +4,8 @@ public class SeatVO2 {
 
 
   String ID;
-  String Seat;
-  String SeatInfo;
+  String Seat;//좌석유형
+  String SeatInfo;//좌석현황
 
 
   public SeatVO2(String ID, String seat, String seatInfo) {

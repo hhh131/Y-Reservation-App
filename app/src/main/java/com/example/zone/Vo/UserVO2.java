@@ -4,7 +4,7 @@ public class UserVO2 {
 
     String ID;
     String PWD;
-    int report;
+    int report;//신고횟수
 
     public UserVO2(String ID, String PWD, int report) {
         this.ID = ID;

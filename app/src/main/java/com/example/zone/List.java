@@ -29,7 +29,7 @@ public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
     LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay;
-    TextView quietTv;
+    TextView quietTv,dvdZoneTv;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     @Override
@@ -41,6 +41,7 @@ public class List extends AppCompatActivity {
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
         quietTv = (TextView)findViewById(R.id.tv_status);
         DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
+        dvdZoneTv = (TextView)findViewById(R.id.DvdZoneTv);
 
         QuietZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,16 +68,17 @@ public class List extends AppCompatActivity {
 
 
 
-        final Query query = myRef.child("Seat").child("Quiet");
+        final Query query = myRef.child("Seat");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
 
-                   int i =(int) datasnapshot.getChildrenCount();
-
+                   int i =(int) datasnapshot.child("QuietZone").getChildrenCount();
                     quietTv.setText(Integer.toString(i));
 
+                i =(int) datasnapshot.child("DvdZone").getChildrenCount();
+                dvdZoneTv.setText(Integer.toString(i));
 
             }
             @Override
@@ -87,23 +89,7 @@ public class List extends AppCompatActivity {
 
 
 
-/*
-       midList =
-                new ArrayList<String>();
-        ListView list = (ListView) findViewById(R.i);
 
-        adapter =
-                new ArrayAdapter<String>(this,
-                        android.R.layout.simple_list_item_1, midList);
-        list.setAdapter(adapter);
-
-
-        midList.add("콰이어트존");
-        midList.add("세미나실");
-
-        adapter.notifyDataSetChanged();
-
-*/
 
 
 

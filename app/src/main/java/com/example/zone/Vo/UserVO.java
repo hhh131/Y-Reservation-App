@@ -2,7 +2,7 @@ package com.example.zone.Vo;
 
 public class UserVO {
 
-    String ID;
+    String ID;//
     String Name;
     String pwd;
 

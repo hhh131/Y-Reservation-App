@@ -243,7 +243,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tv_status3"
+                android:id="@+id/DvdZoneTv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="0/3"
