@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CustomDialog
 {
+        //좌석 효율적 관리를 위해,,
 
     private static final String TAG = "CustomDialog";
     private Context context;
