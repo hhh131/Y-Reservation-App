@@ -2,33 +2,18 @@ package com.example.zone.Vo;
 
 public class SeatVO {
 
-  int Num;
+
   String ID;
-  String Name;
-  String Zone;
-//좌석 사용여부 추가하기
+  String SeatNum;//좌석유형
+  Boolean status;//좌석현황
 
-  public SeatVO()
-  {
 
-  }
-  public  SeatVO(int Num, String ID,String Name,String Zone)
-  {
-    this.Num=Num;
-    this.ID=ID;
-    this.Name=Name;
-    this.Zone=Zone;
+  public SeatVO(String ID, String seatNum, Boolean status) {
+    this.ID = ID;
+    SeatNum = seatNum;
+    this.status = status;
   }
 
-
-
-  public int getNum() {
-    return Num;
-  }
-
-  public void setNum(int num) {
-    Num = num;
-  }
 
   public String getID() {
     return ID;
@@ -38,19 +23,19 @@ public class SeatVO {
     this.ID = ID;
   }
 
-  public String getName() {
-    return Name;
+  public String getSeatNum() {
+    return SeatNum;
   }
 
-  public void setName(String name) {
-    Name = name;
+  public void setSeatNum(String seatNum) {
+    SeatNum = seatNum;
   }
 
-  public String getZone() {
-    return Zone;
+  public Boolean getStatus() {
+    return status;
   }
 
-  public void setZone(String zone) {
-    Zone = zone;
+  public void setStatus(Boolean status) {
+    this.status = status;
   }
 }

@@ -16,7 +16,6 @@ import static com.example.zone.LoginActivity.loginId;
 
 import androidx.annotation.NonNull;
 
-import com.example.zone.Room.QuietZone;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -134,6 +133,8 @@ public class CustomDialog
             Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
     public void QuietZoneRe(Button btn,String Zone)
     {
 
@@ -144,7 +145,7 @@ public class CustomDialog
             btn.setBackgroundColor(Color.rgb(255, 0, 0));
             // 커스텀 다이얼로그를 종료한다.
 
-            SeatVO seatVO = new SeatVO(Integer.parseInt(btn.getText().toString()), loginId, "권", Zone);
+            SeatVO seatVO = new SeatVO()
             myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
