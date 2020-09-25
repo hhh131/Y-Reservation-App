@@ -4,10 +4,14 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
+import static com.example.zone.LoginActivity.loginStatus;
+import static com.example.zone.LoginActivity.loginId;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class DVDZone extends AppCompatActivity {
 
-    Button btn1, btn2, btn3;
+
+    Button btns[] = new Button[3];
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     int a = 0;
@@ -34,9 +39,11 @@ public class DVDZone extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dvd);
 
-        btn1 = (Button) findViewById(R.id.btn1);
-        btn2 = (Button) findViewById(R.id.btn2);
-        btn3 = (Button) findViewById(R.id.btn3);
+        btns[0] = (Button) findViewById(R.id.btn1);
+        btns[1] = (Button) findViewById(R.id.btn2);
+        btns[2] = (Button) findViewById(R.id.btn3);
+
+
 
 
 
@@ -46,11 +53,13 @@ public class DVDZone extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
-                if (datasnapshot.hasChild(btn1.getText().toString())) {
+                for(int i=0;i<3;i++) {
+                    if (datasnapshot.child(btns[i].getText().toString()).child("status").getValue().equals(true)){
 
-                    btn1.setBackgroundColor(Color.rgb(255, 0, 0));
+                        btns[i].setBackgroundColor(Color.rgb(255, 0, 0));
+                        btns[i].setTextColor(Color.rgb(255,255,255));
+                    }
                 }
-
             }
 
 
@@ -62,45 +71,82 @@ public class DVDZone extends AppCompatActivity {
         });
 
 
-        btn1.setOnClickListener(new View.OnClickListener() {
+        btns[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             Check(btn1);
+             Check(btns[0]);
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        btns[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Check(btn2);
+                Check(btns[1]);
             }
         });
 
 
-        btn3.setOnClickListener(new View.OnClickListener() {
+        btns[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Check(btn3);
+                Check(btns[2]);
             }
         });
 
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+
+        Query query = myRef.child("Seat").child("DvdZone").child(btns[0].getText().toString());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+            @Override
+            public void onDataChange(DataSnapshot datasnapshot) {
+
+                    if (datasnapshot.child("id").getValue().equals(loginId)){
+                        myRef.child("Seat").child("DvdZone").child(btns[0].getText().toString()).child("id").setValue("null");
+                        showToast("있네아이이닥");
+
+                    }
+
+            }
+
+
+
+
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("loadUser:onCancelled", databaseError.toException());
+            }
+        });
+
+        return true;
+
+    }
 
     public void showToast(String msg) {
         Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.show();
     }
 
+
     public void CreateDig(Button btn)
     {
         CustomDialog customDialog = new CustomDialog(DVDZone.this);
 
         // 커스텀 다이얼로그를 호출한다.
-        // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
+
         customDialog.callFunction("DvdZone", btn.getText().toString(), btn);
     }
+
 
     public void Check(final Button btn)
     {
@@ -109,17 +155,14 @@ public class DVDZone extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
-                if (datasnapshot.hasChild(btn.getText().toString())) {
 
-                    showToast("이미 예약된 좌석입니다.");
-
-
-                } else {
-
-                    // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-
-                    CreateDig(btn);
-                }
+                    if (datasnapshot.child(btn.getText().toString()).child("status").getValue().equals(true))
+                    {
+                        showToast("이미 예약된 좌석");
+                    }
+                    else {
+                        CreateDig(btn);
+                    }
             }
 
             @Override

@@ -2,28 +2,15 @@ package com.example.zone.Vo;
 
 public class UserVO {
 
-    String ID;//
-    String Name;
-    String pwd;
+    String ID;
+    String PWD;
+    int report;//신고횟수
 
-
-
-    public UserVO()
-    {
-
-
-    }
-    public UserVO(String ID,String pwd,String Name)
-    {
+    public UserVO(String ID, String PWD, int report) {
         this.ID = ID;
-        this.Name = Name;
-        this.pwd = pwd;
-
+        this.PWD = PWD;
+        this.report = report;
     }
-
-
-
-
 
     public String getID() {
         return ID;
@@ -33,19 +20,19 @@ public class UserVO {
         this.ID = ID;
     }
 
-    public String getName() {
-        return Name;
+    public String getPWD() {
+        return PWD;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setPWD(String PWD) {
+        this.PWD = PWD;
     }
 
-    public String getPwd() {
-        return pwd;
+    public int getReport() {
+        return report;
     }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setReport(int report) {
+        this.report = report;
     }
 }

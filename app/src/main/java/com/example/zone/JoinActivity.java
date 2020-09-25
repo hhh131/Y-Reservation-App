@@ -59,7 +59,8 @@ public class JoinActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),name.getText().toString());//텍스트에 입력받은 정보로 UserVo생성
+                UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0);//텍스트에 입력받은 정보로 UserVo생성
+
           /*    Map<String, Object> user = new HashMap<>();
                 user.put("ID",userVO.getID());
                 user.put("PWD", userVO.getPwd());

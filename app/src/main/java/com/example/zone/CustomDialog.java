@@ -79,24 +79,16 @@ public class CustomDialog
             public void onClick(View view) {
                   database = FirebaseDatabase.getInstance();
                   myRef = database.getReference();
-              if (Zone.equals("QuietZone")) {
+
+                  ZoneRe(btn,Zone);
 
 
-                  QuietZoneRe(btn,Zone);
-
-
-
-                }
-              else if(Zone.equals("DvdZone"))
-              {
-                  DvdZoneRe(btn,Zone);
-              }
             }
         });
 
     }
 
-    public void DvdZoneRe(Button btn,String Zone)
+  /*  public void DvdZoneRe(Button btn,String Zone)
     {
         if (AgreeCB.isChecked() == true) {
 
@@ -105,8 +97,8 @@ public class CustomDialog
             btn.setBackgroundColor(Color.rgb(255, 0, 0));
             // 커스텀 다이얼로그를 종료한다.
 
-            SeatVO seatVO = new SeatVO(Integer.parseInt(btn.getText().toString()), loginId, "권", Zone);
-            myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
+
+            myRef.child("Seat").child(Zone).child(btn.getText().toString()).child("status").setValue(true)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -133,9 +125,9 @@ public class CustomDialog
             Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
         }
     }
+*/
 
-
-    public void QuietZoneRe(Button btn,String Zone)
+    public void ZoneRe(Button btn,String Zone)
     {
 
         if (AgreeCB.isChecked() == true) {
@@ -145,7 +137,7 @@ public class CustomDialog
             btn.setBackgroundColor(Color.rgb(255, 0, 0));
             // 커스텀 다이얼로그를 종료한다.
 
-            SeatVO seatVO = new SeatVO()
+            SeatVO seatVO = new SeatVO(loginId,btn.getText().toString(),true);
             myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

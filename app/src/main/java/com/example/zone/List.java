@@ -39,7 +39,7 @@ public class List extends AppCompatActivity {
 
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
-        quietTv = (TextView)findViewById(R.id.tv_status);
+        quietTv = (TextView)findViewById(R.id.tvstatus);
         DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
         dvdZoneTv = (TextView)findViewById(R.id.DvdZoneTv);
 
@@ -73,11 +73,22 @@ public class List extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
+                int i=0;
+                    for(int j=1;j<=5;j++) {
+                        if(datasnapshot.child("QuietZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
+                            i++;
+                        }
+                        quietTv.setText(Integer.toString(i));
+                    }
 
-                   int i =(int) datasnapshot.child("QuietZone").getChildrenCount();
-                    quietTv.setText(Integer.toString(i));
+                i=0;
 
-                i =(int) datasnapshot.child("DvdZone").getChildrenCount();
+                for(int j=1;j<=3;j++) {
+
+                    if(datasnapshot.child("DvdZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
+                        i++;
+                    }
+                }
                 dvdZoneTv.setText(Integer.toString(i));
 
             }
