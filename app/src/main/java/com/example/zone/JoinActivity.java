@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class JoinActivity extends Activity {
     private static final String TAG = "Join";
     private FirebaseAuth mAuth;
-    EditText id,pwd,name;
+    EditText id,pwd;
     Button Signbtn;
     String data;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -43,13 +43,13 @@ public class JoinActivity extends Activity {
         setContentView(R.layout.activity_join);
         id = (EditText)findViewById(R.id.id);
         pwd = (EditText)findViewById(R.id.pwd);
-        name= (EditText)findViewById(R.id.Name);
+
         Signbtn = (Button) findViewById(R.id.Signbtn);
         //back = (Button) findViewById(R.id.back);
         mAuth = FirebaseAuth.getInstance();
          sId=id.getText().toString();
           sPwd= pwd.getText().toString();
-          sName=name.getText().toString();
+
 
 
 
@@ -89,7 +89,7 @@ public class JoinActivity extends Activity {
 
 
 
-    if(!(id.getText().toString().equals("")&&pwd.getText().toString().equals("")&&name.getText().toString().equals(""))){
+    if(!(id.getText().toString().equals("")&&pwd.getText().toString().equals(""))){
 
 
             myRef.child("User").child(id.getText().toString()).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입

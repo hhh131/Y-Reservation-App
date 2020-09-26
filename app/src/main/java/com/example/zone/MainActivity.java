@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
                     if (i >= 10) {
                         BlackCheck = true;
                     }
-
+                    else
+                    {
+                        BlackCheck = false;
+                    }
 
                 }
 
