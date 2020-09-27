@@ -1,6 +1,7 @@
 package com.example.zone.Room;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zone.CustomDialog;
 import com.example.zone.R;
+import com.example.zone.Vo.SeatVO;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -112,11 +114,20 @@ public class DVDZone extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
 
+                try {
                     if (datasnapshot.child("id").getValue().equals(loginId)){
-                        myRef.child("Seat").child("DvdZone").child(btns[0].getText().toString()).child("id").setValue("null");
+                        SeatVO seatVO = new SeatVO(null,datasnapshot.child("seatNum").getValue().toString(),false);
+                        myRef.child("Seat").child("DvdZone").child(btns[0].getText().toString()).setValue(seatVO);
                         showToast("있네아이이닥");
-
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
                     }
+                }catch (Exception e)
+                {
+                    showToast("반납할 좌석이 없습니다.");
+                }
+
 
             }
 

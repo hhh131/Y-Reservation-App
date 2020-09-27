@@ -12,7 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.zone.Room.DVDZone;
+import com.example.zone.Room.PcZoneActivity;
 import com.example.zone.Room.QuietZone;
+import com.example.zone.Room.Willow;
 import com.example.zone.Room.seminar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
-    LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay;
+    LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay,PCZoneLay,WillowLay;
     TextView quietTv,dvdZoneTv;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -39,6 +41,9 @@ public class List extends AppCompatActivity {
 
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
+        WillowLay = (LinearLayout)findViewById(R.id.WillowLay);
+        PCZoneLay = (LinearLayout)findViewById(R.id.PCZoneLay);
+
         quietTv = (TextView)findViewById(R.id.tvstatus);
         DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
         dvdZoneTv = (TextView)findViewById(R.id.DvdZoneTv);
@@ -65,7 +70,20 @@ public class List extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        WillowLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Willow.class);
+                startActivity(intent);
+            }
+        });
+        PCZoneLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PcZoneActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         final Query query = myRef.child("Seat");
@@ -83,7 +101,7 @@ public class List extends AppCompatActivity {
 
                 i=0;
 
-                for(int j=1;j<=3;j++) {
+               for(int j=1;j<=3;j++) {
 
                     if(datasnapshot.child("DvdZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
                         i++;

@@ -16,6 +16,7 @@ import static com.example.zone.LoginActivity.loginId;
 
 import androidx.annotation.NonNull;
 
+import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,13 +33,14 @@ public class CustomDialog
     Dialog dlg;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    Utill utill;
     public CustomDialog(Context context) {
         this.context = context;
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
     public void callFunction(final String Zone, final String SeatNum, final Button btn) {
-
+         utill = new Utill();
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
 
@@ -87,7 +89,6 @@ public class CustomDialog
         });
 
     }
-
   /*  public void DvdZoneRe(Button btn,String Zone)
     {
         if (AgreeCB.isChecked() == true) {
@@ -127,7 +128,7 @@ public class CustomDialog
     }
 */
 
-    public void ZoneRe(Button btn,String Zone)
+    public void ZoneRe(final Button btn, final String Zone)
     {
 
         if (AgreeCB.isChecked() == true) {
@@ -142,6 +143,8 @@ public class CustomDialog
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            ReservationVO reservationVO = new ReservationVO(Zone,btn.getText().toString(),loginId,utill.getDate());
+                            myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                             Log.e(TAG, "좌석예약 성공");
                             // ShowToast("회원가입 성공");
                             //finish();
