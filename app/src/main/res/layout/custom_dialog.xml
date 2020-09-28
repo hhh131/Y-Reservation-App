@@ -29,6 +29,7 @@
         android:text="Quiet Zone"
         android:textColor="#000000"
         android:textSize="30dp"
+        android:fontFamily="@font/tmoneyfont"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -46,6 +47,7 @@
             android:text="좌석 : "
             android:textColor="#000000"
             android:textSize="15dp"
+            android:fontFamily="@font/cafe24font"
             android:textStyle="bold" />
 
         <TextView
@@ -56,6 +58,7 @@
             android:text="n"
             android:textColor="#000000"
             android:textSize="15dp"
+            android:fontFamily="@font/cafe24font"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -77,14 +80,16 @@
 \n\n
 3. 다른 이용자에게 방해가 되어 경고
 를 2번 이상 받을 경우"
+        android:fontFamily="@font/cafe24font"
         android:textColor="#000000"
-        android:textSize="13dp" />
+        android:textSize="15dp" />
 
     <CheckBox
         android:id="@+id/AgreeCB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:fontFamily="@font/cafe24font"
         android:text="동의하기" />
 
 
@@ -105,6 +110,7 @@
             android:text="예약 완료"
             android:textColor="#000000"
             android:textSize="16dp"
+            android:fontFamily="@font/cafe24font"
             android:background="@color/colorAccent"/>
     </LinearLayout>
 

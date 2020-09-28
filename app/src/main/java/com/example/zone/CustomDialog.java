@@ -143,7 +143,9 @@ public class CustomDialog
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+
                             ReservationVO reservationVO = new ReservationVO(Zone,btn.getText().toString(),loginId,utill.getDate());
+
                             myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                             Log.e(TAG, "좌석예약 성공");
                             // ShowToast("회원가입 성공");

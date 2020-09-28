@@ -7,53 +7,57 @@
     <LinearLayout
         android:id="@+id/QuietZoneLay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="70dp"
         android:layout_marginBottom="10dp"
-        android:clickable="true" >
+        android:clickable="true"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tmoneyfont"
             android:text="4F"
-            android:textColor="@android:color/holo_green_light"
-            android:textStyle="bold"
-            android:textSize="60dp" />
+            android:textColor="@android:color/black"
+            android:layout_marginRight="10dp"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <LinearLayout
 
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_zone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/tmoneyfont"
                 android:text="Quiet Study Zone"
-                android:textSize="27dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
 
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/tv_int"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="조용히 공부나 책을 읽을 수 있는 시설 "
-                android:gravity="center_vertical" />
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical"
+                android:text="조용히 공부나 책을 읽을 수 있는 시설 " />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="0dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_marginRight="0dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,6 +70,7 @@
                     android:id="@+id/tvstatus"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/tmoneyfont"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="0"
                     android:textSize="20dp" />
@@ -74,6 +79,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/tmoneyfont"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="/84"
                     android:textSize="20dp" />
@@ -84,14 +90,16 @@
                 android:id="@+id/tv_status"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="n"
-                android:textSize="20dp"
-                android:gravity="center_vertical|center_horizontal" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/tv_status3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/tmoneyfont"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="/n"
                 android:textSize="20dp" />
@@ -102,61 +110,68 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="70dp"
         android:layout_marginBottom="10dp"
-        android:clickable="true">
+        android:clickable="true"
+
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_position1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tmoneyfont"
             android:text="4F"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="60dp" />
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/PCZoneLay"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_zone1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/tmoneyfont"
                 android:text="PC Zone"
-                android:textSize="27dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
-
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/tv_int1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="유한대 PC Zone 중 최대 규모 시설 "
-                android:gravity="center_vertical" />
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical"
+                android:text="유한대 PC Zone 중 최대 규모 시설 " />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="0dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_marginRight="0dp">
+
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_status1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="28/30"
-                android:textSize="20dp"
-                android:gravity="center_vertical|center_horizontal" />
+                android:textSize="20dp" />
 
         </LinearLayout>
 
@@ -164,46 +179,50 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="70dp"
         android:layout_marginBottom="10dp"
-        android:clickable="true">
+        android:clickable="true"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_position2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tmoneyfont"
             android:text="4F"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="60dp" />
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/WillowLay"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_zone2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/tmoneyfont"
                 android:text="WILLOW THEATER"
-                android:textSize="27dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
-
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/tv_int2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="영화 감상이 가능하며 매주 목요일마다
-                                최신영화를 상영 "
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical"
                 android:maxLines="2"
-                android:gravity="center_vertical"/>
+                android:text="영화 감상이 가능하며 매주 목요일마다
+                                최신영화를 상영 " />
 
         </LinearLayout>
 
@@ -211,15 +230,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_status2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="0/1"
-                android:textSize="20dp"
-                android:gravity="center_vertical|center_horizontal" />
+                android:textSize="20dp" />
 
         </LinearLayout>
 
@@ -228,44 +248,47 @@
     <LinearLayout
         android:id="@+id/DvdZoneLay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="70dp"
         android:layout_marginBottom="10dp"
-        android:clickable="true">
+        android:clickable="true"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_position3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tmoneyfont"
             android:text="4F"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="60dp" />
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/tmoneyfont"
                 android:text="DVD Zone"
-                android:textSize="27dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
-
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/tv_int3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="도서와 함께 PC를 사용할 수 있는 시설"
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical"
                 android:maxLines="2"
-                android:gravity="center_vertical"/>
+                android:text="도서와 함께 PC를 사용할 수 있는 시설" />
 
         </LinearLayout>
 
@@ -273,15 +296,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/DvdZoneTv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="0/3"
-                android:textSize="20dp"
-                android:gravity="center_vertical|center_horizontal" />
+                android:textSize="20dp" />
 
         </LinearLayout>
 
@@ -290,45 +314,48 @@
     <LinearLayout
         android:id="@+id/SeminarZoneLay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="70dp"
         android:layout_marginBottom="10dp"
-        android:clickable="true">
+        android:clickable="true"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_position4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tmoneyfont"
             android:text="6F"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="60dp" />
+            android:textSize="25dp"
+            android:layout_marginRight="10dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_zone4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/tmoneyfont"
                 android:text="Seminar Zone"
-                android:textSize="27dp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
-
+                android:textColor="@android:color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/tv_int4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="4명 부터 최대 8명의 인원이 함께 모여
-                                토의하고 연구할 수 있는 시설"
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical"
                 android:maxLines="2"
-                android:gravity="center_vertical"/>
+                android:text="4명 부터 최대 8명의 인원이 함께 모여
+                                토의하고 연구할 수 있는 시설" />
 
         </LinearLayout>
 
@@ -336,15 +363,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_status4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/tmoneyfont"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="1/9"
-                android:textSize="20dp"
-                android:gravity="center_vertical|center_horizontal" />
+                android:textSize="20dp" />
 
         </LinearLayout>
 

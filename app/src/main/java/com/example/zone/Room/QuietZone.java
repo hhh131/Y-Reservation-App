@@ -212,24 +212,24 @@ public class QuietZone extends AppCompatActivity {
                           /*  myRef.child("id").setValue("")
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.e(TAG, "좌석예약 성공");
-                                            // ShowToast("회원가입 성공");
-                                            //finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.e(TAG, "좌석예약 실패");
-                                            //ShowToast("회원가입 실패");
-
-                                        }
-                                    });*/
-
-
+                            public void onSuccess(Void aVoid) {
+                            Log.e(TAG, "좌석예약 성공");
+                            // ShowToast("회원가입 성공");
+                            //finish();
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "좌석예약 실패");
+                            //ShowToast("회원가입 실패");
 
                         }
+                    });*/
+
+
+
+                }
                         else
                         {
                             Toast.makeText(getApplicationContext(),"tqtq",Toast.LENGTH_SHORT).show();

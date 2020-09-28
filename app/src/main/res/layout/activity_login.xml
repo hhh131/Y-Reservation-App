@@ -39,15 +39,17 @@
                 android:text="유한대학교"
                 android:textColor="#ffffff"
                 android:textSize="20dp"
+                android:fontFamily="@font/gmarketfont"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="좌석예약"
+                android:text="도서관"
                 android:textColor="#ffffff"
                 android:textSize="13dp"
+                android:fontFamily="@font/gmarketfont"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -70,6 +72,7 @@
                 android:imeOptions="actionNext"
                 android:background="#65C0B5"
                 android:hint=" 학번"
+
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff" />
 
@@ -84,6 +87,7 @@
                 android:hint=" 비밀번호"
                 android:inputType="textPassword"
                 android:textColor="#ffffff"
+
                 android:textColorHint="#ffffff" />
 
 
@@ -102,6 +106,7 @@
                     android:background="#009483"
                     android:text="로그인"
                     android:textColor="#ffffff"
+                    android:fontFamily="@font/gmarketfont"
                     android:textSize="15dp" />
 
                 <Button
@@ -114,6 +119,7 @@
                     android:background="#009483"
                     android:text="회원가입"
                     android:textColor="#ffffff"
+                    android:fontFamily="@font/gmarketfont"
                     android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>

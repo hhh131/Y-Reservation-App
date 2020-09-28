@@ -161,19 +161,40 @@ public class DVDZone extends AppCompatActivity {
 
     public void Check(final Button btn)
     {
-        Query query = myRef.child("Seat").child("DvdZone");
+        final Query query = myRef.child("Seat").child("DvdZone");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
-            public void onDataChange(DataSnapshot datasnapshot) {
+            public void onDataChange(final DataSnapshot datasnapshot) {
+                Query query = myRef.child("reservation").child("DvdZone");
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    if (datasnapshot.child(btn.getText().toString()).child("status").getValue().equals(true))
-                    {
-                        showToast("이미 예약된 좌석");
+                        if (datasnapshot.hasChild(loginId)) {
+                            showToast("내가 이미 예약한 자리");
+                        }
+                            else if (datasnapshot.child(btn.getText().toString()).child("status").getValue().equals(true)) {
+                                showToast("이미 예약된 좌석");
+                            }
+
+                        else
+                        {
+                            CreateDig(btn);
+                        }
+
                     }
-                    else {
-                        CreateDig(btn);
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
+                });
+
+
+
+
+
             }
 
             @Override

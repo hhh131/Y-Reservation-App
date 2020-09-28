@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button loginbtn,zone,my;
     TextView loginTv;
     Boolean BlackCheck=false;
+    ImageView img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +39,27 @@ public class MainActivity extends AppCompatActivity {
         my=(Button)findViewById(R.id.mainMyReadingRoomButton);
         zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
         loginTv = (TextView)findViewById(R.id.loginText);
-
+        img = (ImageView)findViewById(R.id.imageView1);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
+
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/hhh131/Zone"));
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
+
+
+
+
 
         if(loginStatus==true) {
             Query query = myRef.child("User").child(loginId);
