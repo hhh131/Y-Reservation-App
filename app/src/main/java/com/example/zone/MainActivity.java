@@ -1,9 +1,11 @@
 package com.example.zone;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             loginTv.setText("로그인");
+
         }
 
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.example.zone.Room.DVDZone;
 import com.example.zone.Room.PcZoneActivity;
@@ -43,10 +44,22 @@ public class List extends AppCompatActivity {
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
         WillowLay = (LinearLayout)findViewById(R.id.WillowLay);
         PCZoneLay = (LinearLayout)findViewById(R.id.PCZoneLay);
-
         quietTv = (TextView)findViewById(R.id.tvstatus);
         DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
         dvdZoneTv = (TextView)findViewById(R.id.DvdZoneTv);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         QuietZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override

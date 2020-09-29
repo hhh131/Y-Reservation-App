@@ -3,6 +3,8 @@ package com.example.zone;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +25,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class CustomDialog
 {
         //좌석 효율적 관리를 위해,,
@@ -34,13 +38,21 @@ public class CustomDialog
     FirebaseDatabase database;
     DatabaseReference myRef;
     Utill utill;
+
     public CustomDialog(Context context) {
         this.context = context;
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
     public void callFunction(final String Zone, final String SeatNum, final Button btn) {
-         utill = new Utill();
+
+
+
+
+
+
+
+      utill = new Utill();
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
 
@@ -51,6 +63,7 @@ public class CustomDialog
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
         dlg.setContentView(R.layout.custom_dialog);
+        dlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
 
@@ -71,7 +84,7 @@ public class CustomDialog
         final TextView ZoneName = (TextView) dlg.findViewById(R.id.ZoneName);
         final TextView Seat = (TextView) dlg.findViewById(R.id.SeatNum);
         final Button OKbtn = (Button) dlg.findViewById(R.id.okButton);
-
+        final Button back = (Button) dlg.findViewById(R.id.back);
         AgreeCB =(CheckBox)dlg.findViewById(R.id.AgreeCB);
 
         Seat.setText(SeatNum);
@@ -88,45 +101,16 @@ public class CustomDialog
             }
         });
 
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dlg.dismiss();
+                Log.e("sas","생성");
+            }
+        });
     }
-  /*  public void DvdZoneRe(Button btn,String Zone)
-    {
-        if (AgreeCB.isChecked() == true) {
 
-
-            Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-            btn.setBackgroundColor(Color.rgb(255, 0, 0));
-            // 커스텀 다이얼로그를 종료한다.
-
-
-            myRef.child("Seat").child(Zone).child(btn.getText().toString()).child("status").setValue(true)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.e(TAG, "좌석예약 성공");
-                            // ShowToast("회원가입 성공");
-                            //finish();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e(TAG, "좌석예약 실패");
-                            //ShowToast("회원가입 실패");
-
-                        }
-                    });
-            //showMsg();
-            btn.setTextColor(Color.rgb(255, 255, 255));
-
-
-            dlg.dismiss();
-
-        } else {
-            Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
-        }
-    }
-*/
 
     public void ZoneRe(final Button btn, final String Zone)
     {
@@ -135,7 +119,7 @@ public class CustomDialog
 
 
             Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-            btn.setBackgroundColor(Color.rgb(255, 0, 0));
+            btn.setBackgroundColor(Color.rgb(0, 255, 0));
             // 커스텀 다이얼로그를 종료한다.
 
             SeatVO seatVO = new SeatVO(loginId,btn.getText().toString(),true);

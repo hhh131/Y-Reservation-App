@@ -2,39 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_margin="10dp"
 
+    android:background="@drawable/round_bg"
 
-    <TextView
-        android:id="@+id/title"
+     >
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:text="동의 하기"
-        android:background="#ffffff"/>
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        >
 
 
-</LinearLayout>
+        <Button
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_arrow_back_24px"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/title"
+
+            android:layout_width="295dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:text="동의 하기"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/ZoneName"
         android:layout_width="match_parent"
-        android:layout_height="67dp"
+        android:layout_height="48dp"
+        android:fontFamily="@font/tmoneyfont"
         android:gravity="center"
         android:text="Quiet Zone"
         android:textColor="#000000"
         android:textSize="30dp"
-        android:fontFamily="@font/tmoneyfont"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -43,22 +61,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/cafe24font"
             android:gravity="center"
             android:text="좌석 : "
             android:textColor="#000000"
-            android:textSize="15dp"
-            android:fontFamily="@font/cafe24font"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/SeatNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/cafe24font"
             android:gravity="center"
             android:text="n"
             android:textColor="#000000"
-            android:textSize="15dp"
-            android:fontFamily="@font/cafe24font"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -66,30 +84,36 @@
     <TextView
         android:id="@+id/mesgase"
         android:layout_width="match_parent"
-        android:layout_height="216dp"
+        android:layout_height="252dp"
+        android:fontFamily="@font/cafe24font"
         android:gravity="center"
-        android:hint=" 열람실 좌석은 학교의 사유물로 \n\n
+        android:text="열람실 좌석은 학교의 사유물로 \n\n
         파손,또는 훼손 할 경우 청구 할 수 있습니
-다. \n\n
+다. \n\n\n
 열람실 이용 중 다음의 경우에 퇴실 조
 치 될 수 있습니다.
-\n\n
+\n\n\n
 1. 문란한 행위를 하는 경우
 \n\n
 2. 열람실 파손,훼손의 경우
 \n\n
 3. 다른 이용자에게 방해가 되어 경고
 를 2번 이상 받을 경우"
-        android:fontFamily="@font/cafe24font"
         android:textColor="#000000"
         android:textSize="15dp" />
 
     <CheckBox
+
         android:id="@+id/AgreeCB"
+
+        android:padding="10dp"
+        android:background="@drawable/round_bg_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:fontFamily="@font/cafe24font"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
         android:text="동의하기" />
 
 
@@ -99,8 +123,8 @@
         android:orientation="horizontal">
 
 
-       
-       
+
+
         <Button
             android:id="@+id/okButton"
             android:layout_width="match_parent"
@@ -111,7 +135,8 @@
             android:textColor="#000000"
             android:textSize="16dp"
             android:fontFamily="@font/cafe24font"
-            android:background="@color/colorAccent"/>
+            android:background="@drawable/round_bg_btn"
+           />
     </LinearLayout>
 
 
