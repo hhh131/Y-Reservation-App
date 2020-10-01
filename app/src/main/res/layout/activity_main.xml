@@ -113,31 +113,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
+        android:layout_weight="5"
         android:orientation="vertical">
 
-        <ViewFlipper
-            android:id="@+id/image_slide"
+        <TextView
+            android:id="@+id/myZone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <Button
-            android:id="@+id/mainLogoutButton"
-            android:layout_width="125dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableStart="@drawable/ic_lock_open_black_24dp"
-            android:drawableLeft="@drawable/ic_lock_open_black_24dp"
-            android:text="로그아웃"
-            android:visibility="invisible" />
+            android:fontFamily="@font/tmoneyfont"
+            android:text="ㅁㅁZone"
+            android:textColor="@android:color/black"
+            android:textSize="25dp"
 
-        <Button
-            android:id="@+id/resetButton"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="리셋버튼 / 추후 삭제예정"
-            android:visibility="invisible" />
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/mySeatNum"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:fontFamily="@font/tmoneyfont"
+            android:gravity="center_vertical"
+            android:text="n번자리 사용중"
+            android:textSize="25dp" />
     </LinearLayout>
 
 

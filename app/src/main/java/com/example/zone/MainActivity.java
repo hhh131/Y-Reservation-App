@@ -29,9 +29,10 @@ import static com.example.zone.LoginActivity.loginId;
 public class MainActivity extends AppCompatActivity {
 
     Button loginbtn,zone,my;
-    TextView loginTv;
+    TextView loginTv,myZone,mySeatNum;
     Boolean BlackCheck=false;
     ImageView img;
+    String reverInfo,SeatNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         my=(Button)findViewById(R.id.mainMyReadingRoomButton);
         zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
         loginTv = (TextView)findViewById(R.id.loginText);
+        myZone = (TextView)findViewById(R.id.myZone);
+       mySeatNum = (TextView)findViewById(R.id.mySeatNum);
         img = (ImageView)findViewById(R.id.imageView1);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -64,8 +67,56 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(loginStatus==true) {
-            Query query = myRef.child("User").child(loginId);
+
+
+            Query query = myRef.child("reservation").child("QuietZone");
             query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot datasnapshot) {
+                        if(datasnapshot.hasChild(loginId))
+                        {
+                            reverInfo=datasnapshot.child(loginId).child("reservationType").getValue().toString();
+                            SeatNum=datasnapshot.child(loginId).child("seatNum").getValue().toString();
+
+
+                            myZone.setText(reverInfo);
+                            mySeatNum.setText(SeatNum);
+
+                        }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("loadUser:onCancelled", databaseError.toException());
+                }
+            });
+
+
+
+            myZone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(myZone.getText().toString().equals("QuietZone"))
+                    {
+                        Intent intent = new Intent(getApplicationContext(),QuietZone.class);
+                        startActivity(intent);
+                    }
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+            Query query2 = myRef.child("User").child(loginId);
+            query2.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot datasnapshot) {
                     long i = (long) datasnapshot.child("report").getValue();
