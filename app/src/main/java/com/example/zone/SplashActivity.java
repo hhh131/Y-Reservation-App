@@ -12,7 +12,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_wait);
+        setContentView(R.layout.activity_splash);
 
         Handler hd = new Handler();
         hd.postDelayed(new splashandler(), 1500); // 로딩화면 1.5초동안 동작
