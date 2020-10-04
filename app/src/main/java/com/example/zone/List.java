@@ -32,7 +32,7 @@ public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
     LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay,PCZoneLay,WillowLay;
-    TextView quietTv,dvdZoneTv;
+    TextView quietTv,dvdZoneTv,PcZoneTv;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     @Override
@@ -47,6 +47,7 @@ public class List extends AppCompatActivity {
         quietTv = (TextView)findViewById(R.id.tvstatus);
         DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
         dvdZoneTv = (TextView)findViewById(R.id.DvdZoneTv);
+        PcZoneTv = (TextView)findViewById(R.id.PcZoneTv);
 
 
 
@@ -109,9 +110,8 @@ public class List extends AppCompatActivity {
                         if(datasnapshot.child("QuietZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
                             i++;
                         }
-                        quietTv.setText(Integer.toString(i));
                     }
-
+                quietTv.setText(Integer.toString(i));
                 i=0;
 
                for(int j=1;j<=3;j++) {
@@ -122,6 +122,15 @@ public class List extends AppCompatActivity {
                 }
                 dvdZoneTv.setText(Integer.toString(i));
 
+                i=0;
+
+                for(int j=1;j<=5;j++) {
+
+                    if(datasnapshot.child("PcZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
+                        i++;
+                    }
+                }
+                PcZoneTv.setText(Integer.toString(i));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

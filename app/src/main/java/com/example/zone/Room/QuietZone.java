@@ -38,10 +38,9 @@ public class QuietZone extends AppCompatActivity {
     private Button[] ButtonArray = new Button[buttons.length];
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-    int a = 0;
-    int b = 0;
-    String SeatNum,SeatNum2;
-    Button Sbutton, myBtn;
+
+    String SeatNum;
+    Button Sbutton;
     String Sbtn;
 
     @Override
