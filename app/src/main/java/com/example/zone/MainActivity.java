@@ -139,17 +139,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if(loginStatus==true)
-        {
-            loginTv.setText("로그아웃");
-
-        }
-        else{
-            loginTv.setText("로그인");
-
-        }
-
-
     zone.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -203,6 +192,12 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+    @Override
+    public void onBackPressed() {
+        // 뒤로가기 방지
+    }
+
+
 
     public void showToast(String msg)
     {

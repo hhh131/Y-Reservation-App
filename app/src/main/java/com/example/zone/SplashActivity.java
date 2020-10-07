@@ -15,7 +15,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         Handler hd = new Handler();
-        hd.postDelayed(new splashandler(), 1500); // 로딩화면 1.5초동안 동작
+        hd.postDelayed(new splashandler(), 1300); // 로딩화면 1.5초동안 동작
     }
 
     private class splashandler implements Runnable {

@@ -106,7 +106,7 @@ public class CustomDialog
             @Override
             public void onClick(View v) {
                 dlg.dismiss();
-                Log.e("sas","생성");
+
             }
         });
     }
@@ -132,15 +132,15 @@ public class CustomDialog
 
                             myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                             Log.e(TAG, "좌석예약 성공");
-                            // ShowToast("회원가입 성공");
-                            //finish();
+
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.e(TAG, "좌석예약 실패");
-                            //ShowToast("회원가입 실패");
+
 
                         }
                     });
