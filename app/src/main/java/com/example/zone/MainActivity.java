@@ -3,6 +3,7 @@ package com.example.zone;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ShowableListMenu;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -28,7 +29,7 @@ import static com.example.zone.LoginActivity.loginId;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button loginbtn,zone,my;
+    Button loginbtn,zone,report;
     TextView loginTv,myZone,mySeatNum;
     Boolean BlackCheck=false;
     ImageView img;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Main");
         loginbtn = (Button)findViewById(R.id.loginButton);
-        my=(Button)findViewById(R.id.mainMyReadingRoomButton);
+        report=(Button)findViewById(R.id.mainMyReadingRoomButton);
         zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
         loginTv = (TextView)findViewById(R.id.loginText);
         myZone = (TextView)findViewById(R.id.myZone);
@@ -143,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(loginStatus==true) {
+
                 if(BlackCheck==false) {
                     Intent intent = new Intent(getApplicationContext(), List.class);
                     startActivity(intent);
@@ -160,12 +162,17 @@ public class MainActivity extends AppCompatActivity {
     });
 
 
-    my.setOnClickListener(new View.OnClickListener() {
+    report.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-           Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-            startActivity(intent);
-
+            if(loginStatus==true) {
+                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+                startActivity(intent);
+            }
+                else
+            {
+                showToast("로그인 해 주세요");
+            }
 
 
 
