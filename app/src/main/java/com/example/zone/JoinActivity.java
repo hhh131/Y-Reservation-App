@@ -61,28 +61,6 @@ public class JoinActivity extends Activity {
 
                 UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0);//텍스트에 입력받은 정보로 UserVo생성
 
-          /*    Map<String, Object> user = new HashMap<>();
-                user.put("ID",userVO.getID());
-                user.put("PWD", userVO.getPwd());
-                user.put("Name",userVO.getName());
-                db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error adding document", e);
-                            }
-                        });
-
-
-
-*/
 
 
 
@@ -123,12 +101,7 @@ public class JoinActivity extends Activity {
         });
 
 
-   /*     back.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });*/
+
     }
     public void ShowToast(String msg)
     {

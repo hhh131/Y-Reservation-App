@@ -110,33 +110,7 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/myZone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/tmoneyfont"
-            android:text="ㅁㅁZone"
-            android:textColor="@android:color/black"
-            android:textSize="25dp"
-
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/mySeatNum"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:fontFamily="@font/tmoneyfont"
-            android:gravity="center_vertical"
-            android:text="n번자리 사용중"
-            android:textSize="25dp" />
-    </LinearLayout>
 
 
 </LinearLayout>
