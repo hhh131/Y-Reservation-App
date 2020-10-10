@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
         report=(Button)findViewById(R.id.mainMyReadingRoomButton);
         zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
         loginTv = (TextView)findViewById(R.id.loginText);
-        myZone = (TextView)findViewById(R.id.myZone);
-       mySeatNum = (TextView)findViewById(R.id.mySeatNum);
+
         img = (ImageView)findViewById(R.id.imageView1);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
