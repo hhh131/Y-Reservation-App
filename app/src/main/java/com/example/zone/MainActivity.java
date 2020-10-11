@@ -38,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setTitle("Main");
+        setTitle("도서관 시설 예약");
         loginbtn = (Button)findViewById(R.id.loginButton);
         report=(Button)findViewById(R.id.mainMyReadingRoomButton);
         zone = (Button)findViewById(R.id.mainReadingRoomSelectButton);
         loginTv = (TextView)findViewById(R.id.loginText);
 
         img = (ImageView)findViewById(R.id.imageView1);
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
 
@@ -79,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
                             SeatNum=datasnapshot.child(loginId).child("seatNum").getValue().toString();
 
 
-                            myZone.setText(reverInfo);
-                            mySeatNum.setText(SeatNum);
 
                         }
 
@@ -89,19 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     Log.w("loadUser:onCancelled", databaseError.toException());
-                }
-            });
-
-
-
-            myZone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(myZone.getText().toString().equals("QuietZone"))
-                    {
-                        Intent intent = new Intent(getApplicationContext(),QuietZone.class);
-                        startActivity(intent);
-                    }
                 }
             });
 

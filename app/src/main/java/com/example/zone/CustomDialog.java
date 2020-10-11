@@ -17,6 +17,7 @@ import android.widget.Toast;
 import static com.example.zone.LoginActivity.loginId;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
@@ -112,7 +113,7 @@ public class CustomDialog
     }
 
 
-    public void ZoneRe(final Button btn, final String Zone)
+    public void ZoneRe( final Button btn, final String Zone)
     {
 
         if (AgreeCB.isChecked() == true) {
@@ -145,7 +146,7 @@ public class CustomDialog
                         }
                     });
             //showMsg();
-            btn.setTextColor(Color.rgb(255, 255, 255));
+            btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
 
 
             dlg.dismiss();

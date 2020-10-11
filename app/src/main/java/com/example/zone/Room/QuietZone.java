@@ -1,8 +1,10 @@
 package com.example.zone.Room;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.zone.CustomDialog;
 import com.example.zone.R;
@@ -48,6 +51,7 @@ public class QuietZone extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiet);
 
+        setTitle("Quiet Zone");
 
         for (int i = 0; i < 5; i++) {
             ButtonArray[i] = (Button) findViewById(buttons[i]);
@@ -72,11 +76,10 @@ public class QuietZone extends AppCompatActivity {
                         public void onDataChange(DataSnapshot datasnapshot) {
                             for (int i = 0; i < 5; i++) {
                                 if (datasnapshot.child(ButtonArray[i].getText().toString()).child("seatNum").getValue().equals(SeatNum)) {
-                                    ButtonArray[i].setBackgroundColor(Color.rgb(0, 255, 0));
-                                } else if (datasnapshot.child(ButtonArray[i].getText().toString()).child("status").getValue().equals(true)) {
+                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.round_bg_seat_my));
+                            } else if (datasnapshot.child(ButtonArray[i].getText().toString()).child("status").getValue().equals(true)) {
 
-                                    ButtonArray[i].setBackgroundColor(Color.rgb(255, 0, 0));
-                                    ButtonArray[i].setTextColor(Color.rgb(255, 255, 255));
+                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.round_bg_seat_on));
                                 }
 
 
