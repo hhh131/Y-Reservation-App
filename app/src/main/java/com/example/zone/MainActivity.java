@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(loginStatus==true) {
 
+            loginTv.setText("로그아웃");
 
             Query query = myRef.child("reservation").child("QuietZone");
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -120,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.w("loadUser:onCancelled", databaseError.toException());
                 }
             });
+
+        }
+        else {
+            loginTv.setText("로그인");
 
         }
 

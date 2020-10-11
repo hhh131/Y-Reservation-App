@@ -34,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import static com.example.zone.LoginActivity.loginStatus;
 import static com.example.zone.LoginActivity.loginId;
 
-public class QuietZone extends AppCompatActivity {
+public class QuietZone extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "QuietZone";
     int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5};
     String buttonIndex[] = new String[buttons.length];
@@ -122,7 +122,6 @@ public class QuietZone extends AppCompatActivity {
 
 
 
-
        /*     Query query = myRef.child("Seat").child("QuietZone").child(buttonIndex[i]);
 
 
@@ -155,48 +154,59 @@ public class QuietZone extends AppCompatActivity {
 */
 
 
-            ButtonArray[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Sbutton = (Button) view;
-                    final Query query = myRef.child("Seat").child("QuietZone");
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot datasnapshot) {
-                            if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
-                                showToast("이미 예약된 좌석");
-                            }
-                                //아직수정중
-
-
-                            else {
-
-                                // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                                CustomDialog customDialog = new CustomDialog(QuietZone.this);
-
-                                // 커스텀 다이얼로그를 호출한다.
-                                // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                                customDialog.callFunction("QuietZone", Sbutton.getText().toString(), Sbutton);
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.w("loadUser:onCancelled", databaseError.toException());
-                        }
-                    });
-
-
-                    //Toast.makeText(getApplicationContext(), Sbutton.getText() + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT).show();
-
-
-                }
-            });
+            ButtonArray[i].setOnClickListener(this);
         }
+    }
+
+
+
+    @Override
+    public void onClick(View v)
+    {
+        Sbutton = (Button) v;
+        final Query query = myRef.child("Seat").child("QuietZone");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot datasnapshot) {
+                if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
+                    //showToast("이미 예약된 좌석");
+                }
+                //아직수정중
+
+
+                else {
+
+                    // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
+                    CustomDialog customDialog = new CustomDialog(QuietZone.this);
+
+                    // 커스텀 다이얼로그를 호출한다.
+                    // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
+                    customDialog.callFunction("QuietZone", Sbutton.getText().toString(), Sbutton);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("loadUser:onCancelled", databaseError.toException());
+            }
+        });
+
+
+        //Toast.makeText(getApplicationContext(), Sbutton.getText() + "자리는 이미 예약되어있는 자리입니다.", Toast.LENGTH_SHORT).show();
+
 
     }
+
+
+
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -354,8 +364,9 @@ public class QuietZone extends AppCompatActivity {
         alertDialog.show();
     }
 }
+/*
 
-    /*private View.OnClickListener btnListener = new View.OnClickListener() {
+   private View.OnClickListener btnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Button newButton = (Button) v;
@@ -376,6 +387,8 @@ public class QuietZone extends AppCompatActivity {
             i = 0;
 
         }
-    };*/
+    };
+*/
+
 
 

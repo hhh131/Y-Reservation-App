@@ -120,7 +120,7 @@ public class CustomDialog
 
 
             Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-            btn.setBackgroundColor(Color.rgb(0, 255, 0));
+
             // 커스텀 다이얼로그를 종료한다.
 
             SeatVO seatVO = new SeatVO(loginId,btn.getText().toString(),true);
