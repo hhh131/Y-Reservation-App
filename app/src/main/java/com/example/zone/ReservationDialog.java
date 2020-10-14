@@ -23,12 +23,16 @@ import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-public class CustomDialog
+public class ReservationDialog
 {
         //좌석 효율적 관리를 위해,,
 
@@ -40,7 +44,7 @@ public class CustomDialog
     DatabaseReference myRef;
     Utill utill;
 
-    public CustomDialog(Context context) {
+    public ReservationDialog(Context context) {
         this.context = context;
     }
 
@@ -119,34 +123,62 @@ public class CustomDialog
         if (AgreeCB.isChecked() == true) {
 
 
-            Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
 
             // 커스텀 다이얼로그를 종료한다.
 
-            SeatVO seatVO = new SeatVO(loginId,btn.getText().toString(),true);
-            myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
 
-                            ReservationVO reservationVO = new ReservationVO(Zone,btn.getText().toString(),loginId,utill.getDate());
+            Query query = myRef.child("Seat").child(Zone);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   /* if (snapshot.child(btn.getText().toString()).child("status").equals(false))
+                        {*/
+                        SeatVO seatVO = new SeatVO(loginId,btn.getText().toString(),true);
+                        myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
 
-                            myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
-                            Log.e(TAG, "좌석예약 성공");
+                                        ReservationVO reservationVO = new ReservationVO(Zone,btn.getText().toString(),loginId,utill.getDate());
+
+                                        myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
+                                        Log.e(TAG, "좌석예약 성공");
+                                        Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
+                                        btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                                        Log.e(TAG, "좌석예약 실패");
 
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.e(TAG, "좌석예약 실패");
+                                    }
+                                });
 
 
-                        }
-                    });
+                    }
+             /*       else if(snapshot.child(btn.getText().toString()).child("status").equals(true))
+                    {
+                        Toast.makeText(context, "좌석있음 실패", Toast.LENGTH_SHORT).show();
+                    }*/
+
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+
             //showMsg();
-            btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+
+
+
 
 
             dlg.dismiss();

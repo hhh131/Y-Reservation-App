@@ -20,8 +20,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class JoinActivity extends Activity {
@@ -59,44 +63,53 @@ public class JoinActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0);//텍스트에 입력받은 정보로 UserVo생성
-
-
-
-
-
 
 
     if(!(id.getText().toString().equals("")&&pwd.getText().toString().equals(""))){
 
+        final Query query = myRef.child("User");
 
-            myRef.child("User").child(id.getText().toString()).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                            Log.e(TAG,"회원가입 성공");
-                            ShowToast("회원가입 성공");
-                            finish();
-                    }
-                })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e(TAG,"회원가입 실패");
-                                ShowToast("회원가입 실패");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(id.getText().toString()))
+                {
+                    ShowToast("이미 존재하는 아이디입니다.");
+                }
+                else
+                {
+                    UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0);
+                    myRef.child("User").child(id.getText().toString()).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.e(TAG,"회원가입 성공");
+                                    ShowToast("회원가입 성공");
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e(TAG,"회원가입 실패");
+                                    ShowToast("회원가입 실패");
 
-                            }
-                        });
-                //showMsg();
+                                }
+                            });
                 }
 
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
-
-
-
-
+                }
             }
         });
 

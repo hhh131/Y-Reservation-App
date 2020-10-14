@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.zone.CustomDialog;
+import com.example.zone.ReservationDialog;
 import com.example.zone.R;
 import com.example.zone.Vo.SeatVO;
 import com.google.firebase.database.DataSnapshot;
@@ -160,11 +160,11 @@ public class PcZoneActivity extends AppCompatActivity {
                             else {
 
                                 // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                                CustomDialog customDialog = new CustomDialog(PcZoneActivity.this);
+                                ReservationDialog reservationDialog = new ReservationDialog(PcZoneActivity.this);
 
                                 // 커스텀 다이얼로그를 호출한다.
                                 // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                                customDialog.callFunction("PcZone", Sbutton.getText().toString(), Sbutton);
+                                reservationDialog.callFunction("PcZone", Sbutton.getText().toString(), Sbutton);
                             }
 
                         }

@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import static com.example.zone.LoginActivity.loginStatus;
 import static com.example.zone.LoginActivity.loginId;
@@ -150,11 +152,13 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
-
+        /*IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+        intentIntegrator.setBeepEnabled(false);//바코드 인식시 소리
+        intentIntegrator.initiateScan();*/
     report.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(loginStatus==true) {
+          /*  if(loginStatus==true) {
                 Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
                 startActivity(intent);
             }
@@ -162,6 +166,15 @@ public class MainActivity extends AppCompatActivity {
             {
                 showToast("로그인 해 주세요");
             }
+*/
+
+
+                //LogcatLogger.d(TAG, "* * * * Camera");
+                //Toast.makeText(this, "Camera", Toast.LENGTH_SHORT).show();
+
+
+
+
 
 
 
@@ -188,6 +201,22 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
+
     @Override
     public void onBackPressed() {
         // 뒤로가기 방지

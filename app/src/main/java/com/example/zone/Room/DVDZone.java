@@ -1,6 +1,5 @@
 package com.example.zone.Room;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,16 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import static com.example.zone.LoginActivity.loginStatus;
 import static com.example.zone.LoginActivity.loginId;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.zone.CustomDialog;
+import com.example.zone.ReservationDialog;
 import com.example.zone.R;
 import com.example.zone.Vo.SeatVO;
 import com.google.firebase.database.DataSnapshot;
@@ -210,11 +205,11 @@ public class DVDZone extends AppCompatActivity {
 
     public void CreateDig(Button btn)
     {
-        CustomDialog customDialog = new CustomDialog(DVDZone.this);
+        ReservationDialog reservationDialog = new ReservationDialog(DVDZone.this);
 
         // 커스텀 다이얼로그를 호출한다.
 
-        customDialog.callFunction("DvdZone", btn.getText().toString(), btn);
+        reservationDialog.callFunction("DvdZone", btn.getText().toString(), btn);
     }
 
 
