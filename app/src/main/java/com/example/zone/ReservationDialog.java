@@ -119,7 +119,7 @@ public class ReservationDialog
 
     public void ZoneRe( final Button btn, final String Zone)
     {
-
+        final String seatNum=btn.getText().toString();
         if (AgreeCB.isChecked() == true) {
 
 
@@ -133,13 +133,13 @@ public class ReservationDialog
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                    /* if (snapshot.child(btn.getText().toString()).child("status").equals(false))
                         {*/
-                        SeatVO seatVO = new SeatVO(loginId,btn.getText().toString(),true);
-                        myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
+                        SeatVO seatVO = new SeatVO(loginId,seatNum,true);
+                        myRef.child("Seat").child(Zone).child(seatNum).setValue(seatVO)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        ReservationVO reservationVO = new ReservationVO(Zone,btn.getText().toString(),loginId,utill.getDate());
+                                        ReservationVO reservationVO = new ReservationVO(Zone,seatNum,loginId,utill.getDate());
 
                                         myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석예약 성공");
@@ -160,10 +160,6 @@ public class ReservationDialog
 
 
                     }
-             /*       else if(snapshot.child(btn.getText().toString()).child("status").equals(true))
-                    {
-                        Toast.makeText(context, "좌석있음 실패", Toast.LENGTH_SHORT).show();
-                    }*/
 
 
                 @Override

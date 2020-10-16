@@ -375,7 +375,8 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
         builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                Log.e(TAG, "좌석변경 성공");
+                Toast.makeText(getApplicationContext(), "좌석 변경을 취소했습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
