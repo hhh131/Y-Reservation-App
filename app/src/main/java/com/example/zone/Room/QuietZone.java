@@ -172,13 +172,22 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.hasChild(loginId)) {
+
                         if (snapshot.child(loginId).child("seatNum").getValue().equals(Sbutton.getText().toString())) {
                             showToast("예약");
                             //if문 오류  만약 없으면 처리
                         }
-                    }
-                       else if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
+                        //showToast("예약한 좌석이 있음");
+
+                        /*
+                        반납 처리 후 오류
+                        좌석 변경후 reload
+                        좌석 판단
+                        동시 예약 제어
+                        만약 예약한 좌석이 없을시 좌석 선택시 오류 처리
+                        */
+                        
+                        else if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
 
 
                             showToast("이미 예약된 좌석");
