@@ -186,7 +186,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                         동시 예약 제어
                         만약 예약한 좌석이 없을시 좌석 선택시 오류 처리
                         */
-                        
+
                         else if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
 
 
@@ -200,13 +200,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
 
                         else {
-
-                            // 커스텀 다이얼로그를 생성한다. 사용자가 만든 클래스이다.
-                            ReservationDialog reservationDialog = new ReservationDialog(QuietZone.this);
-
-                            // 커스텀 다이얼로그를 호출한다.
-                            // 커스텀 다이얼로그의 결과를 출력할 TextView를 매개변수로 같이 넘겨준다.
-                            reservationDialog.callFunction("QuietZone", Sbutton.getText().toString(), Sbutton);
+                            CreateDig(Sbutton);
                         }
                     }
 
@@ -233,6 +227,16 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
 
 
+
+
+    public void CreateDig(Button btn)
+    {
+        ReservationDialog reservationDialog = new ReservationDialog(QuietZone.this);
+
+        // 커스텀 다이얼로그를 호출한다.
+
+        reservationDialog.callFunction("QuietZone", btn.getText().toString(), btn);
+    }
 
 
 
