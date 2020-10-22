@@ -80,7 +80,7 @@ public class List extends AppCompatActivity {
         DvdZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DVDZone.class);
+                Intent intent = new Intent(getApplicationContext(), webView.class);
                 startActivity(intent);
             }
         });

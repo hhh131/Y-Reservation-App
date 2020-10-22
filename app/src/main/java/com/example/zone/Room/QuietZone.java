@@ -173,11 +173,23 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        if (snapshot.child(loginId).child("seatNum").getValue().equals(Sbutton.getText().toString())) {
-                            showToast("예약");
-                            //if문 오류  만약 없으면 처리
-                        }
-                        //showToast("예약한 좌석이 있음");
+                    if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
+
+
+                        showToast("이미 예약된 좌석");
+                    }
+                   else if (snapshot.hasChild(loginId)&&snapshot.child(loginId).child("seatNum").getValue().equals(Sbutton.getText().toString())) {
+                        showToast("예약");
+                        //if문 오류  만약 없으면 처리
+
+                    } else if (snapshot.hasChild(loginId) && datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(false)) {
+                        showMsg(Sbutton);
+
+                        //showToast("내가 이미 예약한 자리가 있습니다.");
+                    } else {
+                        CreateDig(Sbutton);
+                    }
+                    //showToast("예약한 좌석이 있음");
 
                         /*
                         반납 처리 후 오류
@@ -187,21 +199,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                         만약 예약한 좌석이 없을시 좌석 선택시 오류 처리
                         */
 
-                        else if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
 
-
-                            showToast("이미 예약된 좌석");
-                        }
-                       else if(snapshot.hasChild(loginId)&&datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(false))
-                        {
-                            showMsg(Sbutton);
-                            //showToast("내가 이미 예약한 자리가 있습니다.");
-                        }
-
-
-                        else {
-                            CreateDig(Sbutton);
-                        }
                     }
 
                     @Override
@@ -361,6 +359,10 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                                         myRef.child("reservation").child("QuietZone").child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석변경 성공");
                                         Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
 
 
                                     }
