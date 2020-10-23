@@ -34,7 +34,8 @@ import static com.example.zone.LoginActivity.loginId;
 
 public class QuietZone extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "QuietZone";
-    int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5};
+    int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5,R.id.btn6,
+                     R.id.btn7, R.id.btn8, R.id.btn9, R.id.btn10, R.id.btn11,R.id.btn12};
     String buttonIndex[] = new String[buttons.length];
     private Button[] ButtonArray = new Button[buttons.length];
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -51,7 +52,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
         setTitle("Quiet Zone");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 12; i++) {
             ButtonArray[i] = (Button) findViewById(buttons[i]);
             buttonIndex[i] = ButtonArray[i].getText().toString();
 
@@ -72,7 +73,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
                         @Override
                         public void onDataChange(DataSnapshot datasnapshot) {
-                            for (int i = 0; i < 5; i++) {
+                            for (int i = 0; i < 12; i++) {
                                 if (datasnapshot.child(ButtonArray[i].getText().toString()).child("seatNum").getValue().equals(SeatNum)) {
                                     ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.round_bg_seat_my));
                             } else if (datasnapshot.child(ButtonArray[i].getText().toString()).child("status").getValue().equals(true)) {

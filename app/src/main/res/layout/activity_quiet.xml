@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Room.QuietZone">
+
   <LinearLayout
       android:id="@+id/line"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:orientation="vertical"
       android:layout_gravity="center"
-      android:layout_weight="1">
+      android:layout_weight="1"
+      android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
@@ -21,51 +22,113 @@
   </LinearLayout>
 
 
+  <Button
+      android:id="@+id/btn1"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
 
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_bg_seat"
+      android:text="1"
+      app:layout_constraintTop_toBottomOf="@+id/line" />
 
-        android:text="1"
-        app:layout_constraintTop_toBottomOf="@+id/line" />
+  <Button
+      android:id="@+id/btn2"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="2"
+      app:layout_constraintLeft_toRightOf="@+id/btn1"
+      app:layout_constraintTop_toTopOf="@id/btn1" />
 
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_bg_seat"
-        android:text="2"
-        app:layout_constraintTop_toTopOf="@id/btn1"
-        app:layout_constraintLeft_toRightOf="@+id/btn1" />
+  <Button
+      android:id="@+id/btn3"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="3"
+      app:layout_constraintLeft_toRightOf="@+id/btn2"
+      app:layout_constraintTop_toTopOf="@id/btn1" />
 
-    <Button
-        android:id="@+id/btn3"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_bg_seat"
-        android:text="3"
-        app:layout_constraintTop_toTopOf="@id/btn1"
-        app:layout_constraintLeft_toRightOf="@+id/btn2" />
-
-    <Button
-        android:id="@+id/btn4"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_bg_seat"
-        android:text="4"
-        app:layout_constraintTop_toTopOf="@id/btn1"
-        app:layout_constraintLeft_toRightOf="@+id/btn3" />
+  <Button
+      android:id="@+id/btn4"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="4"
+      app:layout_constraintLeft_toRightOf="@+id/btn3"
+      app:layout_constraintTop_toTopOf="@id/btn1" />
 
   <Button
       android:id="@+id/btn5"
-      android:layout_width="70dp"
+      android:layout_width="60dp"
       android:layout_height="wrap_content"
       android:background="@drawable/round_bg_seat"
       android:text="5"
-      app:layout_constraintTop_toTopOf="@id/btn1"
-      app:layout_constraintLeft_toRightOf="@+id/btn4"  />
+      app:layout_constraintLeft_toRightOf="@+id/btn4"
+      app:layout_constraintTop_toTopOf="@id/btn1" />
 
+  <Button
+      android:id="@+id/btn6"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="6"
+      app:layout_constraintLeft_toRightOf="@+id/btn5"
+      app:layout_constraintTop_toTopOf="@id/btn1" />
+
+
+  <Button
+      android:id="@+id/btn7"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="7"
+
+      app:layout_constraintTop_toBottomOf="@id/btn1" />
+
+  <Button
+      android:id="@+id/btn8"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="8"
+      app:layout_constraintLeft_toRightOf="@+id/btn7"
+      app:layout_constraintTop_toTopOf="@id/btn7" />
+
+  <Button
+      android:id="@+id/btn9"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="9"
+      app:layout_constraintLeft_toRightOf="@+id/btn8"
+      app:layout_constraintTop_toTopOf="@id/btn7" />
+
+  <Button
+      android:id="@+id/btn10"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="10"
+      app:layout_constraintLeft_toRightOf="@+id/btn9"
+      app:layout_constraintTop_toTopOf="@id/btn7" />
+
+  <Button
+      android:id="@+id/btn11"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="11"
+      app:layout_constraintLeft_toRightOf="@+id/btn10"
+      app:layout_constraintTop_toTopOf="@id/btn7" />
+
+  <Button
+      android:id="@+id/btn12"
+      android:layout_width="60dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/round_bg_seat"
+      android:text="12"
+      app:layout_constraintLeft_toRightOf="@+id/btn11"
+      app:layout_constraintTop_toTopOf="@id/btn7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
