@@ -3,6 +3,7 @@ package com.example.zone;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,7 +88,7 @@ public class List extends AppCompatActivity {
         WillowLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Willow.class);
+                Intent intent = new Intent(getApplicationContext(), Activity_Test.class);
                 startActivity(intent);
             }
         });

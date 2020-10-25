@@ -31,6 +31,7 @@ public class Activity_Test extends AppCompatActivity {
 
         context = this;
 
+
         seat1 = new Button(context);    seat2 = new Button(context);
         seat3 = new Button(context);    seat4 = new Button(context);
         seat5 = new Button(context);    seat6 = new Button(context);
