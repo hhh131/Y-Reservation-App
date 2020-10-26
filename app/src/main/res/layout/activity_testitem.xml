@@ -79,7 +79,7 @@
                 android:textStyle="bold"
                 android:background="@drawable/round_bg_seat" />
 
-
+`
             <Button
                 android:id="@+id/R_seat3"
                 android:layout_width="50dp"
