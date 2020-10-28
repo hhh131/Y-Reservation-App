@@ -179,7 +179,9 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v)
     {
         Sbutton = (Button) v;
+        final String SeatNumber=Sbutton.getText().toString();
         final Query query = myRef.child("Seat").child("QuietZone");
+
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -190,16 +192,16 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    if (datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(true)) {
+                    if (datasnapshot.child(SeatNumber).child("status").getValue().equals(true)) {
 
 
                         showToast("이미 예약된 좌석");
                     }
-                   else if (snapshot.hasChild(loginId)&&snapshot.child(loginId).child("seatNum").getValue().equals(Sbutton.getText().toString())) {
+                   else if (snapshot.hasChild(loginId)&&snapshot.child(loginId).child("seatNum").getValue().equals(SeatNumber)) {
                         showToast("예약");
                         //if문 오류  만약 없으면 처리
 
-                    } else if (snapshot.hasChild(loginId) && datasnapshot.child(Sbutton.getText().toString()).child("status").getValue().equals(false)) {
+                    } else if (snapshot.hasChild(loginId) && datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
                         showMsg(Sbutton);
 
                         //showToast("내가 이미 예약한 자리가 있습니다.");
@@ -243,7 +245,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
 
 //노티피케이션
-    
+
 /*    private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library

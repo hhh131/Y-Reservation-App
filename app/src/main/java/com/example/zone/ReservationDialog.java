@@ -124,7 +124,7 @@ public class ReservationDialog
 
 
 
-            // 커스텀 다이얼로그를 종료한다.
+
 
 
             Query query = myRef.child("Seat").child(Zone);
