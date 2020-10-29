@@ -2,8 +2,11 @@ package com.example.zone.Room;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 import static com.example.zone.LoginActivity.loginId;
 
 public class QuietZone extends AppCompatActivity implements View.OnClickListener {
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private static final String TAG = "QuietZone";
     int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5,R.id.btn6,
                      R.id.btn7, R.id.btn8, R.id.btn9, R.id.btn10, R.id.btn11,R.id.btn12};
@@ -73,7 +77,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
             buttonIndex[i] = ButtonArray[i].getText().toString();
 
 
-            Query query = myRef.child("reservation").child("QuietZone").child(loginId);
+            Query query = myRef.child("reservation").child(TAG).child(loginId);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -83,7 +87,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                         SeatNum = "null";
                     }
 
-                    Query query = myRef.child("Seat").child("QuietZone");
+                    Query query = myRef.child("Seat").child(TAG);
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
@@ -178,16 +182,17 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View v)
     {
+        createNotificationChannel();
         Sbutton = (Button) v;
         final String SeatNumber=Sbutton.getText().toString();
-        final Query query = myRef.child("Seat").child("QuietZone");
+        final Query query = myRef.child("Seat").child(TAG);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(final DataSnapshot datasnapshot) {
 
-                Query query = myRef.child("reservation").child("QuietZone");
+                Query query = myRef.child("reservation").child(TAG);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -246,30 +251,58 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
 //노티피케이션
 
-/*    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
+    private void createNotificationChannel() {
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+  /*      Intent notificationIntent = new Intent(this, QuietZone.class);
+        notificationIntent.putExtra("notificationId", count); //전달할 값
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+*/
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
+                .setContentTitle("QuietZone 1번 좌석 예약중")
+                .setContentText("퇴실 전 반드시 퇴실처리 해주세요")
+                // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
+                //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                //.setContentIntent(pendingIntent) // 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
+                .setAutoCancel(true);
+
+        //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+
+            builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            CharSequence channelName  = "노티페케이션 채널";
+            String description = "오레오 이상을 위한 것임";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+            // 노티피케이션 채널을 시스템에 등록
+            assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
+
+        }else builder.setSmallIcon(R.mipmap.ic_launcher); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
+
+        assert notificationManager != null;
+        notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
         }
-    }*/
+
+
 
 
     public void CreateDig(Button btn)
     {
         ReservationDialog reservationDialog = new ReservationDialog(QuietZone.this);
-
         // 커스텀 다이얼로그를 호출한다.
+        reservationDialog.callFunction(TAG, btn.getText().toString(), btn);
 
-        reservationDialog.callFunction("QuietZone", btn.getText().toString(), btn);
+
+
+
     }
 
 
@@ -290,7 +323,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if(item.getItemId()==R.id.menu1) {
-            Query query = myRef.child("reservation").child("QuietZone").child(loginId);
+            Query query = myRef.child("reservation").child(TAG).child(loginId);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -307,7 +340,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
                     }
 
-                    Query query = myRef.child("Seat").child("QuietZone").child(SeatNum);
+                    Query query = myRef.child("Seat").child(TAG).child(SeatNum);
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
@@ -318,8 +351,8 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                                 if (datasnapshot.child("id").getValue().equals(loginId)) {
                                     SeatVO seatVO = new SeatVO(null, datasnapshot.child("seatNum").getValue().toString(), false);
 
-                                    myRef.child("Seat").child("QuietZone").child(SeatNum).setValue(seatVO);
-                                    myRef.child("reservation").child("QuietZone").child(loginId).removeValue();
+                                    myRef.child("Seat").child(TAG).child(SeatNum).setValue(seatVO);
+                                    myRef.child("reservation").child(TAG).child(loginId).removeValue();
 
                                     Intent intent = getIntent();
                                     finish();
@@ -382,17 +415,17 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
                        String BeseatNum = datasnapshot.child("seatNum").getValue().toString();
                         SeatVO seatVO = new SeatVO(null, BeseatNum, false);
-                        myRef.child("Seat").child("QuietZone").child(BeseatNum).setValue(seatVO);
+                        myRef.child("Seat").child(TAG).child(BeseatNum).setValue(seatVO);
 
                         seatVO = new SeatVO(loginId, btn.getText().toString(), true);
-                        myRef.child("Seat").child("QuietZone").child(btn.getText().toString()).setValue(seatVO)
+                        myRef.child("Seat").child(TAG).child(btn.getText().toString()).setValue(seatVO)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
 
-                                        ReservationVO reservationVO = new ReservationVO("QuietZone",btn.getText().toString(),loginId,utill.getDate());
-                                        myRef.child("reservation").child("QuietZone").child(loginId).setValue(reservationVO);
+                                        ReservationVO reservationVO = new ReservationVO(TAG,btn.getText().toString(),loginId,utill.getDate());
+                                        myRef.child("reservation").child(TAG).child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석변경 성공");
                                         Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
 
