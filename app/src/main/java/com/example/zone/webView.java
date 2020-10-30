@@ -29,6 +29,6 @@ public class webView extends AppCompatActivity {
         mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 브라우저 캐시 허용 여부
         mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
 
-        mWebView.loadUrl("http://10.0.2.2:8080"); // 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
+        mWebView.loadUrl("https://portal.yuhan.ac.kr/user/login.face?ssoReturn=http://lib.yuhan.ac.kr:8080/enpass.client/LoginPortalSSO.jsp"); // 웹뷰에 표시할 웹사이트 주소, 웹뷰 시작
     }
 }

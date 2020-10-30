@@ -19,6 +19,7 @@ import static com.example.zone.LoginActivity.loginId;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.example.zone.Room.QuietZone;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
