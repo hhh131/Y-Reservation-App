@@ -81,7 +81,7 @@ public class List extends AppCompatActivity {
         DvdZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), webView.class);
+                Intent intent = new Intent(getApplicationContext(), MyInfoActivity.class);
                 startActivity(intent);
             }
         });
@@ -107,7 +107,7 @@ public class List extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
                 int i=0;
-                    for(int j=1;j<=5;j++) {
+                    for(int j=1;j<=12;j++) {
                         if(datasnapshot.child("QuietZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
                             i++;
                         }

@@ -1,8 +1,9 @@
 package com.example.zone;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -11,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zone.Room.QuietZone;
+
 import java.util.ArrayList;
 
-public class Activity_Test extends AppCompatActivity {
+public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClickListener {
 
     private ArrayList<MainData> arrayList = new ArrayList<MainData>();
     private MyAdapter myAdapter;
@@ -111,7 +114,6 @@ public class Activity_Test extends AppCompatActivity {
 
         myAdapter.notifyDataSetChanged();
 
-
         /*for ( i = 0; i < btnarray.length; i++){
             btnarray[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,10 +129,57 @@ public class Activity_Test extends AppCompatActivity {
             });
         }*/
 
+        myAdapter.setOnClickListener(this);
+
     }
 
     public void showToast(String msg) {
         Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.show();
     }
+
+    @Override
+    public void onItemClicked_1(int position) {
+
+
+        seat1.setBackgroundColor(Color.rgb(0,0,255));
+        showToast(position + "");
+       //CreateDig(position);
+    }
+
+    @Override
+    public void onItemClicked_2(int position) {
+       // showToast(position + "");
+    }
+
+    @Override
+    public void onItemClicked_3(int position) {
+       // showToast(position + "");
+    }
+
+    @Override
+    public void onItemClicked_4(int position) {
+       // showToast(position + "");
+    }
+
+    @Override
+    public void onItemClicked_5(int position) {
+       // showToast(position + "");
+    }
+
+    @Override
+    public void onItemClicked_6(int position) {
+        //showToast(position + "");
+    }
+
+
+
+    public void CreateDig(int position)
+    {
+        ReservationDialog reservationDialog = new ReservationDialog(context);
+        // 커스텀 다이얼로그를 호출한다.
+        reservationDialog.callFunction("QuietZone", Integer.toString(position), seat1);
+    }
+
+
 }

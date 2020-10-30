@@ -50,7 +50,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
-    String SeatNum;
+    String MySeatNum,SeatNum;
     Button Sbutton,ReturnBtn;
 
 
@@ -83,9 +83,9 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue() != null) {
-                        SeatNum = snapshot.child("seatNum").getValue().toString();
+                        MySeatNum = snapshot.child("seatNum").getValue().toString();
                     } else {
-                        SeatNum = "null";
+                        MySeatNum = "null";
                     }
 
                     Query query = myRef.child("Seat").child(TAG);
@@ -95,7 +95,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                         @Override
                         public void onDataChange(DataSnapshot datasnapshot) {
                             for (int i = 0; i < 12; i++) {
-                                if (datasnapshot.child(ButtonArray[i].getText().toString()).child("seatNum").getValue().equals(SeatNum)) {
+                                if (datasnapshot.child(ButtonArray[i].getText().toString()).child("seatNum").getValue().equals(MySeatNum)) {
                                     ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.round_bg_seat_my));
                             } else if (datasnapshot.child(ButtonArray[i].getText().toString()).child("status").getValue().equals(true)) {
 
@@ -321,24 +321,36 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                    if (datasnapshot.child(SeatNumber).child("status").getValue().equals(true)) {
+                        if(datasnapshot.child(SeatNumber).child("status").getValue().equals(true))
+                        {
+                            if(snapshot.child(loginId).child("seatNum").getValue().equals(SeatNumber))
+                            {
+                                showToast("좌석반납");
+                            }
+                            else
+                            {
+                            showToast("이미 사용중인 좌석입니다.");
+                            }
+                        }
+                        else if(datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
+
+                            if (snapshot.hasChild(loginId)) {
+
+                                showMsg(Sbutton);
+                            }
+                            else
+                            {
+                                CreateDig(Sbutton);
+                            }
+                        }
 
 
-                        showToast("이미 예약된 좌석");
-                    }
-                   else if (snapshot.hasChild(loginId)&&snapshot.child(loginId).child("seatNum").getValue().equals(SeatNumber)) {
-                        showToast("예약");
-                        //if문 오류  만약 없으면 처리
 
-                    } else if (snapshot.hasChild(loginId) && datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
-                        showMsg(Sbutton);
 
-                        //showToast("내가 이미 예약한 자리가 있습니다.");
-                    } else {
-                        CreateDig(Sbutton);
 
-                    }
-                    //showToast("예약한 좌석이 있음");
+
+
+
 
                         /*
                         반납 처리 후 오류
@@ -432,7 +444,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
 
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
@@ -444,7 +456,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if(item.getItemId()==R.id.menu1) {
-           /* Query query = myRef.child("reservation").child(TAG).child(loginId);
+           *//* Query query = myRef.child("reservation").child(TAG).child(loginId);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -477,9 +489,9 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
                                     onResume();
 
-                                    *//*Intent intent = getIntent();
+                                    *//**//*Intent intent = getIntent();
                                     finish();
-                                    startActivity(intent);*//*
+                                    startActivity(intent);*//**//*
                                 }
                             } catch (Exception e) {
                                 showToast("반납할 좌석이 없습니다.");
@@ -505,12 +517,12 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
         else
         {
             finish();
-        }*/
+        }*//*
 
 
         }
         return true;
-    }
+    }*/
 
 
     public void showToast(String msg) {

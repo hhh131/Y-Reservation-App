@@ -1,30 +1,38 @@
 package com.example.zone;
 
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.zone.Room.QuietZone;
 
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
 
     private ArrayList<MainData> arrayList;
-    Context mContext;
+
+    public interface MyRecyclerViewClickListener {
+        void onItemClicked_1(int position);
+        void onItemClicked_2(int position);
+        void onItemClicked_3(int position);
+        void onItemClicked_4(int position);
+        void onItemClicked_5(int position);
+        void onItemClicked_6(int position);
+    }
+
+    private MyRecyclerViewClickListener mListener;
+
+    public void setOnClickListener(MyRecyclerViewClickListener listener){
+        mListener = listener;
+    }
+
     public MyAdapter(ArrayList<MainData> arrayList) {
         this.arrayList = arrayList;
     }
-
-
 
     @NonNull
     @Override
@@ -36,8 +44,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         return holder;
     }
 
-
-
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.CustomViewHolder holder, int position) {
         holder.L_seat1.setText(arrayList.get(position).getL_seat1().getText());
@@ -47,18 +53,47 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         holder.R_seat2.setText(arrayList.get(position).getR_seat2().getText());
         holder.R_seat3.setText(arrayList.get(position).getR_seat3().getText());
 
-        holder.itemView.setTag(position);
+        if(mListener != null){
+            final int pos = position * 6;
+            holder.L_seat1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_1(1 + pos);
+                }
+            });
+            holder.L_seat2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_2(2 + pos);
+                }
+            });
+            holder.L_seat3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_3(3 + pos);
+                }
+            });
+            holder.R_seat1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_4(4 + pos);
+                }
+            });
+            holder.R_seat2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_5(5 + pos);
+                }
+            });
+            holder.R_seat3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_6(6 + pos);
+                }
+            });
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //여기는 각 버튼에 대한 이벤트
-               // Button btn=(Button)view;
-
-
-            }
-        });
+        }
 
     }
 
@@ -79,6 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
+
             this.L_seat1 = (Button) itemView.findViewById(R.id.L_seat1);
             this.L_seat2 = (Button) itemView.findViewById(R.id.L_seat2);
             this.L_seat3 = (Button) itemView.findViewById(R.id.L_seat3);
