@@ -1,20 +1,36 @@
 package com.example.zone;
 
 
+import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+
+import static com.example.zone.LoginActivity.loginId;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
 
     private ArrayList<MainData> arrayList;
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+    String MySeatNum;
+    Context context;
     public interface MyRecyclerViewClickListener {
         void onItemClicked_1(int position);
         void onItemClicked_2(int position);
@@ -45,7 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyAdapter.CustomViewHolder holder, int position) {
         holder.L_seat1.setText(arrayList.get(position).getL_seat1().getText());
         holder.L_seat2.setText(arrayList.get(position).getL_seat2().getText());
         holder.L_seat3.setText(arrayList.get(position).getL_seat3().getText());
@@ -53,11 +69,73 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         holder.R_seat2.setText(arrayList.get(position).getR_seat2().getText());
         holder.R_seat3.setText(arrayList.get(position).getR_seat3().getText());
 
+
+
+        Query query = myRef.child("reservation").child("QuietZone").child(loginId);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() != null) {
+                    MySeatNum = snapshot.child("seatNum").getValue().toString();
+                } else {
+                    MySeatNum = "null";
+                }
+
+                Query query = myRef.child("Seat").child("QuietZone");
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                    @Override
+                    public void onDataChange(DataSnapshot datasnapshot) {
+
+                        SeatCheck(datasnapshot,holder.L_seat1);
+                        SeatCheck(datasnapshot,holder.L_seat2);
+                        SeatCheck(datasnapshot,holder.L_seat3);
+                        SeatCheck(datasnapshot,holder.R_seat1);
+                        SeatCheck(datasnapshot,holder.R_seat2);
+                        SeatCheck(datasnapshot,holder.R_seat3);
+
+                }
+
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w("loadUser:onCancelled", databaseError.toException());
+                }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if(mListener != null){
+
+
+
             final int pos = position * 6;
             holder.L_seat1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                        //컨텍스트. 찾기
                     mListener.onItemClicked_1(1 + pos);
                 }
             });
@@ -96,6 +174,34 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         }
 
     }
+    public void CreateDig(int position)
+    {
+        ReservationDialog reservationDialog = new ReservationDialog(context);
+        // 커스텀 다이얼로그를 호출한다.
+        reservationDialog.callFunction("QuietZone", Integer.toString(position));
+    }
+
+
+
+    public void SeatCheck(DataSnapshot datasnapshot,Button btn)
+    {
+
+        if (datasnapshot.child(btn.getText().toString()).child("seatNum").getValue().equals(MySeatNum)) {
+          btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_my));
+
+        } else if (datasnapshot.child(btn.getText().toString()).child("status").getValue().equals(true)) {
+
+          btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_on));
+        }
+    }
+
+
+
+
+
+
+
+
 
     @Override
     public int getItemCount() {

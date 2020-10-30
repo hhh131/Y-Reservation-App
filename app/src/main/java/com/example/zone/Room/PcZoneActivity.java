@@ -263,7 +263,7 @@ public class PcZoneActivity extends AppCompatActivity {
 
         // 커스텀 다이얼로그를 호출한다.
 
-        reservationDialog.callFunction("PcZone", btn.getText().toString(), btn);
+        //reservationDialog.callFunction("PcZone", btn.getText().toString(), btn);
     }
 
 

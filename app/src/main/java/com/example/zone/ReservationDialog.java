@@ -50,8 +50,7 @@ public class ReservationDialog
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(final String Zone, final String SeatNum, final Button btn) {
-
+    public void callFunction(final String Zone, final String SeatNum) {
 
 
 
@@ -101,7 +100,7 @@ public class ReservationDialog
                   database = FirebaseDatabase.getInstance();
                   myRef = database.getReference();
 
-                  ZoneRe(btn,Zone);
+                  ZoneRe(Zone,SeatNum);
 
 
             }
@@ -118,9 +117,9 @@ public class ReservationDialog
     }
 
 
-    public void ZoneRe( final Button btn, final String Zone)
+    public void ZoneRe(final String Zone,final String seatNum)
     {
-        final String seatNum=btn.getText().toString();
+
         if (AgreeCB.isChecked() == true) {
 
 
@@ -145,7 +144,7 @@ public class ReservationDialog
                                         myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석예약 성공");
                                         Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-                                        btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+                                       // btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
 
                                     }
                                 })

@@ -209,7 +209,7 @@ public class DVDZone extends AppCompatActivity {
 
         // 커스텀 다이얼로그를 호출한다.
 
-        reservationDialog.callFunction("DvdZone", btn.getText().toString(), btn);
+        //reservationDialog.callFunction("DvdZone", btn.getText().toString(), btn);
     }
 
 

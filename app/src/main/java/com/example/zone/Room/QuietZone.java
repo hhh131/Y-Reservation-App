@@ -435,7 +435,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
     {
         ReservationDialog reservationDialog = new ReservationDialog(QuietZone.this);
         // 커스텀 다이얼로그를 호출한다.
-        reservationDialog.callFunction(TAG, btn.getText().toString(), btn);
+        //reservationDialog.callFunction(TAG, btn.getText().toString(), btn);
     }
 
 

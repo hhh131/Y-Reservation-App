@@ -4,19 +4,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zone.Room.QuietZone;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.zone.LoginActivity.loginId;
+
 public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClickListener {
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+
+    String TAG="QuietZone";
 
     private ArrayList<MainData> arrayList = new ArrayList<MainData>();
     private MyAdapter myAdapter;
@@ -138,47 +152,111 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
         toast.show();
     }
 
+
     @Override
     public void onItemClicked_1(int position) {
-
-
-        seat1.setBackgroundColor(Color.rgb(0,0,255));
-        showToast(position + "");
-       //CreateDig(position);
+       CreateDig(position);
     }
 
     @Override
     public void onItemClicked_2(int position) {
-       // showToast(position + "");
+        CreateDig(position);
     }
 
     @Override
     public void onItemClicked_3(int position) {
-       // showToast(position + "");
+        CreateDig(position);
     }
 
     @Override
     public void onItemClicked_4(int position) {
-       // showToast(position + "");
+        CreateDig(position);
     }
 
     @Override
     public void onItemClicked_5(int position) {
-       // showToast(position + "");
+        CreateDig(position);
     }
 
     @Override
     public void onItemClicked_6(int position) {
-        //showToast(position + "");
+        CreateDig(position);
     }
 
 
 
-    public void CreateDig(int position)
+
+
+
+    public void CreateDig(final int position)
+
     {
-        ReservationDialog reservationDialog = new ReservationDialog(context);
-        // 커스텀 다이얼로그를 호출한다.
-        reservationDialog.callFunction("QuietZone", Integer.toString(position), seat1);
+
+        final Query query = myRef.child("Seat").child(TAG);
+        final String SeatNumber=Integer.toString(position);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(final DataSnapshot datasnapshot) {
+
+                Query query = myRef.child("reservation").child(TAG);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if(datasnapshot.child(SeatNumber).child("status").getValue().equals(true))
+                        {
+                           /* if(snapshot.child(loginId).child("seatNum").getValue().equals(SeatNumber))
+                            {
+                                showToast("좌석반납");
+                            }
+                            else
+                            {*/
+                                showToast("이미 사용중인 좌석입니다.");
+
+                        }
+                        else if(datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
+
+                            if (snapshot.hasChild(loginId)) {
+
+                                //showMsg(Sbutton);
+                            }
+                            else
+                            {
+                                ReservationDialog reservationDialog = new ReservationDialog(context);
+                                // 커스텀 다이얼로그를 호출한다.
+                                reservationDialog.callFunction("QuietZone", Integer.toString(position));
+                            }
+                        }
+
+                                //선택된 좌석 선택시 오류
+
+
+
+
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("loadUser:onCancelled", databaseError.toException());
+            }
+        });
+
+
     }
 
 
