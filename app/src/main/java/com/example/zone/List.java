@@ -3,7 +3,6 @@ package com.example.zone;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +10,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.example.zone.Room.DVDZone;
-import com.example.zone.Room.PcZoneActivity;
+import com.example.zone.Adapter.Activity_Test;
 import com.example.zone.Room.QuietZone;
-import com.example.zone.Room.Willow;
 import com.example.zone.Room.seminar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,8 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -95,7 +89,10 @@ public class List extends AppCompatActivity {
         PCZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PcZoneActivity.class);
+
+
+
+                Intent intent = new Intent(getApplicationContext(), QrReaderActivity.class);
                 startActivity(intent);
             }
         });

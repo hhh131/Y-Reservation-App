@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.zone.LoginActivity.loginId;
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 public class PcZoneActivity extends AppCompatActivity {
     int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5};
     String buttonIndex[] = new String[buttons.length];

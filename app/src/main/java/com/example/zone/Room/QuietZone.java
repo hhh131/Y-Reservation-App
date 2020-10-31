@@ -1,8 +1,8 @@
 package com.example.zone.Room;
 
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,9 +10,6 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -28,7 +25,6 @@ import com.example.zone.R;
 import com.example.zone.Utill;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +32,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
-import static com.example.zone.LoginActivity.loginId;
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
 public class QuietZone extends AppCompatActivity implements View.OnClickListener {
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
@@ -46,13 +44,13 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                      R.id.btn7, R.id.btn8, R.id.btn9, R.id.btn10, R.id.btn11,R.id.btn12};
     String buttonIndex[] = new String[buttons.length];
     private Button[] ButtonArray = new Button[buttons.length];
-
+     IntentResult result;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
     String MySeatNum,SeatNum;
     Button Sbutton,ReturnBtn;
-
+    private Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,7 +174,20 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
             ReturnBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Query query = myRef.child("reservation").child(TAG).child(loginId);
+
+
+                    IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+                    intentIntegrator.setOrientationLocked(false);
+                    intentIntegrator.setBeepEnabled(false);//바코드 인식시 소리
+                    intentIntegrator.initiateScan();
+
+
+
+
+
+
+
+                   /* Query query = myRef.child("reservation").child(TAG).child(loginId);
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -229,7 +240,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                         public void onCancelled(@NonNull DatabaseError error) {
 
                         }
-                    });
+                    });*/
 
                 }
 
@@ -239,66 +250,94 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        final Utill utill = new Utill();
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
+            } else if (Integer.parseInt(result.getContents()) <= 84) {
+
+                final String SeatNumber = result.getContents();
+                final Query query = myRef.child("Seat").child(TAG);
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(final DataSnapshot datasnapshot) {
+
+                        Query query = myRef.child("reservation").child(TAG);
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                if (datasnapshot.child(SeatNumber).child("status").getValue().equals(true)) {
+
+                                    showToast("이미 사용중인 좌석입니다.");
+
+                                } else if (datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
+
+                                    if (snapshot.hasChild(loginId)) {
+
+                                        showMsg(Sbutton);
+                                    } else {
+
+                                      /*  SeatVO seatVO = new SeatVO(loginId, SeatNumber, true);
+                                        myRef.child("Seat").child(TAG).child(SeatNumber).setValue(seatVO)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+
+                                                        ReservationVO reservationVO = new ReservationVO(TAG, SeatNumber, loginId, utill.getDate());
+
+                                                        myRef.child("reservation").child(TAG).child(loginId).setValue(reservationVO);
+                                                        Log.e(TAG, "좌석예약 성공");
+                                                        Toast.makeText(getApplicationContext(), "예약 완료", Toast.LENGTH_SHORT).show();
+                                                        // btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getApplicationContext(), "예약 실패", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, "좌석예약 실패");
 
 
+                                                    }
+                                                });*/
+
+                                        ReservationDialog reservationDialog = new ReservationDialog(QuietZone.this);
+                                        //커스텀 다이얼로그를 호출한다.
+                                        reservationDialog.callFunction("QuietZone", result.getContents());
+
+                                        //Toast.makeText(getApplicationContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 
 
-        for (int i = 0; i < 12; i++) {
-            ButtonArray[i] = (Button) findViewById(buttons[i]);
-            buttonIndex[i] = ButtonArray[i].getText().toString();
-
-
-            Query query = myRef.child("reservation").child(TAG).child(loginId);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getValue() != null) {
-                        SeatNum = snapshot.child("seatNum").getValue().toString();
-                    } else {
-                        SeatNum = "null";
-                    }
-
-                    Query query = myRef.child("Seat").child(TAG);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-                        @Override
-                        public void onDataChange(DataSnapshot datasnapshot) {
-                            for (int i = 0; i < 12; i++) {
-                                if (datasnapshot.child(ButtonArray[i].getText().toString()).child("seatNum").getValue().equals(SeatNum)) {
-                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_bg_seat_my));
-                                } else if (datasnapshot.child(ButtonArray[i].getText().toString()).child("status").getValue().equals(true)) {
-
-                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_bg_seat_on));
+                                    }
                                 }
-
-
                             }
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-
-
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.w("loadUser:onCancelled", databaseError.toException());
-                        }
-                    });
+                            }
+                        });
 
 
-                }
+                    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-
-
-
-            ButtonArray[i].setOnClickListener(this);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("loadUser:onCancelled", databaseError.toException());
+                    }
+                });
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+            Toast.makeText(getApplicationContext(), "잘못된 QR코드 입니다.", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -530,8 +569,81 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
         toast.show();
     }
 
-
     public void showMsg(final Button btn) {
+        final Utill utill = new Utill();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("안내");
+        builder.setMessage("좌석을 변경하시겠습니까?");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Query query = myRef.child("reservation").child("QuietZone").child(loginId);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot datasnapshot) {
+
+                        String BeseatNum = datasnapshot.child("seatNum").getValue().toString();
+                        SeatVO seatVO = new SeatVO(null, BeseatNum, false);
+                        myRef.child("Seat").child(TAG).child(BeseatNum).setValue(seatVO);
+
+                        seatVO = new SeatVO(loginId, btn.getText().toString(), true);
+                        myRef.child("Seat").child(TAG).child(btn.getText().toString()).setValue(seatVO)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+
+                                        ReservationVO reservationVO = new ReservationVO(TAG,btn.getText().toString(),loginId,utill.getDate());
+                                        myRef.child("reservation").child(TAG).child(loginId).setValue(reservationVO);
+                                        Log.e(TAG, "좌석변경 성공");
+                                        Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
+
+
+                                    }
+                                });
+
+
+
+
+
+                    }
+
+
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("loadUser:onCancelled", databaseError.toException());
+                    }
+                });
+
+
+            }
+        });
+
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.e(TAG, "좌석변경 성공");
+                Toast.makeText(getApplicationContext(), "좌석 변경을 취소했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+
+    public void QrChange(final String newSeatNum) {
        final Utill utill = new Utill();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("안내");
@@ -548,18 +660,18 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                     @Override
                     public void onDataChange(DataSnapshot datasnapshot) {
 
-                       String BeseatNum = datasnapshot.child("seatNum").getValue().toString();
-                        SeatVO seatVO = new SeatVO(null, BeseatNum, false);
-                        myRef.child("Seat").child(TAG).child(BeseatNum).setValue(seatVO);
+                       String BefoseatNum = datasnapshot.child("seatNum").getValue().toString();
+                        SeatVO seatVO = new SeatVO(null, BefoseatNum, false);
+                        myRef.child("Seat").child(TAG).child(BefoseatNum).setValue(seatVO);
 
-                        seatVO = new SeatVO(loginId, btn.getText().toString(), true);
-                        myRef.child("Seat").child(TAG).child(btn.getText().toString()).setValue(seatVO)
+                        seatVO = new SeatVO(loginId, newSeatNum, true);
+                        myRef.child("Seat").child(TAG).child(newSeatNum).setValue(seatVO)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
 
-                                        ReservationVO reservationVO = new ReservationVO(TAG,btn.getText().toString(),loginId,utill.getDate());
+                                        ReservationVO reservationVO = new ReservationVO(TAG,newSeatNum,loginId,utill.getDate());
                                         myRef.child("reservation").child(TAG).child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석변경 성공");
                                         Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();

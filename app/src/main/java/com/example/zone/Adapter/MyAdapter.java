@@ -1,8 +1,7 @@
-package com.example.zone;
+package com.example.zone.Adapter;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zone.R;
+import com.example.zone.ReservationDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.zone.LoginActivity.loginId;
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
 
@@ -75,12 +76,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() != null) {
+            try {
+                if (snapshot.child("id").getValue() != null) {
                     MySeatNum = snapshot.child("seatNum").getValue().toString();
                 } else {
                     MySeatNum = "null";
                 }
-
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
                 Query query = myRef.child("Seat").child("QuietZone");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -93,7 +98,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
                         SeatCheck(datasnapshot,holder.L_seat3);
                         SeatCheck(datasnapshot,holder.R_seat1);
                         SeatCheck(datasnapshot,holder.R_seat2);
-                        SeatCheck(datasnapshot,holder.R_seat3);
+                      //  SeatCheck(datasnapshot,holder.R_seat3);
 
                 }
 
@@ -135,7 +140,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             holder.L_seat1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        //컨텍스트. 찾기
                     mListener.onItemClicked_1(1 + pos);
                 }
             });
@@ -189,10 +193,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         if (datasnapshot.child(btn.getText().toString()).child("seatNum").getValue().equals(MySeatNum)) {
           btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_my));
 
-        } else if (datasnapshot.child(btn.getText().toString()).child("status").getValue().equals(true)) {
+        } else  if (datasnapshot.child(btn.getText().toString()).child("status").getValue().equals(true)) {
 
-          btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_on));
-        }
+        btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_on));
+    }
     }
 
 

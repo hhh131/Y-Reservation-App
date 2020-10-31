@@ -1,8 +1,8 @@
-package com.example.zone;
+package com.example.zone.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -10,11 +10,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.zone.Room.QuietZone;
+import com.example.zone.R;
+import com.example.zone.ReservationDialog;
+import com.example.zone.Utill;
+import com.example.zone.Vo.ReservationVO;
+import com.example.zone.Vo.SeatVO;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.zone.LoginActivity.loginId;
-
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
+import static com.example.zone.JoinLogin.LoginActivity.loginStatus;
 public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClickListener {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -71,6 +77,13 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
+
+        if(loginStatus==false)
+        {
+            showToast("로그인이 필요합니다.");
+            finish();
+        }
+
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -219,13 +232,13 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
                             if (snapshot.hasChild(loginId)) {
 
-                                //showMsg(Sbutton);
+                                showMsg(SeatNumber);
                             }
                             else
                             {
                                 ReservationDialog reservationDialog = new ReservationDialog(context);
                                 // 커스텀 다이얼로그를 호출한다.
-                                reservationDialog.callFunction("QuietZone", Integer.toString(position));
+                                reservationDialog.callFunction("QuietZone", SeatNumber);
                             }
                         }
 
@@ -259,5 +272,73 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
     }
 
+    public void showMsg(final String SeatNumber) {
+        showToast("메시지");
+        final Utill utill = new Utill();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("안내");
+        builder.setMessage("좌석을 변경하시겠습니까?");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Query query = myRef.child("reservation").child("QuietZone").child(loginId);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot datasnapshot) {
+
+                        String seatNum = datasnapshot.child("seatNum").getValue().toString();
+                        SeatVO seatVO = new SeatVO(null, seatNum, false);
+
+                        myRef.child("Seat").child(TAG).child(seatNum).setValue(seatVO);
+
+                        seatVO = new SeatVO(loginId,SeatNumber, true);
+                        myRef.child("Seat").child(TAG).child(SeatNumber).setValue(seatVO)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+
+                                        ReservationVO reservationVO = new ReservationVO(TAG,SeatNumber, loginId, utill.getDate());
+                                        myRef.child("reservation").child(TAG).child(loginId).setValue(reservationVO);
+                                        Log.e(TAG, "좌석변경 성공");
+                                        Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
+
+
+                                    }
+                                });
+
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("loadUser:onCancelled", databaseError.toException());
+                    }
+                });
+
+
+            }
+        });
+
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.e(TAG, "좌석변경 취소");
+                Toast.makeText(getApplicationContext(), "좌석 변경을 취소했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
 }

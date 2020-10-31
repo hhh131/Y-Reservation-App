@@ -1,4 +1,4 @@
-package com.example.zone;
+package com.example.zone.JoinLogin;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.zone.R;
 import com.example.zone.Vo.UserVO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

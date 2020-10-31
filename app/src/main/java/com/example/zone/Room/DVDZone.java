@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static com.example.zone.LoginActivity.loginId;
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 

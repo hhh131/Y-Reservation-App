@@ -2,7 +2,7 @@ package com.example.zone;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import static com.example.zone.LoginActivity.loginId;
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,8 +16,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

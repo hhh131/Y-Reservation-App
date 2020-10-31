@@ -4,19 +4,23 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyInfoActivity"></activity>
+
+
+        <activity android:name=".QrReaderActivity"></activity>
+        <activity android:name=".MyInfoActivity" />
         <activity android:name=".webView" />
         <activity
-            android:name=".Activity_Test"
+            android:name=".Adapter.Activity_Test"
             android:parentActivityName=".List" />
         <activity
             android:name=".Room.Willow"
@@ -34,18 +38,21 @@
             android:name=".List"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".JoinLogin.LoginActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".JoinActivity"
-            android:parentActivityName=".LoginActivity" />
+            android:name=".JoinLogin.JoinActivity"
+            android:parentActivityName=".JoinLogin.LoginActivity" />
         <activity
             android:name=".Room.QuietZone"
             android:parentActivityName=".List" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+
+            />
         <activity
             android:name=".Room.DVDZone"
             android:parentActivityName=".List" />
+
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

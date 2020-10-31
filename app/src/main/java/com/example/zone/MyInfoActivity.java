@@ -3,23 +3,20 @@ package com.example.zone;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
-import com.example.zone.Room.QuietZone;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import static com.example.zone.LoginActivity.loginId;
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
 public class MyInfoActivity extends AppCompatActivity {
-    TextView myId,mySeat;
+    TextView myId,mySeat,myTime;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
@@ -29,6 +26,7 @@ public class MyInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_info);
         myId=(TextView)findViewById(R.id.myId);
         mySeat=(TextView)findViewById(R.id.mySeat);
+        myTime = (TextView)findViewById(R.id.myZone);
 
 
        final  Query query = myRef.child("User");
@@ -62,6 +60,8 @@ public class MyInfoActivity extends AppCompatActivity {
 
                 if (datasnapshot.hasChild(loginId)) {
                     String MySeatNum=datasnapshot.child(loginId).child("seatNum").getValue().toString();
+                    String ReservationTime=datasnapshot.child(loginId).child("date").getValue().toString();
+                    myTime.setText(ReservationTime);
                     mySeat.setText(MySeatNum);
 
 
