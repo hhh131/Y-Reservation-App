@@ -171,7 +171,8 @@ public class ReservationDialog {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
 */
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo))
+               //BitMap 이미지 요구
                 .setContentTitle("QuietZone "+num+"번 좌석 사용 중")
                 .setContentText("퇴실 전 반드시 좌석 반납처리 해주세요")
                 .setDefaults(Notification.FLAG_FOREGROUND_SERVICE)

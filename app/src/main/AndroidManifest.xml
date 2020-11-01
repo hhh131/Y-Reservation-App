@@ -54,7 +54,7 @@
             android:parentActivityName=".List" />
 
         <activity android:name=".SplashActivity"
-            android:label="유한대 예약">
+            android:label="유예시">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
