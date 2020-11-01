@@ -3,12 +3,57 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:background="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/seat_color" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:src="@drawable/seat_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right"
+            android:layout_margin="5dp" >
+
+            <Button
+                android:id="@+id/input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="#ffffff"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="입구"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="match_parent" />
+            <Button
+                android:id="@+id/MySeatReturnBtn"
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/seat_button"
+                android:gravity="center"
+                android:text="좌석 반납"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/QrBtn"
+                android:layout_width="82dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/seat_button"
+                android:gravity="center"
+                android:text="Qr로 예약"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:background="@android:color/white"
@@ -19,4 +64,5 @@
      />
 
 
+</LinearLayout>
 </LinearLayout>

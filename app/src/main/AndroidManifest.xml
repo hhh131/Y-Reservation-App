@@ -53,7 +53,8 @@
             android:name=".Room.DVDZone"
             android:parentActivityName=".List" />
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity"
+            android:label="유한대 예약">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

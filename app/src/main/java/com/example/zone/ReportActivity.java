@@ -57,7 +57,7 @@ public class ReportActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.e(TAG, "회원가입 성공");
+                                Log.e(TAG, "신고 완료");
                                 showToast("신고 완료");
                                 finish();
                             }

@@ -60,7 +60,7 @@ public class List extends AppCompatActivity {
         QuietZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), QuietZone.class);
+                Intent intent = new Intent(getApplicationContext(), Activity_Test.class);
                 startActivity(intent);
             }
         });
@@ -82,7 +82,7 @@ public class List extends AppCompatActivity {
         WillowLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Activity_Test.class);
+                Intent intent = new Intent(getApplicationContext(), QuietZone.class);
                 startActivity(intent);
             }
         });
@@ -104,7 +104,7 @@ public class List extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
                 int i=0;
-                    for(int j=1;j<=12;j++) {
+                    for(int j=1;j<=84;j++) {
                         if(datasnapshot.child("QuietZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
                             i++;
                         }

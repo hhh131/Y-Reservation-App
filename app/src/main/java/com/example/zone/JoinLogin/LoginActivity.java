@@ -109,6 +109,7 @@ public class LoginActivity extends Activity {
                             loginId = id;
                             intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
+                            finish();
                         } else {
                             Log.e("loginCheck : ", "비밀번호가 틀립니다.");
                             showToast("비밀번호가 틀립니다.");

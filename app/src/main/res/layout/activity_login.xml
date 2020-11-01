@@ -29,7 +29,7 @@
                 android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/yuhanlogo2"/>
+                android:src="@drawable/logo2"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,7 +94,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_weight="2">
                 <Button
                     android:id="@+id/loginbtn"

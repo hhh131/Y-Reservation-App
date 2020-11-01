@@ -1,10 +1,17 @@
 package com.example.zone.Adapter;
 
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -12,11 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zone.R;
 import com.example.zone.ReservationDialog;
+import com.example.zone.Room.QuietZone;
 import com.example.zone.Utill;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
@@ -27,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
@@ -35,13 +46,17 @@ import static com.example.zone.JoinLogin.LoginActivity.loginStatus;
 public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClickListener {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-
-    String TAG="QuietZone";
-
+    IntentResult result;
+    String ZONE="QuietZone";
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+    private Activity activity = this;
+    String SeatNum;
     private ArrayList<MainData> arrayList = new ArrayList<MainData>();
     private MyAdapter myAdapter;
     private RecyclerView recyclerView;
+    private Button QrBtn,MySeatReturnBtn,input;
     private LinearLayoutManager linearLayoutManager;
+
     private Button seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8, seat9, seat10, seat11, seat12,
                    seat13, seat14, seat15, seat16, seat17, seat18, seat19, seat20, seat21, seat22,
                    seat23, seat24, seat25, seat26, seat27, seat28, seat29, seat30, seat31, seat32,
@@ -59,7 +74,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
             seat53, seat54, seat55, seat56, seat57, seat58, seat59, seat60, seat61, seat62,
             seat63, seat64, seat65, seat66, seat67, seat68, seat69, seat70, seat71, seat72,
     seat73, seat74, seat75, seat76, seat77, seat78, seat79, seat80, seat81, seat82, seat83, seat84};
-    
+
     private String[] btnName = {"seat1", "seat2", "seat3", "seat4", "seat5", "seat6", "seat7", "seat8", "seat9", "seat10", "seat11", "seat12",
             "seat13", "seat14", "seat15", "seat16", "seat17", "seat18", "seat19", "seat20", "seat21", "seat22",
             "seat23", "seat24", "seat25", "seat26", "seat27", "seat28", "seat29", "seat30", "seat31", "seat32",
@@ -78,6 +93,23 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if(loginStatus==false)
         {
             showToast("로그인이 필요합니다.");
@@ -86,6 +118,9 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        QrBtn=(Button)findViewById(R.id.QrBtn) ;
+        input=(Button)findViewById(R.id.input) ;
+        MySeatReturnBtn=(Button)findViewById(R.id.MySeatReturnBtn);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -141,6 +176,8 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
         myAdapter.notifyDataSetChanged();
 
+
+
         /*for ( i = 0; i < btnarray.length; i++){
             btnarray[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -156,9 +193,104 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
             });
         }*/
 
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                    if (i1 > i3)
+                        input.setVisibility(View.INVISIBLE);
+
+                    if (i1 < i3)
+                        input.setVisibility(View.VISIBLE);
+
+                }
+            });
+        }
+
+
+
+
+
         myAdapter.setOnClickListener(this);
+        QrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+                intentIntegrator.setOrientationLocked(false);
+                intentIntegrator.setBeepEnabled(false);//바코드 인식시 소리
+                intentIntegrator.initiateScan();
+            }
+        });
+
+        MySeatReturnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                 Query query = myRef.child("reservation").child(ZONE).child(loginId);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                            try {
+
+                                if(datasnapshot.getValue()!=null) {
+                                    SeatNum = datasnapshot.child("seatNum").getValue().toString();
+                                }
+                                else
+                                {
+                                    showToast("반납 할 좌석이 없습니다.");
+                                }
+                            } catch (Exception e) {
+
+                            }
+
+                            Query query = myRef.child("Seat").child(ZONE).child(SeatNum);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                @Override
+                                public void onDataChange(DataSnapshot datasnapshot) {
+
+                                    try {
+                                        if (datasnapshot.child("id").getValue().equals(loginId)) {
+                                            SeatVO seatVO = new SeatVO(null, datasnapshot.child("seatNum").getValue().toString(), false);
+
+                                            myRef.child("Seat").child(ZONE).child(SeatNum).setValue(seatVO);
+                                            myRef.child("reservation").child(ZONE).child(loginId).removeValue();
+                                            showToast("좌석 반납 완료");
+
+                                            Intent intent = getIntent();
+                                            finish();
+                                            startActivity(intent);
+
+
+                                        }
+                                    } catch (Exception e) {
+                                        showToast("반납할 좌석이 없습니다.");
+                                    }
+                                }
+
+
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Log.w("loadUser:onCancelled", databaseError.toException());
+                                }
+                            });
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+            }
+        });
+
 
     }
+
 
     public void showToast(String msg) {
         Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
@@ -205,14 +337,14 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
     {
 
-        final Query query = myRef.child("Seat").child(TAG);
+        final Query query = myRef.child("Seat").child(ZONE);
         final String SeatNumber=Integer.toString(position);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(final DataSnapshot datasnapshot) {
 
-                Query query = myRef.child("reservation").child(TAG);
+                Query query = myRef.child("reservation").child(ZONE);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -273,7 +405,6 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
     }
 
     public void showMsg(final String SeatNumber) {
-        showToast("메시지");
         final Utill utill = new Utill();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("안내");
@@ -293,20 +424,20 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                         String seatNum = datasnapshot.child("seatNum").getValue().toString();
                         SeatVO seatVO = new SeatVO(null, seatNum, false);
 
-                        myRef.child("Seat").child(TAG).child(seatNum).setValue(seatVO);
+                        myRef.child("Seat").child(ZONE).child(seatNum).setValue(seatVO);
 
                         seatVO = new SeatVO(loginId,SeatNumber, true);
-                        myRef.child("Seat").child(TAG).child(SeatNumber).setValue(seatVO)
+                        myRef.child("Seat").child(ZONE).child(SeatNumber).setValue(seatVO)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
 
-                                        ReservationVO reservationVO = new ReservationVO(TAG,SeatNumber, loginId, utill.getDate());
-                                        myRef.child("reservation").child(TAG).child(loginId).setValue(reservationVO);
-                                        Log.e(TAG, "좌석변경 성공");
+                                        ReservationVO reservationVO = new ReservationVO(ZONE,SeatNumber, loginId, utill.getDate());
+                                        myRef.child("reservation").child(ZONE).child(loginId).setValue(reservationVO);
+                                        Log.e(ZONE, "좌석변경 성공");
                                         Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
-
+                                        createNotificationChannel(SeatNumber);
                                         Intent intent = getIntent();
                                         finish();
                                         startActivity(intent);
@@ -332,7 +463,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
         builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.e(TAG, "좌석변경 취소");
+                Log.e(ZONE, "좌석변경 취소");
                 Toast.makeText(getApplicationContext(), "좌석 변경을 취소했습니다.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -340,5 +471,139 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
+            } else if (Integer.parseInt(result.getContents()) <= 84) {
+
+                final String SeatNumber = result.getContents();
+                final Query query = myRef.child("Seat").child(ZONE);
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(final DataSnapshot datasnapshot) {
+
+                        Query query = myRef.child("reservation").child(ZONE);
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                if (datasnapshot.child(SeatNumber).child("status").getValue().equals(true)) {
+
+                                    showToast("이미 사용중인 좌석입니다.");
+
+                                } else if (datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
+
+                                    if (snapshot.hasChild(loginId)) {
+
+                                        showMsg(SeatNumber);
+                                    } else {
+
+                                      /*  SeatVO seatVO = new SeatVO(loginId, SeatNumber, true);
+                                        myRef.child("Seat").child(ZONE).child(SeatNumber).setValue(seatVO)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+
+                                                        ReservationVO reservationVO = new ReservationVO(ZONE, SeatNumber, loginId, utill.getDate());
+
+                                                        myRef.child("reservation").child(ZONE).child(loginId).setValue(reservationVO);
+                                                        Log.e(ZONE, "좌석예약 성공");
+                                                        Toast.makeText(getApplicationContext(), "예약 완료", Toast.LENGTH_SHORT).show();
+                                                        // btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getApplicationContext(), "예약 실패", Toast.LENGTH_SHORT).show();
+                                                        Log.e(ZONE, "좌석예약 실패");
+
+
+                                                    }
+                                                });*/
+
+                                        ReservationDialog reservationDialog = new ReservationDialog(Activity_Test.this);
+                                        //커스텀 다이얼로그를 호출한다.
+                                        reservationDialog.callFunction("QuietZone", result.getContents());
+
+                                        //Toast.makeText(getApplicationContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("loadUser:onCancelled", databaseError.toException());
+                    }
+                });
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+            Toast.makeText(getApplicationContext(), "잘못된 QR코드 입니다.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void createNotificationChannel(String num) {
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+  /*      Intent notificationIntent = new Intent(this, QuietZone.class);
+        notificationIntent.putExtra("notificationId", count); //전달할 값
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+*/
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo)) //BitMap 이미지 요구
+                .setContentTitle("QuietZone "+num+"번 좌석 사용 중")
+                .setContentText("퇴실 전 반드시 좌석 반납처리 해주세요")
+                .setDefaults(Notification.FLAG_FOREGROUND_SERVICE)
+                // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
+                //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                //.setContentIntent(pendingIntent) // 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
+                .setAutoCancel(true);
+
+        //OREO API 26 이상에서는 채널 필요
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            CharSequence channelName  = "노티페케이션 채널";
+            String description = "오레오 이상을 위한 것임";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance);
+            channel.setDescription(description);
+
+            // 노티피케이션 채널을 시스템에 등록
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+
+        }else builder.setSmallIcon(R.mipmap.ic_main); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
+
+        assert notificationManager != null;
+        notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
+    }
+
 
 }

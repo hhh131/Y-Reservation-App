@@ -93,12 +93,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
                     @Override
                     public void onDataChange(DataSnapshot datasnapshot) {
 
-                        SeatCheck(datasnapshot,holder.L_seat1);
+                       SeatCheck(datasnapshot,holder.L_seat1);
                         SeatCheck(datasnapshot,holder.L_seat2);
                         SeatCheck(datasnapshot,holder.L_seat3);
                         SeatCheck(datasnapshot,holder.R_seat1);
                         SeatCheck(datasnapshot,holder.R_seat2);
-                      //  SeatCheck(datasnapshot,holder.R_seat3);
+                        SeatCheck(datasnapshot,holder.R_seat3);
 
                 }
 
@@ -197,6 +197,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
         btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_on));
     }
+
     }
 
 
@@ -233,4 +234,5 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             this.R_seat3 = (Button) itemView.findViewById(R.id.R_seat3);
         }
     }
+
 }

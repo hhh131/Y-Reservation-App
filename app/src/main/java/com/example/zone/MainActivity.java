@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     Boolean BlackCheck = false;
     ImageView img;
     String reverInfo, SeatNum;
+    private long lastTimeBackPressed;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,13 +196,17 @@ public class MainActivity extends AppCompatActivity {
             double latitude = gpsTracker.getLatitude();
             double longitude = gpsTracker.getLongitude();
 
-            if(latitude>(37.476116))
+            if(latitude>(37.487712)||latitude<(37.486998))
             {
                 Toast.makeText(MainActivity.this, "벗어난 위도 " + latitude + "\n벗어난 경도 " + longitude, Toast.LENGTH_LONG).show();
             }
+            else
+            {
+                Toast.makeText(MainActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
+            }
 
 
-            Toast.makeText(MainActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
+
 
 
 
@@ -269,7 +275,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // 뒤로가기 방지
+        //2초 이내에 뒤로가기 버튼을 재 클릭 시 앱 종료
+        if (System.currentTimeMillis() - lastTimeBackPressed< 2000)
+        {
+            finish();
+            return;
+        }
+        //'뒤로' 버튼 한번 클릭 시 메시지
+        Toast.makeText(this, "'뒤로' 버튼을 한번 더 누르시면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show();
+        //lastTimeBackPressed에 '뒤로'버튼이 눌린 시간을 기록
+        lastTimeBackPressed = System.currentTimeMillis();
+
+
+
     }
 
 
