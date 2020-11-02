@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    tools:context=".WarnigActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/waringlogo" />
+        <TextView
+            android:id="@+id/waring"
+            android:layout_width="76dp"
+            android:layout_height="53dp"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/gmarketfont"
+            android:gravity="center_vertical"
+            android:text="경고!"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+    <TextView
+        android:id="@+id/waringMsg"
+        android:layout_width="374dp"
+        android:layout_height="492dp"
+        android:layout_gravity="center"
+        android:background="@drawable/warnig_msg"
+        android:fontFamily="@font/tmoneyfont"
+        android:text="관리자 경고 메시지"
+        android:textSize="15dp" />
+</LinearLayout>

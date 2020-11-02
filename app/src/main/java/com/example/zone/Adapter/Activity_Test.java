@@ -92,7 +92,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_view);
-
+        setTitle("QuietZone");
 
 
 

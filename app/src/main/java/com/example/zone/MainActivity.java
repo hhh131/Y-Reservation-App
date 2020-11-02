@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         zone = (Button) findViewById(R.id.mainReadingRoomSelectButton);
         loginTv = (TextView) findViewById(R.id.loginText);
 
-        img = (ImageView) findViewById(R.id.imageView1);
+       // img = (ImageView) findViewById(R.id.imageView1);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
@@ -88,15 +88,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 */
-
-
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/hhh131/Zone"));
-                startActivity(intent);
-            }
-        });
 
 
 
@@ -192,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            gpsTracker = new GpsTracker(MainActivity.this);
+        /*    gpsTracker = new GpsTracker(MainActivity.this);
             double latitude = gpsTracker.getLatitude();
             double longitude = gpsTracker.getLongitude();
 
@@ -205,22 +196,22 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
             }
 
+*/
 
 
 
 
 
 
-
-          /*  if(loginStatus==true) {
-                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
+            if(loginStatus==true) {
+                Intent intent = new Intent(getApplicationContext(), WarnigActivity.class);
                 startActivity(intent);
             }
                 else
             {
                 showToast("로그인 해 주세요");
             }
-*/
+
 
 
                 //LogcatLogger.d(TAG, "* * * * Camera");

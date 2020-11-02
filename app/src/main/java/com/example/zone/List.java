@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
-    LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay,PCZoneLay,WillowLay;
+    LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay,PCZoneLay;
     TextView quietTv,dvdZoneTv,PcZoneTv;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -37,11 +37,9 @@ public class List extends AppCompatActivity {
         setTitle("목록");
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
-        WillowLay = (LinearLayout)findViewById(R.id.WillowLay);
         PCZoneLay = (LinearLayout)findViewById(R.id.PCZoneLay);
         quietTv = (TextView)findViewById(R.id.tvstatus);
-        DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
-        dvdZoneTv = (TextView)findViewById(R.id.DvdZoneTv);
+
         PcZoneTv = (TextView)findViewById(R.id.PcZoneTv);
 
 
@@ -72,28 +70,16 @@ public class List extends AppCompatActivity {
             }
         });
 
-        DvdZoneLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MyInfoActivity.class);
-                startActivity(intent);
-            }
-        });
-        WillowLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), QuietZone.class);
-                startActivity(intent);
-            }
-        });
+
+
         PCZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-
-                Intent intent = new Intent(getApplicationContext(), QrReaderActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
                 startActivity(intent);
+
+
             }
         });
 
@@ -110,15 +96,7 @@ public class List extends AppCompatActivity {
                         }
                     }
                 quietTv.setText(Integer.toString(i));
-                i=0;
 
-               for(int j=1;j<=3;j++) {
-
-                    if(datasnapshot.child("DvdZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
-                        i++;
-                    }
-                }
-                dvdZoneTv.setText(Integer.toString(i));
 
                 i=0;
 
