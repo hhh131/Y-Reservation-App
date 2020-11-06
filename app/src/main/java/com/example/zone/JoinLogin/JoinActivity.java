@@ -79,7 +79,7 @@ public class JoinActivity extends Activity {
                 }
                 else
                 {
-                    UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0);
+                    UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0,null);
                     myRef.child("User").child(id.getText().toString()).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

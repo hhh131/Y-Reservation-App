@@ -21,7 +21,22 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <service
+            android:name=".FirebaseInstanceIDService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+
+
         <activity android:name=".WarnigActivity"></activity>
+
+
 
         <activity android:name=".MyInfoActivity" />
         <activity android:name=".webView" />
@@ -38,7 +53,7 @@
             android:name=".ReportActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Room.seminar"
+            android:name=".Room.SeminarZone"
             android:parentActivityName=".List" />
         <activity
             android:name=".List"

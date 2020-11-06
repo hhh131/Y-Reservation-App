@@ -11,8 +11,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.zone.JoinLogin.JoinActivity;
 import com.example.zone.MainActivity;
 import com.example.zone.R;
+import com.example.zone.Vo.UserVO;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends Activity {
     private FirebaseAuth mAuth;
@@ -27,7 +36,7 @@ public class LoginActivity extends Activity {
     EditText id,pwd;
     Button loginbtn,joinbtn;
     Intent intent;
-
+    String token;
     public static Boolean loginStatus = false;
     public static String loginId = "";
 
@@ -63,7 +72,7 @@ public class LoginActivity extends Activity {
                     toast.show();
                 } else {
 
-                loginCheck(id.getText().toString(),pwd.getText().toString());
+                    loginCheck(id.getText().toString(),pwd.getText().toString());
 
 
                   /*  mAuth.signInWithEmailAndPassword(id.getText().toString(), pwd.getText().toString())
@@ -94,45 +103,99 @@ public class LoginActivity extends Activity {
         });
 
     }
-        public void loginCheck(final String id, final String pwd) {
-            final Query query = myRef.child("User");
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void loginCheck(final String id, final String pwd) {
 
-                @Override
-                public void onDataChange(DataSnapshot datasnapshot) {
 
-                    if (datasnapshot.hasChild(id)) {
-                        if (datasnapshot.child(id).child("pwd").getValue().equals(pwd)) {
-                            showToast("로그인 되었습니다.");
-                            Log.e("loginCheck : ", id + "로그인되었습니다.");
-                            loginStatus = true;
-                            loginId = id;
-                            intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Log.e("loginCheck : ", "비밀번호가 틀립니다.");
-                            showToast("비밀번호가 틀립니다.");
-                        }
+
+
+        final Query query = myRef.child("User");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot datasnapshot) {
+
+                if (datasnapshot.hasChild(id)) {
+                    if (datasnapshot.child(id).child("pwd").getValue().equals(pwd)) {
+                        final String report=(datasnapshot.child(id).child("report").getValue().toString());
+                        // showToast(report);
+                        showToast("로그인 되었습니다.");
+                        Log.e("loginCheck : ", id + "로그인되었습니다.");
+                        loginStatus = true;
+                        loginId = id;
+
+                        FirebaseMessaging.getInstance().getToken()
+                                .addOnCompleteListener(new OnCompleteListener<String>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<String> task) {
+                                        if (!task.isSuccessful()) {
+                                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                                            return;
+                                        }
+
+                                        // Get new FCM registration token
+                                        token = task.getResult();
+
+                                        // Log and toast
+                                        //String msg = getString(R.string.msg_token_fmt, token);
+                                        //Log.d(TAG, msg);
+                                        // Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+
+
+                                        UserVO userVO = new UserVO(id,pwd,Integer.parseInt(report),token);
+                                        myRef.child("User").child(id).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.e(TAG,"토큰 성공");
+                                                        //showToast("회원가입 성공");
+                                                        //finish();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e(TAG,"토큰 실패");
+                                                        //showToast("회원가입 실패");
+
+                                                    }
+                                                });
+                                    }
+                                });
+
+
+
+
+
+
+
+                        intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
                     } else {
-                        Log.e("loginCheck : ", "해당 아이디가 존재하지 않습니다.");
-                        showToast("해당아이디가 존재하지 않습니다.");
+                        Log.e("loginCheck : ", "비밀번호가 틀립니다.");
+                        showToast("비밀번호가 틀립니다.");
                     }
+                } else {
+                    Log.e("loginCheck : ", "해당 아이디가 존재하지 않습니다.");
+                    showToast("해당아이디가 존재하지 않습니다.");
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("loadUser:onCancelled", databaseError.toException());
-                }
-            });
-        }
-            public void showToast(String msg)
-            {
-                Toast toast = Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
-                toast.show();
             }
-
-
-
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.w("loadUser:onCancelled", databaseError.toException());
+            }
+        });
     }
+    public void showToast(String msg)
+    {
+        Toast toast = Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+
+
+
+
+
+}
 
