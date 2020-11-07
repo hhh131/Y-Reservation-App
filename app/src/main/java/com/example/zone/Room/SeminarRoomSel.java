@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zone.R;
 
-public class SeminarZone extends AppCompatActivity implements View.OnClickListener{
+public class SeminarRoomSel extends AppCompatActivity implements View.OnClickListener{
     Button Sbutton;
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9;
     int buttons[] = {R.id.seminar1, R.id.seminar2, R.id.seminar3, R.id.seminar4, R.id.seminar5, R.id.seminar6,
@@ -36,7 +36,7 @@ public class SeminarZone extends AppCompatActivity implements View.OnClickListen
 
         String SeminarRoom=Sbutton.getText().toString();
 
-        Intent intent=new Intent(SeminarZone.this,seminarDay.class);
+        Intent intent=new Intent(SeminarRoomSel.this, seminarDay.class);
         intent.putExtra("RoomNum",SeminarRoom);
         startActivity(intent);
 

@@ -27,7 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class JoinActivity extends Activity {
     private static final String TAG = "Join";
@@ -39,7 +39,7 @@ public class JoinActivity extends Activity {
     DatabaseReference myRef = database.getReference();
 
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //FirebaseFirestore db = FirebaseFirestore.getInstance();
     String sId,sPwd,sName;
 
     @Override

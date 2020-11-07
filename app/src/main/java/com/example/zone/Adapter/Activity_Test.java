@@ -23,6 +23,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.zone.GpsTracker;
 import com.example.zone.R;
 import com.example.zone.ReservationDialog;
 import com.example.zone.Room.QuietZone;
@@ -47,6 +48,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     IntentResult result;
+
     String ZONE="QuietZone";
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private Activity activity = this;
@@ -56,7 +58,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
     private RecyclerView recyclerView;
     private Button QrBtn,MySeatReturnBtn,input;
     private LinearLayoutManager linearLayoutManager;
-
+    NotificationManager notificationManager;
     private Button seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8, seat9, seat10, seat11, seat12,
                    seat13, seat14, seat15, seat16, seat17, seat18, seat19, seat20, seat21, seat22,
                    seat23, seat24, seat25, seat26, seat27, seat28, seat29, seat30, seat31, seat32,
@@ -259,10 +261,9 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                                             myRef.child("Seat").child(ZONE).child(SeatNum).setValue(seatVO);
                                             myRef.child("reservation").child(ZONE).child(loginId).removeValue();
                                             showToast("좌석 반납 완료");
+                                            cancleNotifi();
+                                            myAdapter.notifyDataSetChanged();
 
-                                            Intent intent = getIntent();
-                                            finish();
-                                            startActivity(intent);
 
 
                                         }
@@ -337,6 +338,18 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
     {
 
+        /*GpsTracker gpsTracker = new GpsTracker(Activity_Test.this);
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
+
+        if(latitude>(37.487712)||latitude<(37.486998))
+        {
+            Toast.makeText(Activity_Test.this, "학교 내에서만 예약이 가능합니다." + latitude + "\n벗어난 경도 " + longitude, Toast.LENGTH_LONG).show();
+        }
+        else {
+        }*/
+           // Toast.makeText(Activity_Test.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
+
         final Query query = myRef.child("Seat").child(ZONE);
         final String SeatNumber=Integer.toString(position);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -349,39 +362,28 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        if(datasnapshot.child(SeatNumber).child("status").getValue().equals(true))
-                        {
+                        if (datasnapshot.child(SeatNumber).child("status").getValue().equals(true)) {
                            /* if(snapshot.child(loginId).child("seatNum").getValue().equals(SeatNumber))
                             {
                                 showToast("좌석반납");
                             }
                             else
                             {*/
-                                showToast("이미 사용중인 좌석입니다.");
+                            showToast("이미 사용중인 좌석입니다.");
 
-                        }
-                        else if(datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
+                        } else if (datasnapshot.child(SeatNumber).child("status").getValue().equals(false)) {
 
                             if (snapshot.hasChild(loginId)) {
 
                                 showMsg(SeatNumber);
-                            }
-                            else
-                            {
+                            } else {
                                 ReservationDialog reservationDialog = new ReservationDialog(context);
                                 // 커스텀 다이얼로그를 호출한다.
                                 reservationDialog.callFunction("QuietZone", SeatNumber);
                             }
                         }
 
-                                //선택된 좌석 선택시 오류
-
-
-
-
-
-
-
+                        //선택된 좌석 선택시 오류
 
 
                     }
@@ -438,9 +440,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                                         Log.e(ZONE, "좌석변경 성공");
                                         Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
                                         createNotificationChannel(SeatNumber);
-                                        Intent intent = getIntent();
-                                        finish();
-                                        startActivity(intent);
+                                        myAdapter.notifyDataSetChanged();
 
 
                                     }
@@ -562,11 +562,15 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
             Toast.makeText(getApplicationContext(), "잘못된 QR코드 입니다.", Toast.LENGTH_SHORT).show();
         }
     }
-
+    private void cancleNotifi()
+    {
+        notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
 
     private void createNotificationChannel(String num) {
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
   /*      Intent notificationIntent = new Intent(this, QuietZone.class);
         notificationIntent.putExtra("notificationId", count); //전달할 값
@@ -582,8 +586,8 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                 //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 //.setContentIntent(pendingIntent) // 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
-                .setAutoCancel(true);
-
+                .setAutoCancel(true)
+                 .setOngoing(true);
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 

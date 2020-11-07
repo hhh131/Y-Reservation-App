@@ -1,17 +1,19 @@
 package com.example.zone.Room;
 
-public class ListData {
-    private String subject;
+import android.widget.TextView;
 
-    public ListData(String subject) {
+public class ListData {
+    private TextView subject;
+
+    public ListData(TextView subject){
         this.subject = subject;
     }
 
-    public String getSubject() {
+    public TextView getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(TextView subject) {
         this.subject = subject;
     }
 }

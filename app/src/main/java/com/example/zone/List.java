@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.zone.Adapter.Activity_Test;
-import com.example.zone.Room.SeminarZone;
+import com.example.zone.Room.SeminarRoomSel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,7 +64,7 @@ public class List extends AppCompatActivity {
         SeminarLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SeminarZone.class);
+                Intent intent = new Intent(getApplicationContext(), SeminarRoomSel.class);
                 startActivity(intent);
             }
         });

@@ -1,0 +1,20 @@
+package com.example.zone;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+
+import androidx.annotation.Nullable;
+
+public class NotifiService extends Service {
+    public NotifiService() {
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+
+}

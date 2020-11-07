@@ -31,14 +31,14 @@ public class FirebaseInstanceIDService extends FirebaseMessagingService {
             Log.d("FCM Log", "알림 메시지: " + remoteMessage.getNotification().getBody());
             String messageBody = remoteMessage.getNotification().getBody();
             String messageTitle = remoteMessage.getNotification().getTitle();
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, WarnigActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
             String channelId = "Channel ID";
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, channelId)
-                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setSmallIcon(R.mipmap.ic_main)
                             .setContentTitle(messageTitle)
                             .setContentText(messageBody)
                             .setAutoCancel(true)

@@ -39,13 +39,15 @@ public class LoginActivity extends Activity {
     String token;
     public static Boolean loginStatus = false;
     public static String loginId = "";
-
+    String loginInfo;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         loginbtn = (Button) findViewById(R.id.loginbtn);
         joinbtn = (Button) findViewById(R.id.joinbtn);
@@ -116,12 +118,13 @@ public class LoginActivity extends Activity {
 
                 if (datasnapshot.hasChild(id)) {
                     if (datasnapshot.child(id).child("pwd").getValue().equals(pwd)) {
-                        final String report=(datasnapshot.child(id).child("report").getValue().toString());
+                        final int report=Integer.parseInt(datasnapshot.child(id).child("report").getValue().toString());
                         // showToast(report);
                         showToast("로그인 되었습니다.");
                         Log.e("loginCheck : ", id + "로그인되었습니다.");
                         loginStatus = true;
                         loginId = id;
+
 
                         FirebaseMessaging.getInstance().getToken()
                                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -142,7 +145,7 @@ public class LoginActivity extends Activity {
 
 
 
-                                        UserVO userVO = new UserVO(id,pwd,Integer.parseInt(report),token);
+                                        UserVO userVO = new UserVO(id,pwd,report,token);
                                         myRef.child("User").child(id).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
@@ -166,11 +169,13 @@ public class LoginActivity extends Activity {
 
 
 
+                          finish();
+                            intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
 
 
 
-                        intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
+
                     } else {
                         Log.e("loginCheck : ", "비밀번호가 틀립니다.");
                         showToast("비밀번호가 틀립니다.");

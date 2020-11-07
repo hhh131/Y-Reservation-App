@@ -36,7 +36,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-database:19.5.1'
-    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+
     implementation 'com.google.firebase:firebase-functions:16.1.3'
     implementation 'com.google.firebase:firebase-storage:16.0.4'
     //noinspection GradleCompatible
@@ -46,7 +46,7 @@ dependencies {
 
     implementation 'com.android.support.constraint:constraint-layout:2.0.1'
 
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

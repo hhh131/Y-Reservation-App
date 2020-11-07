@@ -178,12 +178,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         }
 
     }
-    public void CreateDig(int position)
-    {
-        ReservationDialog reservationDialog = new ReservationDialog(context);
-        // 커스텀 다이얼로그를 호출한다.
-        reservationDialog.callFunction("QuietZone", Integer.toString(position));
-    }
 
 
 

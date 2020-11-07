@@ -19,16 +19,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.example.zone.Adapter.MyAdapter;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class ReservationDialog {
     //좌석 효율적 관리를 위해,,
@@ -40,6 +44,8 @@ public class ReservationDialog {
     FirebaseDatabase database;
     DatabaseReference myRef;
     Utill utill;
+    Boolean status;
+    MyAdapter myAdapter;
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     public ReservationDialog(Context context) {
         this.context = context;
@@ -111,32 +117,65 @@ public class ReservationDialog {
         if (AgreeCB.isChecked() == true) {
 
 
-            SeatVO seatVO = new SeatVO(loginId, seatNum, true);
-            myRef.child("Seat").child(Zone).child(seatNum).setValue(seatVO)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
 
-                            ReservationVO reservationVO = new ReservationVO(Zone, seatNum, loginId, utill.getDate());
+            final Query query = myRef.child("Seat").child(Zone).child(seatNum);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                            myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
-                            Log.e(TAG, "좌석예약 성공");
-                            Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-                            createNotificationChannel(seatNum);
-                             //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
-                            //createNotificationChannel(Integer.toString(position));
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    status =Boolean.parseBoolean(snapshot.child("status").getValue().toString());
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
-                            Log.e(TAG, "좌석예약 실패");
+                    if (status.equals(false)) {
+                        SeatVO seatVO = new SeatVO(loginId, seatNum, true);
+                        myRef.child("Seat").child(Zone).child(seatNum).setValue(seatVO)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        ReservationVO reservationVO = new ReservationVO(Zone, seatNum, loginId, utill.getDate());
+
+                                        myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
+                                        Log.e(TAG, "좌석예약 성공");
+                                        Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
+                                        createNotificationChannel(seatNum);
+                                       // small.notifyDataSetChanged();
+                                        //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+                                        //createNotificationChannel(Integer.toString(position));
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                                        Log.e(TAG, "좌석예약 실패");
 
 
-                        }
-                    });
+                                    }
+                                });
+
+
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
+
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+
+                }
+            });
+
 
 
         }
@@ -180,8 +219,8 @@ public class ReservationDialog {
                 //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 //.setContentIntent(pendingIntent) // 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
-                .setAutoCancel(true);
-
+                .setAutoCancel(true)
+                .setOngoing(true);
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
