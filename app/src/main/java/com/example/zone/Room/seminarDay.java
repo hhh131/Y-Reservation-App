@@ -532,6 +532,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         recyclertime.setVisibility(View.VISIBLE);
         recycleruntil.setVisibility(View.GONE);
         dayString= textView.getText().toString();
+
        // Toast.makeText(getApplicationContext(), position + dayString, Toast.LENGTH_SHORT).show();
         //textView.setBackgroundColor(Color.rgb(255,0,0));
 
@@ -550,6 +551,10 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     @Override
     public void onSmallItemClicked(int position, final TextView textView) {
          timeString= textView.getText().toString();
+        textView.setBackgroundColor(Color.RED);
+
+
+
         //Toast.makeText(getApplicationContext(), timeString, Toast.LENGTH_SHORT).show();
 
        // smalladapter.notifyDataSetChanged();

@@ -2,11 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="false">
+
+
         <shape android:shape="rectangle">
-            <corners android:radius="5dp"/>
+            <corners android:radius="4dp"/>
 
             <stroke
-                android:width="3dp"
+                android:width="2dp"
                 android:color="@android:color/black" />
 
             <solid android:color="#ffffff" />
@@ -18,6 +20,9 @@
                 android:top="8dp" />
 
         </shape>
+
+
+
     </item>
 
     <item android:state_pressed="true">
