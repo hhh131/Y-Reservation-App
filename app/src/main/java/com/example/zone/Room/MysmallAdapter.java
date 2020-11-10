@@ -2,16 +2,15 @@ package com.example.zone.Room;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.zone.Adapter.MyAdapter;
 import com.example.zone.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,9 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 import static com.example.zone.Room.seminarDay.RoomNum;
 import static com.example.zone.Room.seminarDay.dayString;
-import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
 public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomViewHolder> {
     private ArrayList<ListData> smalldata;
@@ -48,7 +47,7 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
 
 
     public interface MysmallViewClickListener {
-        void onSmallItemClicked(int position, TextView textView);
+        void onSmallItemClicked(int position, TextView textView, int alpha);
     }
 
     private MysmallViewClickListener sListener;
@@ -83,17 +82,22 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 try {
+                        dayString = dayString.substring(0,5);
+                        String TimeString=holder.subject.getText().toString().substring(0,2);
 
-
-                    if(datasnapshot.child(dayString).child(holder.subject.getText().toString()).child("status").getValue().equals(true))
+                    if(datasnapshot.child("2020").child(dayString).hasChild(TimeString))
                     {
-                        if(datasnapshot.child(dayString).child(holder.subject.getText().toString()).child("id").getValue().toString().equals(loginId)) {
-                            holder.subject.setBackgroundColor(Color.GREEN);
+                        if(datasnapshot.child("2020").child(dayString).child(TimeString).child("id").getValue().toString().equals(loginId)) {
+                            holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_reser));
+                            holder.alpha = 1;
                         }
                         else
                         {
-                            holder.subject.setBackgroundColor(Color.RED);
+                            holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_list));
+                            holder.alpha = 0;
                         }
+                    }else{
+                        holder.alpha = 0;
                     }
 
                 }catch (Exception e)
@@ -127,7 +131,7 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
             holder.subject.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    sListener.onSmallItemClicked(pos,holder.subject);
+                    sListener.onSmallItemClicked(pos,holder.subject, holder.alpha);
                 }
             });
         }
@@ -142,11 +146,13 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView subject;
+        protected int alpha;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.subject = (TextView) itemView.findViewById(R.id.btnday);
+            alpha = 0;
 
         }
     }

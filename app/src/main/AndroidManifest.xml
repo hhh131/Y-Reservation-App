@@ -60,9 +60,6 @@
             android:parentActivityName=".List" />
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".Room.DVDZone"
-            android:parentActivityName=".List" />
-        <activity
             android:name=".SplashActivity"
             android:label="유예시">
             <intent-filter>

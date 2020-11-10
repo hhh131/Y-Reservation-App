@@ -1,5 +1,6 @@
 package com.example.zone.Room;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,11 +13,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zone.R;
-import com.example.zone.Vo.SeminarVO;
+import com.example.zone.SeminarReservationDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,29 +51,33 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     private TextView dayinfo1, dayinfo2, dayinfo3, dayinfo4, dayinfo5;
     private TextView timeinfo1, timeinfo2, timeinfo3, timeinfo4, timeinfo5, timeinfo6, timeinfo7, timeinfo8, timeinfo9, timeinfo10, timeinfo11, timeinfo12, timeinfo13;
     private TextView untilinfo1, untilinfo2, untilinfo3;
+    private TextView checkdayinfo, checktimeinfo, checktimeRinfo, checkuntilinfo;
     private TextView[] arraydayinfo = {dayinfo1, dayinfo2, dayinfo3, dayinfo4, dayinfo5};
     private TextView[] arraytimeinfo = {timeinfo1, timeinfo2, timeinfo3, timeinfo4, timeinfo5, timeinfo6, timeinfo7, timeinfo8, timeinfo9, timeinfo10, timeinfo11, timeinfo12, timeinfo13};
     private TextView[] arrayuntilinfo = {untilinfo1, untilinfo2, untilinfo3};
     private Button btncheckin,btnCancel;
     private TextView status;
-    private String[] hour = {"09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"};
+    TextView tempview;
+    private String[] hour = {"09:00 \n~ 10:00", "10:00\n~ 11:00", "11:00\n~ 12:00", "12:00\n~ 13:00", "13:00\n~ 14:00", "14:00\n~ 15:00",
+                    "15:00\n~ 16:00", "16:00\n~ 17:00", "17:00\n~ 18:00", "18:00\n~ 19:00", "19:00\n~ 20:00", "20:00\n~ 21:00", "21:00\n~ 22:00"};
     private String[] dbhour = new String[13];
     private String selday = "";
     private String seltime = "";
     private String seluntil = "";
     private String Zone = "Seminar";
 
-    private int checkday = 0, checktime = 0, checkuntil = 0, checktotal = 0;
+    private int checkday = 0, checktime = 0, checkuntil = 0, checktotal = 0, checktimeR = 0, checkuntilk = 0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     TextView tb;
     public static String RoomNum;
+    String YearString ="2020";
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
     SimpleDateFormat sdfweek = new SimpleDateFormat("EE", Locale.KOREAN);
     SimpleDateFormat sdftime = new SimpleDateFormat("HH");
-
+    Activity activity = this;
     Calendar cal = Calendar.getInstance();
-
+    IntentResult result;
     String time = sdftime.format(cal.getTime());        //현재시간
 
     String[] day = new String[5];
@@ -109,6 +117,8 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         recycleruntil.setVisibility(View.GONE);
         context = this;
 
+        tempview = new TextView(context);
+
         dayinfo1 = new TextView(context);
         dayinfo2 = new TextView(context);
         dayinfo3 = new TextView(context);
@@ -132,9 +142,9 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         untilinfo2 = new TextView(context);
         untilinfo3 = new TextView(context);
 
-        if (cal.get(Calendar.DAY_OF_WEEK) < 1) {  //일요일인지 확인
+        if (cal.get(Calendar.DAY_OF_WEEK) == 1) {  //일요일인지 확인
             cal.add(Calendar.DATE, 1);      //일요일이면 다음날로
-        } else if (cal.get(Calendar.DAY_OF_WEEK) < 2) {    //토요일인지 확인
+        } else if (cal.get(Calendar.DAY_OF_WEEK) == 7) {    //토요일인지 확인
             cal.add(Calendar.DATE, 1);              //토요일이면 다다음날로
             cal.add(Calendar.DATE, 1);
         }
@@ -147,7 +157,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
             int j = cal.get(Calendar.DAY_OF_WEEK);
 
-            if (j > 2) {    //주말이 아닐때만 배열에 입력
+            if (j != 1 && j != 7) {    //주말이 아닐때만 배열에 입력
                 day[i] = sdf.format(cal.getTime());
                 week[i] = sdfweek.format(cal.getTime());
             } else {          //주말이면 배열에 널값을 방지하기 위해 i값 감소
@@ -223,6 +233,10 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         //dayinfo1.setBackgroundColor(Color.RED);
         dayString = dayinfo1.getText().toString();
         timeString = timeinfo1.getText().toString();
+
+
+        checkdayinfo = dayinfo1;
+        dayinfo1.setBackgroundColor(Color.RED);
 
 
 //        for (int i = 0; i < 5; i++){
@@ -369,80 +383,25 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         btncheckin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-
-
-                        if (datasnapshot.child(dayString).hasChild(timeString)) {
-
-                            Toast.makeText(getApplicationContext(), "이미 예약중입니다.", Toast.LENGTH_SHORT).show();
-
-                        } else {
-
-                                SeminarVO seminarVO = new SeminarVO(loginId, true, false);
-                                myRef.child("Seat").child(Zone).child(RoomNum).child(dayString).child(timeString).setValue(seminarVO)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.e(Zone, "예약 성공");
-                                                Toast.makeText(getApplicationContext(),"예약 성공",Toast.LENGTH_SHORT).show();
-                                                // finish();
-                                                smalladapter.notifyDataSetChanged();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.e(Zone, "예약 실패");
-                                                //howToast("회원가입 실패");
-
-                                            }
-                                        });
-
-
-                        }
-                    }
+                SeminarReservationDialog reservationDialog = new SeminarReservationDialog(seminarDay.this);
+                //커스텀 다이얼로그를 호출한다.
+                reservationDialog.callFunction("Seminar", RoomNum,dayString,timeString,checkuntilk,checktime);
 
 
 
 
 
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
 
             }
         });
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-             /*   final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        //Toast.makeText(getApplicationContext(),snapshot.child(selday).child(seltime).getValue().toString(),Toast.LENGTH_SHORT).show();
-
-                       if(snapshot.child(dayString).child(timeString).child("status").getValue().equals(true))
-                        {
-                            Toast.makeText(getApplicationContext(),"예약되어있음",Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });*/
+                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+                intentIntegrator.setOrientationLocked(false);
+                intentIntegrator.setBeepEnabled(false);//바코드 인식시 소리
+                intentIntegrator.initiateScan();
             }
         });
 
@@ -528,7 +487,18 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     public void onMiddleItemClicked(int position,TextView textView) {
         smalladapter.notifyDataSetChanged();
         middleadapter.notifyDataSetChanged();
-        textView.setBackgroundColor(Color.RED);
+
+        if (checkday == 0){
+            checkday = 1;
+            checkdayinfo = textView;
+            checkdayinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+        }else if (checkdayinfo.getText() != textView.getText()){
+            checkdayinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
+            checkdayinfo = textView;
+            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+        }
+
+        //textView.setBackgroundColor(Color.RED);
         recyclertime.setVisibility(View.VISIBLE);
         recycleruntil.setVisibility(View.GONE);
         dayString= textView.getText().toString();
@@ -549,10 +519,25 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     }
 
     @Override
-    public void onSmallItemClicked(int position, final TextView textView) {
-         timeString= textView.getText().toString();
-        textView.setBackgroundColor(Color.RED);
+    public void onSmallItemClicked(final int position, TextView textView, int alpha) {
+        timeString= textView.getText().toString();
+        timeString=timeString.substring(0,2);
 
+        tempview.setBackground(ContextCompat.getDrawable(tempview.getContext(), R.drawable.round_textview_reser));
+
+        if (checktime == 0){
+            checktime = 1;
+            checktimeinfo = textView;
+            checktimeinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+        } else if (alpha == 1){
+            checktimeinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_reser));
+            checktimeinfo = textView;
+            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+        } else if(alpha == 0){
+            checktimeinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
+            checktimeinfo = textView;
+            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+        }
 
 
         //Toast.makeText(getApplicationContext(), timeString, Toast.LENGTH_SHORT).show();
@@ -577,6 +562,24 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                     }
                 }
                 else {
+                 /*   if (position == 13){
+                        untildata.clear();
+                        untildata.add(new ListData(untilinfo1));
+                    }else if(position == 12){
+                        untildata.clear();
+                        untildata.add(new ListData(untilinfo1));
+                        untildata.add(new ListData(untilinfo2));
+                    }else {
+                        untildata.clear();
+                        untildata.add(new ListData(untilinfo1));
+                        untildata.add(new ListData(untilinfo2));
+                        untildata.add(new ListData(untilinfo3));
+                    }
+
+                    untiladapter = new MyuntilAdapter(untildata);
+                    recycleruntil.setAdapter(untiladapter);
+                    //untiladapter.notifyDataSetChanged();*/
+
                     recycleruntil.setVisibility(View.VISIBLE);
                     btnCancel.setVisibility(View.GONE);
                 }
@@ -592,7 +595,75 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
     @Override
     public void onUntilItemClicked(int position,TextView textView) {
-        untillString= textView.getText().toString();
-        Toast.makeText(getApplicationContext(), untillString, Toast.LENGTH_SHORT).show();
+        untillString = textView.getText().toString();
+        checkuntilk = Integer.parseInt(untillString.substring(0,1));
+
+        if (checkuntil == 0 && checkuntil == 2){
+            checkuntil = 1;
+            checkuntilinfo = textView;
+           // checkuntilinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+        }else{
+           // checkuntilinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
+            checkuntilinfo = textView;
+          //  textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+        }
+
+        //Toast.makeText(getApplicationContext(), untillString, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
+            } else if (result.getContents().equals("1")) {
+
+                final String SeatNumber = result.getContents();
+                final Query query = myRef.child("Seat").child(Zone).child(result.getContents());
+
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(final DataSnapshot datasnapshot) {
+
+
+                        //datasnapshot.child("2020").child("11").child("12").child(09).getValue().equals()
+
+
+
+
+
+                /*        Query query = myRef.child("reservation").child(Zone);
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+
+                            }
+                        });*/
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("loadUser:onCancelled", databaseError.toException());
+                    }
+                });
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+            Toast.makeText(getApplicationContext(), "잘못된 QR코드 입니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

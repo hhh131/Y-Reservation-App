@@ -1,8 +1,5 @@
 package com.example.zone.Room;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.zone.ReservationDialog;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.zone.R;
-import com.example.zone.Vo.SeatVO;
+import com.example.zone.ReservationDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
+
 public class PcZoneActivity extends AppCompatActivity {
     int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5};
     String buttonIndex[] = new String[buttons.length];
@@ -191,7 +191,7 @@ public class PcZoneActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if(item.getItemId()==R.id.menu1) {
+        if(item.getItemId()== R.id.menu1) {
             Query query = myRef.child("reservation").child("PcZone").child(loginId);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -218,9 +218,9 @@ public class PcZoneActivity extends AppCompatActivity {
 
                             try {
                                 if (datasnapshot.child("id").getValue().equals(loginId)) {
-                                    SeatVO seatVO = new SeatVO(null, datasnapshot.child("seatNum").getValue().toString(), false);
+                                   // SeatVO seatVO = new SeatVO(null, datasnapshot.child("seatNum").getValue().toString(), false);
 
-                                    myRef.child("Seat").child("PcZone").child(SeatNum).setValue(seatVO);
+                                    //myRef.child("Seat").child("PcZone").child(SeatNum).setValue(seatVO);
                                     myRef.child("reservation").child("PcZone").child(loginId).removeValue();
 
                                     Intent intent = getIntent();

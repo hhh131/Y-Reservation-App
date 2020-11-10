@@ -10,7 +10,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="39dp"
+            android:layout_height="10dp"
             />
 
         <LinearLayout
@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="right"
-            android:layout_margin="5dp" >
+
+            android:layout_marginBottom="10dp" >
 
             <Button
                 android:id="@+id/input"
@@ -28,7 +29,7 @@
                 android:background="#ffffff"
                 android:enabled="false"
                 android:gravity="center"
-                android:text=""
+                android:text="입구"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
@@ -43,6 +44,7 @@
                 android:background="@drawable/seat_button"
                 android:gravity="center"
                 android:text="좌석 반납"
+                android:layout_marginRight="3dp"
                 android:textStyle="bold" />
             <Button
                 android:id="@+id/QrBtn"
@@ -51,6 +53,7 @@
                 android:background="@drawable/seat_button"
                 android:gravity="center"
                 android:text="Qr로 예약"
+                android:layout_marginRight="3dp"
                 android:textStyle="bold" />
 
         </LinearLayout>

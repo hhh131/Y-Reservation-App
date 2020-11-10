@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,10 +25,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.zone.GpsTracker;
 import com.example.zone.R;
 import com.example.zone.ReservationDialog;
-import com.example.zone.Room.QuietZone;
 import com.example.zone.Utill;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
@@ -44,11 +44,12 @@ import java.util.ArrayList;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
 import static com.example.zone.JoinLogin.LoginActivity.loginStatus;
+
 public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClickListener {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     IntentResult result;
-
+    Utill utill;
     String ZONE="QuietZone";
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private Activity activity = this;
@@ -165,16 +166,29 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
         seat73.setText("73");   seat74.setText("74");   seat75.setText("75");   seat76.setText("76");   seat77.setText("77");   seat78.setText("78");
         seat79.setText("79");   seat80.setText("80");   seat81.setText("81");   seat82.setText("82");   seat83.setText("83");   seat84.setText("84");
 
-        arrayList.add(new MainData(seat1, seat2, seat3, seat4, seat5, seat6));          arrayList.add(new MainData(seat7, seat8, seat9, seat10, seat11, seat12));
-        arrayList.add(new MainData(seat13, seat14, seat15, seat16, seat17, seat18));    arrayList.add(new MainData(seat19, seat20, seat21, seat22, seat23, seat24));
-        arrayList.add(new MainData(seat25, seat26, seat27, seat28, seat29, seat30));    arrayList.add(new MainData(seat31, seat32, seat33, seat34, seat35, seat36));
-        arrayList.add(new MainData(seat37, seat38, seat39, seat40, seat41, seat42));    arrayList.add(new MainData(seat43, seat44, seat45, seat46, seat47, seat48));
-        arrayList.add(new MainData(seat49, seat50, seat51, seat52, seat53, seat54));    arrayList.add(new MainData(seat55, seat56, seat57, seat58, seat59, seat60));
-        arrayList.add(new MainData(seat61, seat62, seat63, seat64, seat65, seat66));    arrayList.add(new MainData(seat67, seat68, seat69, seat70, seat71, seat72));
-        arrayList.add(new MainData(seat73, seat74, seat75, seat76, seat77, seat78));    arrayList.add(new MainData(seat79, seat80, seat81, seat82, seat83, seat84));
+        arrayList.add(new MainData(seat1, seat2, seat3, seat4, seat5, seat6, seat7, seat8, seat9, seat10, seat11, seat12));
+        arrayList.add(new MainData(seat13, seat14, seat15, seat16, seat17, seat18, seat19, seat20, seat21, seat22, seat23, seat24));
+        arrayList.add(new MainData(seat25, seat26, seat27, seat28, seat29, seat30, seat31, seat32, seat33, seat34, seat35, seat36));
+        arrayList.add(new MainData(seat37, seat38, seat39, seat40, seat41, seat42, seat43, seat44, seat45, seat46, seat47, seat48));
+        arrayList.add(new MainData(seat49, seat50, seat51, seat52, seat53, seat54, seat55, seat56, seat57, seat58, seat59, seat60));
+        arrayList.add(new MainData(seat61, seat62, seat63, seat64, seat65, seat66, seat67, seat68, seat69, seat70, seat71, seat72));
+        arrayList.add(new MainData(seat73, seat74, seat75, seat76, seat77, seat78, seat79, seat80, seat81, seat82, seat83, seat84));
 
         myAdapter = new MyAdapter(arrayList);
         recyclerView.setAdapter(myAdapter);
+
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(recyclerView.getScrollY() != 0){
+                    input.setTextColor(Color.WHITE);
+                } else if (recyclerView.getScrollY() == 0) {
+                    input.setTextColor(Color.BLACK);
+                }
+
+                return false;
+            }
+        });
 
         myAdapter.notifyDataSetChanged();
 
@@ -194,22 +208,6 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                 }
             });
         }*/
-
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                    if (i1 > i3)
-                        input.setVisibility(View.INVISIBLE);
-
-                    if (i1 < i3)
-                        input.setVisibility(View.VISIBLE);
-
-                }
-            });
-        }
 
 
 
@@ -256,7 +254,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
                                     try {
                                         if (datasnapshot.child("id").getValue().equals(loginId)) {
-                                            SeatVO seatVO = new SeatVO(null, datasnapshot.child("seatNum").getValue().toString(), false);
+                                            SeatVO seatVO = new SeatVO("0", datasnapshot.child("seatNum").getValue().toString(),"0" ,false);
 
                                             myRef.child("Seat").child(ZONE).child(SeatNum).setValue(seatVO);
                                             myRef.child("reservation").child(ZONE).child(loginId).removeValue();
@@ -329,6 +327,35 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
         CreateDig(position);
     }
 
+    @Override
+    public void onItemClicked_7(int position) {
+        CreateDig(position);
+    }
+
+    @Override
+    public void onItemClicked_8(int position) {
+        CreateDig(position);
+    }
+
+    @Override
+    public void onItemClicked_9(int position) {
+        CreateDig(position);
+    }
+
+    @Override
+    public void onItemClicked_10(int position) {
+        CreateDig(position);
+    }
+
+    @Override
+    public void onItemClicked_11(int position) {
+        CreateDig(position);
+    }
+
+    @Override
+    public void onItemClicked_12(int position) {
+        CreateDig(position);
+    }
 
 
 
@@ -424,11 +451,11 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                     public void onDataChange(DataSnapshot datasnapshot) {
 
                         String seatNum = datasnapshot.child("seatNum").getValue().toString();
-                        SeatVO seatVO = new SeatVO(null, seatNum, false);
+                        SeatVO seatVO = new SeatVO("0", seatNum, "0",false);
 
                         myRef.child("Seat").child(ZONE).child(seatNum).setValue(seatVO);
 
-                        seatVO = new SeatVO(loginId,SeatNumber, true);
+                        seatVO = new SeatVO(loginId,SeatNumber, utill.getDate(),true);
                         myRef.child("Seat").child(ZONE).child(SeatNumber).setValue(seatVO)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

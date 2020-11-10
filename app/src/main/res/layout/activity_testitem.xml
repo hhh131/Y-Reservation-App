@@ -89,4 +89,85 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/LLtest2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <Button
+
+                android:id="@+id/L_seat4"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="7"
+                android:textStyle="bold"
+                android:background="@drawable/seat_button" />
+
+            <Button
+                android:id="@+id/L_seat5"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="8"
+                android:textStyle="bold"
+                android:background="@drawable/seat_button" />
+
+            <Button
+                android:id="@+id/L_seat6"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="9"
+                android:textStyle="bold"
+                android:background="@drawable/seat_button" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+        <LinearLayout
+            android:id="@+id/LRtest2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/R_seat4"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textStyle="bold"
+                android:background="@drawable/seat_button" />
+
+            <Button
+                android:id="@+id/R_seat5"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/seat_button"
+                android:text="11"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/R_seat6"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:textStyle="bold"
+                android:background="@drawable/seat_button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

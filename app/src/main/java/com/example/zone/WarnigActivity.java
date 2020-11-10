@@ -1,7 +1,6 @@
 package com.example.zone;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
 import static com.example.zone.JoinLogin.LoginActivity.loginStatus;
 
@@ -51,9 +51,8 @@ public class WarnigActivity extends AppCompatActivity {
                     {
                             if(datasnapshot.child(Integer.toString(i)).child("id").getValue().toString().equals(loginId))
                             {
-                                waringMsg+="신고내역"+Integer.toString(i)+"\n"
-                                          +datasnapshot.child(Integer.toString(i)).child("content").getValue().toString()+"\n"
-                                          +datasnapshot.child(Integer.toString(i)).child("message").getValue().toString()+"\n\n";
+                                waringMsg+="신고내역"+"\n\n"
+                                         +datasnapshot.child(Integer.toString(i)).child("message").getValue().toString()+"\n\n";
                                 WaringMsg.setText(waringMsg);
                             }
 

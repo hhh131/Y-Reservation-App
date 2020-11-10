@@ -1,11 +1,11 @@
 package com.example.zone;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class webView extends AppCompatActivity {
     private WebView mWebView; // 웹뷰 선언

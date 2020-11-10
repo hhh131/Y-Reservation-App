@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.zone.JoinLogin.JoinActivity;
 import com.example.zone.MainActivity;
 import com.example.zone.R;
 import com.example.zone.Vo.UserVO;
@@ -27,8 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
-
-import static android.content.ContentValues.TAG;
 
 public class LoginActivity extends Activity {
     private FirebaseAuth mAuth;

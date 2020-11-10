@@ -1,8 +1,5 @@
 package com.example.zone;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zone.Adapter.Activity_Test;
 import com.example.zone.Room.SeminarRoomSel;
@@ -98,26 +98,12 @@ public class List extends AppCompatActivity {
 
 
                 i=0;
-
-                for(int j=1;j<=5;j++) {
-
-                    if(datasnapshot.child("PcZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
-                        i++;
-                    }
-                }
-                PcZoneTv.setText(Integer.toString(i));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w("loadUser:onCancelled", databaseError.toException());
             }
         });
-
-
-
-
-
-
 
     }
 

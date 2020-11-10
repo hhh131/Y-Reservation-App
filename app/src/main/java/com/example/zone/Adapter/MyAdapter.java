@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zone.R;
-import com.example.zone.ReservationDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +38,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         void onItemClicked_4(int position);
         void onItemClicked_5(int position);
         void onItemClicked_6(int position);
+        void onItemClicked_7(int position);
+        void onItemClicked_8(int position);
+        void onItemClicked_9(int position);
+        void onItemClicked_10(int position);
+        void onItemClicked_11(int position);
+        void onItemClicked_12(int position);
     }
 
     private MyRecyclerViewClickListener mListener;
@@ -69,7 +74,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         holder.R_seat1.setText(arrayList.get(position).getR_seat1().getText());
         holder.R_seat2.setText(arrayList.get(position).getR_seat2().getText());
         holder.R_seat3.setText(arrayList.get(position).getR_seat3().getText());
-
+        holder.L_seat4.setText(arrayList.get(position).getL_seat4().getText());
+        holder.L_seat5.setText(arrayList.get(position).getL_seat5().getText());
+        holder.L_seat6.setText(arrayList.get(position).getL_seat6().getText());
+        holder.R_seat4.setText(arrayList.get(position).getR_seat4().getText());
+        holder.R_seat5.setText(arrayList.get(position).getR_seat5().getText());
+        holder.R_seat6.setText(arrayList.get(position).getR_seat6().getText());
 
 
         Query query = myRef.child("reservation").child("QuietZone").child(loginId);
@@ -93,12 +103,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
                     @Override
                     public void onDataChange(DataSnapshot datasnapshot) {
 
-                       SeatCheck(datasnapshot,holder.L_seat1);
+                        SeatCheck(datasnapshot,holder.L_seat1);
                         SeatCheck(datasnapshot,holder.L_seat2);
                         SeatCheck(datasnapshot,holder.L_seat3);
                         SeatCheck(datasnapshot,holder.R_seat1);
                         SeatCheck(datasnapshot,holder.R_seat2);
                         SeatCheck(datasnapshot,holder.R_seat3);
+                        SeatCheck(datasnapshot,holder.L_seat4);
+                        SeatCheck(datasnapshot,holder.L_seat5);
+                        SeatCheck(datasnapshot,holder.L_seat6);
+                        SeatCheck(datasnapshot,holder.R_seat4);
+                        SeatCheck(datasnapshot,holder.R_seat5);
+                        SeatCheck(datasnapshot,holder.R_seat6);
 
                 }
 
@@ -136,7 +152,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
 
 
-            final int pos = position * 6;
+            final int pos = position * 12;
             holder.L_seat1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -173,6 +189,42 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
                     mListener.onItemClicked_6(6 + pos);
                 }
             });
+            holder.L_seat4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_7(7 + pos);
+                }
+            });
+            holder.L_seat5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_8(8 + pos);
+                }
+            });
+            holder.L_seat6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_9(9 + pos);
+                }
+            });
+            holder.R_seat4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_10(10 + pos);
+                }
+            });
+            holder.R_seat5.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_11(11 + pos);
+                }
+            });
+            holder.R_seat6.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClicked_12(12 + pos);
+                }
+            });
 
 
         }
@@ -185,11 +237,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
     {
 
         if (datasnapshot.child(btn.getText().toString()).child("seatNum").getValue().equals(MySeatNum)) {
-          btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_my));
+          btn.setBackground(ContextCompat.getDrawable(btn.getContext(), R.drawable.round_bg_seat_my));
 
         } else  if (datasnapshot.child(btn.getText().toString()).child("status").getValue().equals(true)) {
 
-        btn.setBackground(ContextCompat.getDrawable(btn.getContext(),R.drawable.round_bg_seat_on));
+        btn.setBackground(ContextCompat.getDrawable(btn.getContext(), R.drawable.round_bg_seat_on));
     }
 
     }
@@ -216,6 +268,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         protected Button R_seat1;
         protected Button R_seat2;
         protected Button R_seat3;
+        protected Button L_seat4;
+        protected Button L_seat5;
+        protected Button L_seat6;
+        protected Button R_seat4;
+        protected Button R_seat5;
+        protected Button R_seat6;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -226,6 +284,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             this.R_seat1 = (Button) itemView.findViewById(R.id.R_seat1);
             this.R_seat2 = (Button) itemView.findViewById(R.id.R_seat2);
             this.R_seat3 = (Button) itemView.findViewById(R.id.R_seat3);
+            this.L_seat4 = (Button) itemView.findViewById(R.id.L_seat4);
+            this.L_seat5 = (Button) itemView.findViewById(R.id.L_seat5);
+            this.L_seat6 = (Button) itemView.findViewById(R.id.L_seat6);
+            this.R_seat4 = (Button) itemView.findViewById(R.id.R_seat4);
+            this.R_seat5 = (Button) itemView.findViewById(R.id.R_seat5);
+            this.R_seat6 = (Button) itemView.findViewById(R.id.R_seat6);
         }
     }
 

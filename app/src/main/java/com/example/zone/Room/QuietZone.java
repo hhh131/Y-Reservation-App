@@ -1,14 +1,8 @@
 package com.example.zone.Room;
 
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,15 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.zone.ReservationDialog;
 import com.example.zone.R;
+import com.example.zone.ReservationDialog;
 import com.example.zone.Utill;
-import com.example.zone.Vo.ReservationVO;
-import com.example.zone.Vo.SeatVO;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,8 +31,8 @@ import static com.example.zone.JoinLogin.LoginActivity.loginId;
 public class QuietZone extends AppCompatActivity implements View.OnClickListener {
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
     private static final String TAG = "QuietZone";
-    int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5,R.id.btn6,
-                     R.id.btn7, R.id.btn8, R.id.btn9, R.id.btn10, R.id.btn11,R.id.btn12};
+    int buttons[] = {R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6,
+                     R.id.btn7, R.id.btn8, R.id.btn9, R.id.btn10, R.id.btn11, R.id.btn12};
     String buttonIndex[] = new String[buttons.length];
     private Button[] ButtonArray = new Button[buttons.length];
      IntentResult result;
@@ -95,10 +85,10 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                         public void onDataChange(DataSnapshot datasnapshot) {
                             for (int i = 0; i < 12; i++) {
                                 if (datasnapshot.child(ButtonArray[i].getText().toString()).child("seatNum").getValue().equals(MySeatNum)) {
-                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.round_bg_seat_my));
+                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_bg_seat_my));
                             } else if (datasnapshot.child(ButtonArray[i].getText().toString()).child("status").getValue().equals(true)) {
 
-                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.round_bg_seat_on));
+                                    ButtonArray[i].setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.round_bg_seat_on));
                                 }
 
 
@@ -547,7 +537,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                     @Override
                     public void onDataChange(DataSnapshot datasnapshot) {
 
-                        String BeseatNum = datasnapshot.child("seatNum").getValue().toString();
+           /*             String BeseatNum = datasnapshot.child("seatNum").getValue().toString();
                         SeatVO seatVO = new SeatVO(null, BeseatNum, false);
                         myRef.child("Seat").child(TAG).child(BeseatNum).setValue(seatVO);
 
@@ -569,7 +559,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
 
                                     }
-                                });
+                                });*/
 
 
 
@@ -621,7 +611,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
                     @Override
                     public void onDataChange(DataSnapshot datasnapshot) {
 
-                       String BefoseatNum = datasnapshot.child("seatNum").getValue().toString();
+                     /*  String BefoseatNum = datasnapshot.child("seatNum").getValue().toString();
                         SeatVO seatVO = new SeatVO(null, BefoseatNum, false);
                         myRef.child("Seat").child(TAG).child(BefoseatNum).setValue(seatVO);
 
@@ -639,11 +629,8 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
                                         Intent intent = getIntent();
                                         finish();
-                                        startActivity(intent);
+                                        startActivity(intent);*/
 
-
-                                    }
-                                });
 
 
 
