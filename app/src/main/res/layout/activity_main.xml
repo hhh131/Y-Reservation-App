@@ -9,10 +9,9 @@
     tools:context=".Room.QuietZone">
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="435dp"
         android:layout_marginTop="50dp"
         android:layout_weight="1"
         android:gravity="center"
@@ -35,9 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/tmoneyfont"
                 android:text="예약하기"
                 android:textColor="#000000"
-                android:fontFamily="@font/tmoneyfont"
                 android:textSize="20dp" />
         </LinearLayout>
 
@@ -48,7 +47,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/mainMyReadingRoomButton"
+                android:id="@+id/reportbtn"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -58,9 +57,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/tmoneyfont"
                 android:text="신고하기"
                 android:textColor="#000000"
-                android:fontFamily="@font/tmoneyfont"
                 android:textSize="20dp" />
         </LinearLayout>
 
@@ -82,32 +81,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="로그인"
                 android:fontFamily="@font/tmoneyfont"
+                android:text="로그인"
                 android:textColor="#000000"
                 android:textSize="20dp" />
         </LinearLayout>
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:src="@drawable/itsmind"
-            android:id="@+id/imageView1"
-            android:layout_width="360dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp" />
-
-
-    </LinearLayout>
+        android:orientation="vertical"/>
 
 
 

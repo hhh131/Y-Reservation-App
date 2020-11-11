@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".JoinLogin.LoginActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -29,7 +29,7 @@
                 android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/yuhanlogo2"/>
+                android:src="@drawable/logo2"/>
 
             <TextView
                 app:layout_constraintTop_toBottomOf="@+id/logo"

@@ -1,8 +1,5 @@
 package com.example.zone;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,13 +7,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
-import com.example.zone.Room.DVDZone;
-import com.example.zone.Room.PcZoneActivity;
-import com.example.zone.Room.QuietZone;
-import com.example.zone.Room.Willow;
-import com.example.zone.Room.seminar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.zone.Adapter.Activity_Test;
+import com.example.zone.Room.SeminarRoomSel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,14 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
-    LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay,PCZoneLay,WillowLay;
+    LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay,PCZoneLay;
     TextView quietTv,dvdZoneTv,PcZoneTv;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -42,11 +36,9 @@ public class List extends AppCompatActivity {
         setTitle("목록");
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
-        WillowLay = (LinearLayout)findViewById(R.id.WillowLay);
         PCZoneLay = (LinearLayout)findViewById(R.id.PCZoneLay);
         quietTv = (TextView)findViewById(R.id.tvstatus);
-        DvdZoneLay = (LinearLayout)findViewById(R.id.DvdZoneLay);
-        dvdZoneTv = (TextView)findViewById(R.id.DvdZoneTv);
+
         PcZoneTv = (TextView)findViewById(R.id.PcZoneTv);
 
 
@@ -65,37 +57,28 @@ public class List extends AppCompatActivity {
         QuietZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), QuietZone.class);
+                Intent intent = new Intent(getApplicationContext(), Activity_Test.class);
                 startActivity(intent);
             }
         });
         SeminarLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), seminar.class);
+                Intent intent = new Intent(getApplicationContext(), SeminarRoomSel.class);
                 startActivity(intent);
             }
         });
 
-        DvdZoneLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DVDZone.class);
-                startActivity(intent);
-            }
-        });
-        WillowLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Willow.class);
-                startActivity(intent);
-            }
-        });
+
+
         PCZoneLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PcZoneActivity.class);
+
+                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
                 startActivity(intent);
+
+
             }
         });
 
@@ -106,43 +89,21 @@ public class List extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot datasnapshot) {
                 int i=0;
-                    for(int j=1;j<=5;j++) {
+                    for(int j=1;j<=84;j++) {
                         if(datasnapshot.child("QuietZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
                             i++;
                         }
                     }
                 quietTv.setText(Integer.toString(i));
-                i=0;
 
-               for(int j=1;j<=3;j++) {
-
-                    if(datasnapshot.child("DvdZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
-                        i++;
-                    }
-                }
-                dvdZoneTv.setText(Integer.toString(i));
 
                 i=0;
-
-                for(int j=1;j<=5;j++) {
-
-                    if(datasnapshot.child("PcZone").child(Integer.toString(j)).child("status").getValue().equals(true)) {
-                        i++;
-                    }
-                }
-                PcZoneTv.setText(Integer.toString(i));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.w("loadUser:onCancelled", databaseError.toException());
             }
         });
-
-
-
-
-
-
 
     }
 

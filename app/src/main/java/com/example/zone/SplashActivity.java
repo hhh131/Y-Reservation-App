@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
+import com.example.zone.JoinLogin.LoginActivity;
+
 public class SplashActivity extends Activity {
 
     @Override

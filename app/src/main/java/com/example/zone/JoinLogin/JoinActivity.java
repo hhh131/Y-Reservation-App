@@ -1,4 +1,4 @@
-package com.example.zone;
+package com.example.zone.JoinLogin;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.zone.R;
 import com.example.zone.Vo.UserVO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,7 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class JoinActivity extends Activity {
     private static final String TAG = "Join";
@@ -38,7 +39,7 @@ public class JoinActivity extends Activity {
     DatabaseReference myRef = database.getReference();
 
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //FirebaseFirestore db = FirebaseFirestore.getInstance();
     String sId,sPwd,sName;
 
     @Override
@@ -78,7 +79,7 @@ public class JoinActivity extends Activity {
                 }
                 else
                 {
-                    UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0);
+                    UserVO userVO = new UserVO(id.getText().toString(),pwd.getText().toString(),0,null);
                     myRef.child("User").child(id.getText().toString()).setValue(userVO)//User아래에 userVO객체 정보로 DB에 정보 삽입
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

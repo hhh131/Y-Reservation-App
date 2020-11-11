@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:background="#009483"
-    tools:context=".JoinActivity">
+    tools:context=".JoinLogin.JoinActivity">
 
 
     <LinearLayout
@@ -20,7 +19,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_weight="3"
             android:textColor="#ffffff"
             android:text="학번"
@@ -48,12 +47,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="날짜"
             android:textColor="#ffffff"
             android:textSize="17dp" />
 
         <TextView
+
             android:id="@+id/date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -62,31 +62,54 @@
             android:background="@drawable/round_bg"
             android:textSize="17dp" />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+
+            android:text="신고좌석"
+            android:textColor="#ffffff"
+            android:textSize="17dp" />
+
+        <Spinner
+            android:id="@+id/crimer"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:background="#ffffff" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_weight="3"
             android:textColor="#ffffff"
             android:text="신고내용"
             android:textSize="17dp" />
 
         <EditText
+
             android:id="@+id/report"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="307dp"
             android:layout_weight="7"
-            android:hint="내용을 입력하세요"
             android:background="@drawable/round_bg"
+            android:hint="내용을 입력하세요(100자 이하)"
             android:textColor="#000000"
-            android:textSize="17dp" />
+            android:textSize="17dp"/>
     </LinearLayout>
 
     <Button

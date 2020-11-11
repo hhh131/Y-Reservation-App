@@ -1,7 +1,11 @@
 package com.example.zone;
 
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -14,11 +18,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.zone.LoginActivity.loginId;
-
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
 
+import com.example.zone.Adapter.MyAdapter;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,38 +33,34 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
+import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
-public class ReservationDialog
-{
-        //좌석 효율적 관리를 위해,,
+public class ReservationDialog {
+    //좌석 효율적 관리를 위해,,
 
     private static final String TAG = "CustomDialog";
     private Context context;
-     CheckBox AgreeCB;
+    CheckBox AgreeCB;
     Dialog dlg;
     FirebaseDatabase database;
     DatabaseReference myRef;
     Utill utill;
-
+    Boolean status;
+    MyAdapter myAdapter;
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
     public ReservationDialog(Context context) {
         this.context = context;
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(final String Zone, final String SeatNum, final Button btn) {
+    public void callFunction(final String Zone, final String SeatNum) {
 
 
-
-
-
-
-
-      utill = new Utill();
+        utill = new Utill();
 
         // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
 
-         dlg = new Dialog(context);
+        dlg = new Dialog(context);
 
         // 액티비티의 타이틀바를 숨긴다.
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -71,16 +70,13 @@ public class ReservationDialog
         dlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-
         WindowManager.LayoutParams params = dlg.getWindow().getAttributes();
-        params.width=WindowManager.LayoutParams.MATCH_PARENT;
-       // params.height=WindowManager.LayoutParams.MATCH_PARENT;
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        // params.height=WindowManager.LayoutParams.MATCH_PARENT;
 
 
         // 커스텀 다이얼로그를 노출한다.
         dlg.show();
-
-
 
 
         // 커스텀 다이얼로그의 각 위젯들을 정의한다.
@@ -90,17 +86,17 @@ public class ReservationDialog
         final TextView Seat = (TextView) dlg.findViewById(R.id.SeatNum);
         final Button OKbtn = (Button) dlg.findViewById(R.id.okButton);
         final Button back = (Button) dlg.findViewById(R.id.back);
-        AgreeCB =(CheckBox)dlg.findViewById(R.id.AgreeCB);
+        AgreeCB = (CheckBox) dlg.findViewById(R.id.AgreeCB);
 
         Seat.setText(SeatNum);
         ZoneName.setText(Zone);
         OKbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                  database = FirebaseDatabase.getInstance();
-                  myRef = database.getReference();
+                database = FirebaseDatabase.getInstance();
+                myRef = database.getReference();
 
-                  ZoneRe(btn,Zone);
+                ZoneRe(Zone, SeatNum);
 
 
             }
@@ -117,34 +113,35 @@ public class ReservationDialog
     }
 
 
-    public void ZoneRe( final Button btn, final String Zone)
-    {
+    public void ZoneRe(final String Zone, final String seatNum) {
 
         if (AgreeCB.isChecked() == true) {
 
 
 
-            // 커스텀 다이얼로그를 종료한다.
-
-
-            Query query = myRef.child("Seat").child(Zone);
+            final Query query = myRef.child("Seat").child(Zone).child(seatNum);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                   /* if (snapshot.child(btn.getText().toString()).child("status").equals(false))
-                        {*/
-                        SeatVO seatVO = new SeatVO(loginId,btn.getText().toString(),true);
-                        myRef.child("Seat").child(Zone).child(btn.getText().toString()).setValue(seatVO)
+                    status =Boolean.parseBoolean(snapshot.child("status").getValue().toString());
+
+                    if (status.equals(false)) {
+                        SeatVO seatVO = new SeatVO(loginId, seatNum, utill.getDate(),true);
+                        myRef.child("Seat").child(Zone).child(seatNum).setValue(seatVO)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        ReservationVO reservationVO = new ReservationVO(Zone,btn.getText().toString(),loginId,utill.getDate());
+                                        ReservationVO reservationVO = new ReservationVO(Zone, seatNum, loginId, utill.getDate());
 
                                         myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석예약 성공");
                                         Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-                                        btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+                                        createNotificationChannel(seatNum);
+                                       // small.notifyDataSetChanged();
+                                        //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+                                        //createNotificationChannel(Integer.toString(position));
 
                                     }
                                 })
@@ -160,17 +157,35 @@ public class ReservationDialog
 
 
                     }
-             /*       else if(snapshot.child(btn.getText().toString()).child("status").equals(true))
+                    else
                     {
-                        Toast.makeText(context, "좌석있음 실패", Toast.LENGTH_SHORT).show();
-                    }*/
+                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                    }
 
+
+
+
+
+
+
+                }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
+
                 }
             });
+
+
+
+        }
+        else {
+            Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
+        }
+        dlg.dismiss();
+
+
 
 
 
@@ -181,11 +196,50 @@ public class ReservationDialog
 
 
 
-            dlg.dismiss();
 
-        } else {
-            Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
-        }
+
+
+
     }
+    private void createNotificationChannel(String num) {
 
+        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+  /*      Intent notificationIntent = new Intent(this, QuietZone.class);
+        notificationIntent.putExtra("notificationId", count); //전달할 값
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+*/
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo))
+               //BitMap 이미지 요구
+                .setContentTitle("QuietZone "+num+"번 좌석 사용 중")
+                .setContentText("퇴실 전 반드시 좌석 반납처리 해주세요")
+                .setDefaults(Notification.FLAG_FOREGROUND_SERVICE)
+                // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
+                //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                //.setContentIntent(pendingIntent) // 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
+                .setAutoCancel(true)
+                .setOngoing(true);
+        //OREO API 26 이상에서는 채널 필요
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            builder.setSmallIcon(R.drawable.logo); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            CharSequence channelName  = "노티페케이션 채널";
+            String description = "오레오 이상을 위한 것임";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance);
+            channel.setDescription(description);
+
+            // 노티피케이션 채널을 시스템에 등록
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+
+        }else builder.setSmallIcon(R.mipmap.ic_main); // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
+
+        assert notificationManager != null;
+        notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
+    }
 }
