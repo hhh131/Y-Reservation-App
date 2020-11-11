@@ -61,8 +61,8 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     private Button btncheckin,btnCancel;
     private TextView status;
     TextView tempview;
-    private String[] hour = {"09:00 \n~ 10:00", "10:00\n~ 11:00", "11:00\n~ 12:00", "12:00\n~ 13:00", "13:00\n~ 14:00", "14:00\n~ 15:00",
-                    "15:00\n~ 16:00", "16:00\n~ 17:00", "17:00\n~ 18:00", "18:00\n~ 19:00", "19:00\n~ 20:00", "20:00\n~ 21:00", "21:00\n~ 22:00"};
+    private String[] hour = {"09:00 \n- 10:00", "10:00\n- 11:00", "11:00\n- 12:00", "12:00\n- 13:00", "13:00\n- 14:00", "14:00\n- 15:00",
+                    "15:00\n- 16:00", "16:00\n- 17:00", "17:00\n- 18:00", "18:00\n- 19:00", "19:00\n- 20:00", "20:00\n- 21:00", "21:00\n- 22:00"};
     private String[] dbhour = new String[13];
     private String selday = "";
     private String seltime = "";
@@ -82,7 +82,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     Calendar cal = Calendar.getInstance();
     IntentResult result;
     String time = sdftime.format(cal.getTime());        //현재시간
-
+    String Today;
     String[] day = new String[5];
     String[] dbday = new String[5];
     String[] week = new String[5];
@@ -96,6 +96,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         setContentView(R.layout.activity_tabmenu);
         //ShowToast(utill.getDate());
         status = (TextView) findViewById(R.id.status);
+        Today=sdf.format(cal.getTime());
 
         btncheckin = (Button) findViewById(R.id.btncheckin);
         btnCancel = (Button) findViewById(R.id.btnCancle);
@@ -353,10 +354,11 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
 
                         for(int i=9;i<23;i++) {
-                            if (snapshot.child("2020").child(dayString).hasChild(Integer.toString(i))) {
+                            if (snapshot.child("2020").child(Today).hasChild(Integer.toString(i))) {
                                 if (i != 9) {
-                                    if (snapshot.child("2020").child(dayString).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
-                                        myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(dayString).child(Integer.toString(i)).child("enter").setValue(true)
+                                    if (snapshot.child("2020").child(Today).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
+
+                                        myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(Today).child(Integer.toString(i)).child("enter").setValue(true)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
@@ -375,8 +377,8 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                                                 });
                                     }
                                 } else if (i == 9) {
-                                    if (snapshot.child("2020").child(dayString).child("09").child("id").getValue().toString().equals(loginId)) {
-                                        myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(dayString).child("09").child("enter").setValue(true)
+                                    if (snapshot.child("2020").child(Today).child("09").child("id").getValue().toString().equals(loginId)) {
+                                        myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(Today).child("09").child("enter").setValue(true)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
@@ -683,6 +685,8 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         //Toast.makeText(getApplicationContext(), timeString, Toast.LENGTH_SHORT).show();
 
        // smalladapter.notifyDataSetChanged();
+        timeString=timeString.substring(0,2);
+        dayString=dayString.substring(0,5);
         final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -745,13 +749,13 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        //Today=sdf.format(cal.getTime());
         result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
-            } else if (result.getContents().equals("seminar")) {
+            } else if (result.getContents()!=null) {
 
                 final Query query = myRef.child("Seat").child(Zone).child(result.getContents());
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -761,10 +765,10 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
 
                         for(int i=9;i<23;i++) {
-                            if (snapshot.child("2020").child(dayString).hasChild(Integer.toString(i))) {
+                            if (snapshot.child("2020").child(Today).hasChild(Integer.toString(i))) {
                                 if (i != 9) {
-                                    if (snapshot.child("2020").child(dayString).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
-                                        myRef.child("Seat").child(Zone).child(result.getContents()).child("2020").child(dayString).child(Integer.toString(i)).child("enter").setValue(true)
+                                    if (snapshot.child("2020").child(Today).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
+                                        myRef.child("Seat").child(Zone).child(result.getContents()).child("2020").child(Today).child(Integer.toString(i)).child("enter").setValue(true)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
@@ -783,8 +787,8 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                                                 });
                                     }
                                 } else if (i == 9) {
-                                    if (snapshot.child("2020").child(dayString).child("09").child("id").getValue().toString().equals(loginId)) {
-                                        myRef.child("Seat").child(Zone).child(result.getContents()).child("2020").child(dayString).child("09").child("enter").setValue(true)
+                                    if (snapshot.child("2020").child(Today).child("09").child("id").getValue().toString().equals(loginId)) {
+                                        myRef.child("Seat").child(Zone).child(result.getContents()).child("2020").child(Today).child("09").child("enter").setValue(true)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
@@ -807,7 +811,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                             }
                             else
                             {
-                                ShowToast("체크인 실패 \n예약 내용이 없습니다.");
+                               // ShowToast("체크인 실패 \n예약 내용이 없습니다.");
                             }
                         }
 
