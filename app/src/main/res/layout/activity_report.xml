@@ -107,6 +107,7 @@
             android:layout_height="307dp"
             android:layout_weight="7"
             android:background="@drawable/round_bg"
+            android:maxLength="100"
             android:hint="내용을 입력하세요(100자 이하)"
             android:textColor="#000000"
             android:textSize="17dp"/>

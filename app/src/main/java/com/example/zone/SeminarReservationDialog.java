@@ -43,6 +43,7 @@ public class SeminarReservationDialog {
     private Context context;
     CheckBox AgreeCB;
     Dialog dlg;
+    int CT;
     FirebaseDatabase database;
     DatabaseReference myRef;
     MysmallAdapter smalladapter;
@@ -56,7 +57,7 @@ public class SeminarReservationDialog {
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(final String Zone, final String RoomNum,final String dayString,final String timeString,final int checkuntilk,final int checktime) {
+    public void callFunction(final String Zone, final String RoomNum,final String dayString,final String timeString,final int checkuntilk) {
 
 
         utill = new Utill();
@@ -69,7 +70,7 @@ public class SeminarReservationDialog {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg.setContentView(R.layout.custom_dialog);
+        dlg.setContentView(R.layout.seminar_dialog);
         dlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
@@ -92,14 +93,14 @@ public class SeminarReservationDialog {
         AgreeCB = (CheckBox) dlg.findViewById(R.id.AgreeCB);
 
         Seat.setText(RoomNum);
-        ZoneName.setText(Zone);
+        ZoneName.setText("세미나 실");
         OKbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 database = FirebaseDatabase.getInstance();
                 myRef = database.getReference();
 
-                ZoneRe(Zone, RoomNum,dayString,timeString,checkuntilk,checktime);
+                ZoneRe(Zone, RoomNum,dayString,timeString,checkuntilk);
 
 
             }
@@ -116,7 +117,7 @@ public class SeminarReservationDialog {
     }
 
 
-    public void ZoneRe(final String Zone, final String RoomNum,final String dayString,final String timeString,final int checkuntilk,final int checktime) {
+    public void ZoneRe(final String Zone, final String RoomNum,final String dayString,final String timeString,final int checkuntilk) {
 
         if (AgreeCB.isChecked() == true) {
 
@@ -147,6 +148,7 @@ public class SeminarReservationDialog {
                                             Log.e(Zone, "예약 성공");
                                             Toast.makeText(context, "예약 성공", Toast.LENGTH_SHORT).show();
                                             // finish();
+                                            createNotificationChannel(RoomNum);
                                             //smalladapter.notifyDataSetChanged();
                                             //untiladapter.notifyDataSetChanged();
                                         }
@@ -159,8 +161,8 @@ public class SeminarReservationDialog {
 
                                         }
                                     });
-                            //checktime = Integer.parseInt(intime) + 1;
-                            intime = Integer.toString(checktime);
+                            CT = Integer.parseInt(intime) + 1;
+                            intime = Integer.toString(CT);
                         }
                     }
                 }
@@ -217,15 +219,15 @@ public class SeminarReservationDialog {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo))
                //BitMap 이미지 요구
-                .setContentTitle("QuietZone "+num+"번 좌석 사용 중")
-                .setContentText("퇴실 전 반드시 좌석 반납처리 해주세요")
+                .setContentTitle("Seminar "+num+" 예약완료")
+                .setContentText("반드시 지정된 시간에 입실 해 주세요")
                 .setDefaults(Notification.FLAG_FOREGROUND_SERVICE)
                 // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
                 //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 //.setContentIntent(pendingIntent) // 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
-                .setAutoCancel(true)
-                .setOngoing(true);
+                .setAutoCancel(true);
+
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 

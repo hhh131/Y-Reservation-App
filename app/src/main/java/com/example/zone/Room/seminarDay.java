@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zone.R;
 import com.example.zone.SeminarReservationDialog;
+import com.example.zone.Utill;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +35,7 @@ import com.google.zxing.integration.android.IntentResult;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
@@ -49,7 +52,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     private LinearLayoutManager linearLayoutManager1, linearLayoutManager2, linearLayoutManager3;
 
     private TextView dayinfo1, dayinfo2, dayinfo3, dayinfo4, dayinfo5;
-    private TextView timeinfo1, timeinfo2, timeinfo3, timeinfo4, timeinfo5, timeinfo6, timeinfo7, timeinfo8, timeinfo9, timeinfo10, timeinfo11, timeinfo12, timeinfo13;
+    private TextView timeinfo1, timeinfo2, timeinfo3, timeinfo4, timeinfo5, timeinfo6, timeinfo7, timeinfo8, timeinfo9, timeinfo10, timeinfo11, timeinfo12, timeinfo13, timeinfoover;
     private TextView untilinfo1, untilinfo2, untilinfo3;
     private TextView checkdayinfo, checktimeinfo, checktimeRinfo, checkuntilinfo;
     private TextView[] arraydayinfo = {dayinfo1, dayinfo2, dayinfo3, dayinfo4, dayinfo5};
@@ -69,7 +72,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     private int checkday = 0, checktime = 0, checkuntil = 0, checktotal = 0, checktimeR = 0, checkuntilk = 0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-    TextView tb;
+
     public static String RoomNum;
     String YearString ="2020";
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
@@ -91,18 +94,17 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabmenu);
-
+        //ShowToast(utill.getDate());
         status = (TextView) findViewById(R.id.status);
-        tb = (TextView) findViewById(R.id.tb);
+
         btncheckin = (Button) findViewById(R.id.btncheckin);
         btnCancel = (Button) findViewById(R.id.btnCancle);
-        tb.setText(RoomNum + "Seminar");
 
         Intent intent = getIntent();
         RoomNum = intent.getStringExtra("RoomNum");
         RoomNum = RoomNum + "번 방";
         setTitle(RoomNum);
-            btnCancel.setVisibility(View.GONE);
+        btnCancel.setVisibility(View.GONE);
 
         recyclerday = (RecyclerView) findViewById(R.id.recyclerday);
         recyclertime = (RecyclerView) findViewById(R.id.recyclertime);
@@ -138,6 +140,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         timeinfo11 = new TextView(context);
         timeinfo12 = new TextView(context);
         timeinfo13 = new TextView(context);
+        timeinfoover = new TextView(context);
         untilinfo1 = new TextView(context);
         untilinfo2 = new TextView(context);
         untilinfo3 = new TextView(context);
@@ -190,6 +193,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         timeinfo11.setText(hour[10]);
         timeinfo12.setText(hour[11]);
         timeinfo13.setText(hour[12]);
+        timeinfoover.setText("금일 예약은 \n불가능합니다.");
 
         smalldata.add(new ListData(timeinfo1));
         smalldata.add(new ListData(timeinfo2));
@@ -239,104 +243,6 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         dayinfo1.setBackgroundColor(Color.RED);
 
 
-//        for (int i = 0; i < 5; i++){
-//            day[i] = middledata.get(i).getSubject();
-//            dbday[i] = middledata.get(i).getSubject().substring(0, 2) + middledata.get(i).getSubject().substring(3, 5);
-//        }
-//
-//
-//        middleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long id) {
-//                int k = 0;
-//                smalldata.clear();
-//                checkday = 1; checktime = 0; checkuntil = 0;
-//                btncheckin.setEnabled(false);
-//
-//                selday = dbday[position];
-//
-//                if (position == 0){
-//                    for (int i = 0; i < 13; i++){
-//                        if(Integer.parseInt(time) <= i + 9) {
-//                            smalldata.add(new ListData(hour[i]));
-//                            dbhour[k] = hour[i].substring(0,2);00000000
-//                            k++;
-//                        }
-//                    }
-//                }else{
-//                    for (int i = 0; i < 13; i++) {
-//                        smalldata.add(new ListData(hour[i]));
-//                        dbhour[k] = hour[i].substring(0, 2);
-//                        k++;
-//                    }
-//                }
-//                smallList.setAdapter(smalladapter);
-//
-//                status.setText(selday);
-//
-//                final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
-//                query.addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        //Toast.makeText(getApplicationContext(),snapshot.child(selday).child(seltime).getValue().toString(),Toast.LENGTH_SHORT).show();
-//
-//                        /*if(snapshot.child(selday).child(seltime).child("status").getValue().equals(true))
-//                        {
-//                            //smallList.getChildAt(position).setEnabled(false);
-//
-//                        }*/
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//
-//            }
-//        });
-//
-//        smallList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-//                untildata.clear();
-//
-//                seltime = dbhour[position];
-//                checktime = 1; checkuntil = 0;
-//                btncheckin.setEnabled(false);
-//
-//                if (seltime.equals("20")){
-//                    untildata.add(new ListData("1시간"));
-//                    untildata.add(new ListData("2시간"));
-//                }else if(seltime.equals("21")){
-//                    untildata.add(new ListData("1시간"));
-//                }else {
-//                    untildata.add(new ListData("1시간")); untildata.add(new ListData("2시간")); untildata.add(new ListData("3시간"));
-//                }
-//                untilList.setAdapter(untiladapter);
-//
-//                status.setText(seltime);
-//
-//            }
-//        });
-//
-//        untilList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                seluntil = until[position];
-//                checkuntil = 1;
-//
-//                checktotal = checkday + checktime + checkuntil;
-//
-//                if (checktotal == 3) {
-//                    btncheckin.setEnabled(true);
-//                }
-//
-//                status.setText(selday);
-//            }
-//        });
 
         middleadapter.setOnClickListener(this);
         smalladapter.setOnClickListener(this);
@@ -351,7 +257,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.e(Zone, "취소 성공");
-                                Toast.makeText(getApplicationContext(),"예약 성공",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "예약 성공", Toast.LENGTH_SHORT).show();
                                 // finish();
                                 smalladapter.notifyDataSetChanged();
                             }
@@ -379,14 +285,54 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                     }
                 });*/
             }
-                                     });
+        });
         btncheckin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                SeminarReservationDialog reservationDialog = new SeminarReservationDialog(seminarDay.this);
-                //커스텀 다이얼로그를 호출한다.
-                reservationDialog.callFunction("Seminar", RoomNum,dayString,timeString,checkuntilk,checktime);
+
+                    final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int tt=0;
+                            for(int i=9;i<23;i++) {
+                                if (snapshot.child("2020").child(dayString).hasChild(Integer.toString(i))) {
+                                    if (i != 9) {
+                                        if (snapshot.child("2020").child(dayString).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
+                                            //Toast.makeText(getApplicationContext(),"예약불가",Toast.LENGTH_SHORT).show();
+                                            tt++;
+                                        }
+                                    } else if (i == 9) {
+                                        if (snapshot.child("2020").child(dayString).child("09").child("id").getValue().toString().equals(loginId)) {
+                                            //Toast.makeText(getApplicationContext(),"예약불가",Toast.LENGTH_SHORT).show();
+                                            tt++;
+                                        }
+                                    }
+                                }
+                            }
+                                if(tt==0)
+                                {
+
+                                    SeminarReservationDialog reservationDialog = new SeminarReservationDialog(seminarDay.this);
+                                    //커스텀 다이얼로그를 호출한다.
+                                    reservationDialog.callFunction("Seminar", RoomNum, dayString, timeString, checkuntilk);
+                                }
+                                else
+                                {
+                                    Toast.makeText(getApplicationContext(),"하루에 한번만 예약 가능합니다.",Toast.LENGTH_SHORT).show();
+                                }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+
+                    });
+
+
+
 
 
 
@@ -398,10 +344,80 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+
+                final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
+               query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(final DataSnapshot snapshot) {
+
+
+                        for(int i=9;i<23;i++) {
+                            if (snapshot.child("2020").child(dayString).hasChild(Integer.toString(i))) {
+                                if (i != 9) {
+                                    if (snapshot.child("2020").child(dayString).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
+                                        myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(dayString).child(Integer.toString(i)).child("enter").setValue(true)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.e(Zone,"체크인 성공");
+                                                        ShowToast("체크인 성공");
+
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e(Zone,"체크인 실패");
+                                                        ShowToast("체크인 실패");
+
+                                                    }
+                                                });
+                                    }
+                                } else if (i == 9) {
+                                    if (snapshot.child("2020").child(dayString).child("09").child("id").getValue().toString().equals(loginId)) {
+                                        myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(dayString).child("09").child("enter").setValue(true)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.e(Zone,"체크인 성공");
+                                                        ShowToast("체크인 성공");
+
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e(Zone,"체크인 실패");
+                                                        ShowToast("체크인 실패");
+
+                                                    }
+                                                });
+
+                                    }
+                                }
+                            }
+                            else {
+
+                            }
+
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w("loadUser:onCancelled", databaseError.toException());
+                    }
+                });
+
+
+             /*   IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
                 intentIntegrator.setOrientationLocked(false);
                 intentIntegrator.setBeepEnabled(false);//바코드 인식시 소리
-                intentIntegrator.initiateScan();
+                intentIntegrator.initiateScan();*/
             }
         });
 
@@ -453,34 +469,6 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
 
     }
-    void testMethod(int position)
-    {
-        final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //Toast.makeText(getApplicationContext(),snapshot.child(selday).child(seltime).getValue().toString(),Toast.LENGTH_SHORT).show();
-                try {
-                    if (snapshot.child(dayString).child(timeString).child("status").getValue().equals(true)) {
-
-
-                    } else {
-
-                    }
-
-
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     @Override
 
@@ -488,56 +476,208 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         smalladapter.notifyDataSetChanged();
         middleadapter.notifyDataSetChanged();
 
-        if (checkday == 0){
+        if (checkday == 0) {
             checkday = 1;
             checkdayinfo = textView;
-            checkdayinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
-        }else if (checkdayinfo.getText() != textView.getText()){
-            checkdayinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
+            //checkdayinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            checkdayinfo.setTextColor(Color.parseColor("#ff414d"));
+            checkdayinfo.setTypeface(textView.getTypeface(), Typeface.BOLD);
+        } else if (checkdayinfo.getText() != textView.getText()) {
+            //checkdayinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
+            checkdayinfo.setTextColor(Color.parseColor("#000000"));
+            checkdayinfo.setTypeface(textView.getTypeface(), Typeface.NORMAL);
             checkdayinfo = textView;
-            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            //textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            textView.setTextColor(Color.parseColor("#ff414d"));
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         }
+        {
+        if (position == 1) {
+            smalldata.clear();
+
+            if (Integer.parseInt(time) <= 9) {
+                smalldata.add(new ListData(timeinfo1));
+                smalldata.add(new ListData(timeinfo2));
+                smalldata.add(new ListData(timeinfo3));
+                smalldata.add(new ListData(timeinfo4));
+                smalldata.add(new ListData(timeinfo5));
+                smalldata.add(new ListData(timeinfo6));
+                smalldata.add(new ListData(timeinfo7));
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 10) {
+                smalldata.add(new ListData(timeinfo2));
+                smalldata.add(new ListData(timeinfo3));
+                smalldata.add(new ListData(timeinfo4));
+                smalldata.add(new ListData(timeinfo5));
+                smalldata.add(new ListData(timeinfo6));
+                smalldata.add(new ListData(timeinfo7));
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 11) {
+                smalldata.add(new ListData(timeinfo3));
+                smalldata.add(new ListData(timeinfo4));
+                smalldata.add(new ListData(timeinfo5));
+                smalldata.add(new ListData(timeinfo6));
+                smalldata.add(new ListData(timeinfo7));
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 12) {
+                smalldata.add(new ListData(timeinfo4));
+                smalldata.add(new ListData(timeinfo5));
+                smalldata.add(new ListData(timeinfo6));
+                smalldata.add(new ListData(timeinfo7));
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 13) {
+                smalldata.add(new ListData(timeinfo5));
+                smalldata.add(new ListData(timeinfo6));
+                smalldata.add(new ListData(timeinfo7));
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 14) {
+                smalldata.add(new ListData(timeinfo6));
+                smalldata.add(new ListData(timeinfo7));
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 15) {
+                smalldata.add(new ListData(timeinfo7));
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 16) {
+                smalldata.add(new ListData(timeinfo8));
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 17) {
+                smalldata.add(new ListData(timeinfo9));
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 18) {
+                smalldata.add(new ListData(timeinfo10));
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 19) {
+                smalldata.add(new ListData(timeinfo11));
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 20) {
+                smalldata.add(new ListData(timeinfo12));
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) <= 21) {
+                smalldata.add(new ListData(timeinfo13));
+            } else if (Integer.parseInt(time) > 21) {
+                smalldata.add(new ListData(timeinfoover));
+            }
+        } else {
+            smalldata.clear();
+            smalldata.add(new ListData(timeinfo1));
+            smalldata.add(new ListData(timeinfo2));
+            smalldata.add(new ListData(timeinfo3));
+            smalldata.add(new ListData(timeinfo4));
+            smalldata.add(new ListData(timeinfo5));
+            smalldata.add(new ListData(timeinfo6));
+            smalldata.add(new ListData(timeinfo7));
+            smalldata.add(new ListData(timeinfo8));
+            smalldata.add(new ListData(timeinfo9));
+            smalldata.add(new ListData(timeinfo10));
+            smalldata.add(new ListData(timeinfo11));
+            smalldata.add(new ListData(timeinfo12));
+            smalldata.add(new ListData(timeinfo13));
+        }
+    }
+
+        smalladapter = new MysmallAdapter(smalldata);
+        recyclertime.setAdapter(smalladapter);
+
+        smalladapter.setOnClickListener(this);
 
         //textView.setBackgroundColor(Color.RED);
         recyclertime.setVisibility(View.VISIBLE);
         recycleruntil.setVisibility(View.GONE);
         dayString= textView.getText().toString();
 
-       // Toast.makeText(getApplicationContext(), position + dayString, Toast.LENGTH_SHORT).show();
-        //textView.setBackgroundColor(Color.rgb(255,0,0));
 
-
-      /*  if(position == 1){
-            for (int i = 0; i < 13; i++){
-                if(Integer.parseInt(time) <= Integer.parseInt(smalldata.get(i).getSubject().getText().toString().substring(0, 2))){
-                    //arraytimeinfo[position - 1].setEnabled(true);
-                }
-
-            }
-        }*/
 
     }
 
     @Override
-    public void onSmallItemClicked(final int position, TextView textView, int alpha) {
+    public void onSmallItemClicked(final int position, TextView textView) {
         timeString= textView.getText().toString();
         timeString=timeString.substring(0,2);
 
-        tempview.setBackground(ContextCompat.getDrawable(tempview.getContext(), R.drawable.round_textview_reser));
 
         if (checktime == 0){
+            //tempview.setBackground(textView.getBackground());
+            tempview.setTextColor(textView.getTextColors());
+            tempview.setTypeface(textView.getTypeface());
             checktime = 1;
             checktimeinfo = textView;
-            checktimeinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
-        } else if (alpha == 1){
-            checktimeinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_reser));
+            //textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            textView.setTextColor(Color.parseColor("#ff414d"));
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+        } else{
+            //checktimeinfo.setBackground(tempview.getBackground());
+            checktimeinfo.setTextColor(tempview.getTextColors());
+            checktimeinfo.setTypeface(tempview.getTypeface());
             checktimeinfo = textView;
-            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
-        } else if(alpha == 0){
-            checktimeinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
-            checktimeinfo = textView;
-            textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            //tempview.setBackground(textView.getBackground());
+            //textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            textView.setTextColor(Color.parseColor("#ff414d"));
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         }
+
+        if (position == 13){
+            untildata.clear();
+            untildata.add(new ListData(untilinfo1));
+        }else if(position == 12){
+            untildata.clear();
+            untildata.add(new ListData(untilinfo1));
+            untildata.add(new ListData(untilinfo2));
+        }else {
+            untildata.clear();
+            untildata.add(new ListData(untilinfo1));
+            untildata.add(new ListData(untilinfo2));
+            untildata.add(new ListData(untilinfo3));
+        }
+
+        untiladapter = new MyuntilAdapter(untildata);
+        recycleruntil.setAdapter(untiladapter);
+
+        untiladapter.setOnClickListener(this);
 
 
         //Toast.makeText(getApplicationContext(), timeString, Toast.LENGTH_SHORT).show();
@@ -562,27 +702,15 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                     }
                 }
                 else {
-                 /*   if (position == 13){
-                        untildata.clear();
-                        untildata.add(new ListData(untilinfo1));
-                    }else if(position == 12){
-                        untildata.clear();
-                        untildata.add(new ListData(untilinfo1));
-                        untildata.add(new ListData(untilinfo2));
-                    }else {
-                        untildata.clear();
-                        untildata.add(new ListData(untilinfo1));
-                        untildata.add(new ListData(untilinfo2));
-                        untildata.add(new ListData(untilinfo3));
-                    }
 
-                    untiladapter = new MyuntilAdapter(untildata);
-                    recycleruntil.setAdapter(untiladapter);
-                    //untiladapter.notifyDataSetChanged();*/
+
+
+                    //untiladapter.notifyDataSetChanged();
 
                     recycleruntil.setVisibility(View.VISIBLE);
                     btnCancel.setVisibility(View.GONE);
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -598,14 +726,18 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         untillString = textView.getText().toString();
         checkuntilk = Integer.parseInt(untillString.substring(0,1));
 
-        if (checkuntil == 0 && checkuntil == 2){
+        if (checkuntil == 0){
             checkuntil = 1;
             checkuntilinfo = textView;
-           // checkuntilinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            //checkuntilinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            checkuntilinfo.setTextColor(Color.parseColor("#ff414d"));
+            checkuntilinfo.setTypeface(textView.getTypeface(), Typeface.BOLD);
         }else{
-           // checkuntilinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
+            checkuntilinfo.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_list));
             checkuntilinfo = textView;
-          //  textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            //textView.setBackground(ContextCompat.getDrawable(this, R.drawable.round_textview_check));
+            textView.setTextColor(Color.parseColor("#ff414d"));
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
         }
 
         //Toast.makeText(getApplicationContext(), untillString, Toast.LENGTH_SHORT).show();
@@ -619,38 +751,66 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_LONG).show();
-            } else if (result.getContents().equals("1")) {
+            } else if (result.getContents().equals("seminar")) {
 
-                final String SeatNumber = result.getContents();
                 final Query query = myRef.child("Seat").child(Zone).child(result.getContents());
-
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
-                    public void onDataChange(final DataSnapshot datasnapshot) {
+                    public void onDataChange(final DataSnapshot snapshot) {
 
 
-                        //datasnapshot.child("2020").child("11").child("12").child(09).getValue().equals()
+                        for(int i=9;i<23;i++) {
+                            if (snapshot.child("2020").child(dayString).hasChild(Integer.toString(i))) {
+                                if (i != 9) {
+                                    if (snapshot.child("2020").child(dayString).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
+                                        myRef.child("Seat").child(Zone).child(result.getContents()).child("2020").child(dayString).child(Integer.toString(i)).child("enter").setValue(true)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.e(Zone,"체크인 성공");
+                                                        ShowToast("체크인 성공");
 
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e(Zone,"체크인 실패");
+                                                        ShowToast("체크인 실패");
 
+                                                    }
+                                                });
+                                    }
+                                } else if (i == 9) {
+                                    if (snapshot.child("2020").child(dayString).child("09").child("id").getValue().toString().equals(loginId)) {
+                                        myRef.child("Seat").child(Zone).child(result.getContents()).child("2020").child(dayString).child("09").child("enter").setValue(true)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.e(Zone,"체크인 성공");
+                                                        ShowToast("체크인 성공");
 
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.e(Zone,"체크인 실패");
+                                                        ShowToast("체크인 실패");
 
+                                                    }
+                                                });
 
-                /*        Query query = myRef.child("reservation").child(Zone);
-                        query.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-
+                                    }
+                                }
                             }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-
+                            else
+                            {
+                                ShowToast("체크인 실패 \n예약 내용이 없습니다.");
                             }
-                        });*/
+                        }
+
 
 
                     }
@@ -666,4 +826,10 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
             Toast.makeText(getApplicationContext(), "잘못된 QR코드 입니다.", Toast.LENGTH_SHORT).show();
         }
     }
+    public void ShowToast(String msg)
+    {
+        Toast toast = Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
 }

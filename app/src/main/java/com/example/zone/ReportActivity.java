@@ -57,18 +57,19 @@ public class ReportActivity extends AppCompatActivity {
         Date mDate = new Date(now);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
         final String getTime = simpleDate.format(mDate);
-
-
-        final Query query = myRef.child("Seat").child("QuietZone");
+        uselist.add("0");
+                    //uselist.add("12");
+       final Query query = myRef.child("Seat").child("QuietZone");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                for(int i =1;i<84;i++) {
+                for(int i =1;i<85;i++) {
 
                     if(datasnapshot.child(Integer.toString(i)).child("status").getValue().equals(true)){
                         uselist.add(Integer.toString(i));
                     }
+
                 }
             }
 
@@ -84,9 +85,7 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-
-
-       /* for (int i =1;i<85;i++) {
+     /*   for (int i =1;i<85;i++) {
             uselist.add(Integer.toString(i));
         }*/
         ArrayAdapter<String> crimeradapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, uselist);
@@ -106,41 +105,46 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //uselist.
+                if(reportEditText.getText().toString().equals(""))
+                {
+                    showToast("신고내용을 입력 해 주세요");
+                }//좌석선택 안했을시 if 추가 하기
+                else {
+                    reportText = reportEditText.getText().toString();
 
-                reportText = reportEditText.getText().toString();
-                Query query = myRef.child("Report");
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    Query query = myRef.child("Report");
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(DataSnapshot datasnapshot) {
+                        @Override
+                        public void onDataChange(DataSnapshot datasnapshot) {
 
-                        noCnt=(int)datasnapshot.getChildrenCount();
-                        ReportVO reportVO = new ReportVO(noCnt,loginId, getTime, reportText,false);
-                        myRef.child("Report").push().setValue(reportVO)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.e(TAG, "회원가입 성공");
-                                        showToast("신고 완료");
-                                        finish();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e(TAG, "신고 에러");
-                                        showToast("신고하는 도중에 에러가 발생하였습니다.");
+                            noCnt = (int) datasnapshot.getChildrenCount();
+                            ReportVO reportVO = new ReportVO(noCnt, loginId, getTime, reportText, false, crimer.getSelectedItem().toString());
+                            myRef.child("Report").push().setValue(reportVO)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.e(TAG, "신고 성공");
+                                            showToast("신고 완료");
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e(TAG, "신고 에러");
+                                            showToast("신고하는 도중에 에러가 발생하였습니다.");
 
-                                    }
-                                });
-                    }
+                                        }
+                                    });
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-
+                        }
+                    });
+                }
 
             }
         });

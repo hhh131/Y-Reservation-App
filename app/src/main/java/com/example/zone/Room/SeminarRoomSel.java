@@ -22,6 +22,7 @@ public class SeminarRoomSel extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seminar);
+        setTitle("세미나실 선택");
         for (int i = 0; i < 9; i++) {
             ButtonArray[i] = (Button) findViewById(buttons[i]);
             buttonIndex[i] = ButtonArray[i].getText().toString();
@@ -35,7 +36,7 @@ public class SeminarRoomSel extends AppCompatActivity implements View.OnClickLis
         Sbutton = (Button) v;
 
         String SeminarRoom=Sbutton.getText().toString();
-
+        SeminarRoom=SeminarRoom.substring(0,1);
         Intent intent=new Intent(SeminarRoomSel.this, seminarDay.class);
         intent.putExtra("RoomNum",SeminarRoom);
         startActivity(intent);
