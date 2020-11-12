@@ -669,6 +669,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         untiladapter.setOnClickListener(this);
 
 
+
         //Toast.makeText(getApplicationContext(), timeString, Toast.LENGTH_SHORT).show();
 
        // smalladapter.notifyDataSetChanged();
@@ -680,29 +681,37 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //Toast.makeText(getApplicationContext(),snapshot.child(selday).child(seltime).getValue().toString(),Toast.LENGTH_SHORT).show();
-                if(snapshot.child(dayString).hasChild(timeString)) {
-                    if (snapshot.child(dayString).child(timeString).child("id").getValue().toString().equals(loginId)) {
-                            btnCancel.setVisibility(View.VISIBLE);
 
-
+          /*          int tmp=Integer.parseInt(timeString);
+                    if (snapshot.child(dayString).child(Integer.toString(tmp+1)).child("status").getValue().equals(true)) {
+                        untildata.clear();
+                        untildata.add(new ListData(untilinfo1));
+                        ShowToast("앞에 뭐있음 성공");
+                        ShowToast(tmp+"");
                     }
-                    else
+                    else if(snapshot.child(dayString).hasChild(Integer.toString(tmp+2)))
                     {
-
-                        btnCancel.setVisibility(View.GONE);
+                        untildata.clear();
+                        untildata.add(new ListData(untilinfo1));
+                        untildata.add(new ListData(untilinfo2));
+                        ShowToast(tmp+"");
+                        //btnCancel.setVisibility(View.GONE);
                     }
+                    else{
+                        ShowToast(tmp+"");
+                    }*/
+
                 }
-                else {
 
-
+                    //ShowToast("앞에 뭐있음 성공");
 
                     //untiladapter.notifyDataSetChanged();
 
-                    recycleruntil.setVisibility(View.VISIBLE);
+                /*    recycleruntil.setVisibility(View.VISIBLE);
                     btnCancel.setVisibility(View.GONE);
-                }
+               */
 
-            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
