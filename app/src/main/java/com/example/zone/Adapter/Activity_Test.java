@@ -467,8 +467,8 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                                         Log.e(ZONE, "좌석변경 성공");
                                         Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
                                         createNotificationChannel(SeatNumber);
-                                        myAdapter.notifyDataSetChanged();
-
+                                        //myAdapter.notifyDataSetChanged();
+                                        finish();
 
                                     }
                                 });

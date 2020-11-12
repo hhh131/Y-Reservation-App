@@ -2,6 +2,7 @@ package com.example.zone.Room;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.zone.R;
 import com.example.zone.SeminarReservationDialog;
 import com.example.zone.Utill;
+import com.example.zone.Vo.ReservationVO;
+import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -50,7 +54,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     public static String dayString="",timeString="",untillString="";
     private RecyclerView recyclerday, recyclertime, recycleruntil;
     private LinearLayoutManager linearLayoutManager1, linearLayoutManager2, linearLayoutManager3;
-
+    int j=0;
     private TextView dayinfo1, dayinfo2, dayinfo3, dayinfo4, dayinfo5;
     private TextView timeinfo1, timeinfo2, timeinfo3, timeinfo4, timeinfo5, timeinfo6, timeinfo7, timeinfo8, timeinfo9, timeinfo10, timeinfo11, timeinfo12, timeinfo13, timeinfoover;
     private TextView untilinfo1, untilinfo2, untilinfo3;
@@ -78,10 +82,12 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
     SimpleDateFormat sdfweek = new SimpleDateFormat("EE", Locale.KOREAN);
     SimpleDateFormat sdftime = new SimpleDateFormat("HH");
+    SimpleDateFormat sdftime2 = new SimpleDateFormat("HH:MM");
     Activity activity = this;
     Calendar cal = Calendar.getInstance();
     IntentResult result;
     String time = sdftime.format(cal.getTime());        //현재시간
+    String time2 = sdftime2.format(cal.getTime());
     String Today;
     String[] day = new String[5];
     String[] dbday = new String[5];
@@ -105,7 +111,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         RoomNum = intent.getStringExtra("RoomNum");
         RoomNum = RoomNum + "번 방";
         setTitle(RoomNum);
-        btnCancel.setVisibility(View.GONE);
+       // btnCancel.setVisibility(View.GONE);
 
         recyclerday = (RecyclerView) findViewById(R.id.recyclerday);
         recyclertime = (RecyclerView) findViewById(R.id.recyclertime);
@@ -252,25 +258,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
             @Override
             public void onClick(View v) {
 
-
-                myRef.child("Seat").child(Zone).child(RoomNum).child(dayString).child(timeString).removeValue()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.e(Zone, "취소 성공");
-                                Toast.makeText(getApplicationContext(), "예약 성공", Toast.LENGTH_SHORT).show();
-                                // finish();
-                                smalladapter.notifyDataSetChanged();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e(Zone, "예약 실패");
-                                //howToast("회원가입 실패");
-
-                            }
-                        });
+                showMsg();
 
                /* final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -415,8 +403,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                     }
                 });
 
-
-             /*   IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
+     /*          IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
                 intentIntegrator.setOrientationLocked(false);
                 intentIntegrator.setBeepEnabled(false);//바코드 인식시 소리
                 intentIntegrator.initiateScan();*/
@@ -835,5 +822,75 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         Toast toast = Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
         toast.show();
     }
+    public void showMsg() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("안내");
+        builder.setMessage("예약을 취소 하시겠습니까?");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
 
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        j=0;
+                        for(int i =9;i<23;i++) {
+                            if(snapshot.child("2020").child(dayString).hasChild(Integer.toString(i))) {
+                                if (snapshot.child("2020").child(dayString).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {
+
+                                    myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(dayString).child(Integer.toString(i)).removeValue()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.e(Zone, "취소 성공");
+                                                    Toast.makeText(getApplicationContext(), "취소 성공", Toast.LENGTH_SHORT).show();
+                                                    // finish();
+                                                    smalladapter.notifyDataSetChanged();
+                                                    j++;
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e(Zone, "예약 실패");
+                                                    //howToast("회원가입 실패");
+
+                                                }
+                                            });
+
+                                }
+                            }
+                        }
+                        if(j==0)
+                        {
+                            Toast.makeText(getApplicationContext(), "취소 할 예약이 없습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+
+            }
+        });
+
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.e(Zone, "예약취소 취소");
+                Toast.makeText(getApplicationContext(), "예약취소를 취소했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
