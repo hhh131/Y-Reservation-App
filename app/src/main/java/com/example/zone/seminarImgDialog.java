@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -23,9 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.zone.Adapter.MyAdapter;
-import com.example.zone.Room.MysmallAdapter;
-import com.example.zone.Room.MyuntilAdapter;
-import com.example.zone.Vo.SeminarVO;
+import com.example.zone.Vo.ReservationVO;
+import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -37,28 +35,25 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
-public class SeminarReservationDialog {
+public class seminarImgDialog {
     //좌석 효율적 관리를 위해,,
 
     private static final String TAG = "CustomDialog";
     private Context context;
     CheckBox AgreeCB;
     Dialog dlg;
-    int CT;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    MysmallAdapter smalladapter;
-    MyuntilAdapter untiladapter;
     Utill utill;
     Boolean status;
     MyAdapter myAdapter;
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
-    public SeminarReservationDialog(Context context) {
+    public seminarImgDialog(Context context) {
         this.context = context;
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(final String Zone, final String RoomNum, final String dayString, final String timeString, final int checkuntilk, final MysmallAdapter smalladapter) {
+    public void callFunction(final String Zone) {
 
 
         utill = new Utill();
@@ -71,7 +66,7 @@ public class SeminarReservationDialog {
         dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg.setContentView(R.layout.seminar_dialog);
+        dlg.setContentView(R.layout.seminarimg_dialog);
         dlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
@@ -93,15 +88,15 @@ public class SeminarReservationDialog {
         final Button back = (Button) dlg.findViewById(R.id.back);
         AgreeCB = (CheckBox) dlg.findViewById(R.id.AgreeCB);
 
-        Seat.setText(RoomNum);
-        ZoneName.setText("세미나 실");
+        //Seat.setText(SeatNum);
+        ZoneName.setText(Zone);
         OKbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 database = FirebaseDatabase.getInstance();
                 myRef = database.getReference();
 
-                ZoneRe(Zone, RoomNum,dayString,timeString,checkuntilk,smalladapter);
+                //ZoneRe(Zone, SeatNum);
 
 
             }
@@ -118,65 +113,62 @@ public class SeminarReservationDialog {
     }
 
 
-    public void ZoneRe(final String Zone, final String RoomNum,final String dayString,final String timeString,final int checkuntilk,final MysmallAdapter smalladapter) {
+    public void ZoneRe(final String Zone, final String seatNum) {
 
         if (AgreeCB.isChecked() == true) {
 
 
-            final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
+
+            final Query query = myRef.child("Seat").child(Zone).child(seatNum);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
-                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    status =Boolean.parseBoolean(snapshot.child("status").getValue().toString());
+
+                    if (status.equals(false)) {
+                        SeatVO seatVO = new SeatVO(loginId, seatNum, utill.getDate(),true);
+                        myRef.child("Seat").child(Zone).child(seatNum).setValue(seatVO)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        ReservationVO reservationVO = new ReservationVO(Zone, seatNum, loginId, utill.getDate());
+
+                                        myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
+                                        Log.e(TAG, "좌석예약 성공");
+                                        Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
+                                        createNotificationChannel(seatNum);
+                                       // small.notifyDataSetChanged();
+                                        //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+                                        //createNotificationChannel(Integer.toString(position));
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                                        Log.e(TAG, "좌석예약 실패");
 
 
-                    if (datasnapshot.child(dayString).hasChild(timeString)) {
-
-                        Toast.makeText(context, "이미 예약중입니다.", Toast.LENGTH_SHORT).show();
-
-                    } else {
+                                    }
+                                });
 
 
-                        String dayStringSub=dayString.substring(0,5);
-                        SeminarVO seminarVO = new SeminarVO(loginId, true, false);
-                        String intime = timeString;
-                        //ReservationVO reservationVO = new ReservationVO(Zone,RoomNum,loginId,"");
-                        for (int a = 0; a < checkuntilk; a++) {
-                            myRef.child("Seat").child(Zone).child(RoomNum).child("2020").child(dayStringSub).child(intime).setValue(seminarVO)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.e(Zone, "예약 성공");
-                                            Toast.makeText(context, "예약 성공", Toast.LENGTH_SHORT).show();
-                                            // finish();
-                                            createNotificationChannel(RoomNum);
-                                            smalladapter.notifyDataSetChanged();
-                                            //smalladapter.notifyDataSetChanged();
-                                            //untiladapter.notifyDataSetChanged();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.e(Zone, "예약 실패");
-                                            Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    });
-                            CT = Integer.parseInt(intime) + 1;
-                            intime = Integer.toString(CT);
-                        }
                     }
+                    else
+                    {
+                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
+
+
+
                 }
-
-
-
-
-
-
-
-
-
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -221,15 +213,15 @@ public class SeminarReservationDialog {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo))
                //BitMap 이미지 요구
-                .setContentTitle("Seminar "+num+" 예약완료")
-                .setContentText("반드시 지정된 시간에 입실 해 주세요")
+                .setContentTitle("QuietZone "+num+"번 좌석 사용 중")
+                .setContentText("퇴실 전 반드시 좌석 반납처리 해주세요")
                 .setDefaults(Notification.FLAG_FOREGROUND_SERVICE)
                 // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
                 //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 //.setContentIntent(pendingIntent) // 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
-                .setAutoCancel(true);
-
+                .setAutoCancel(true)
+                .setOngoing(true);
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 

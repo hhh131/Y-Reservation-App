@@ -45,7 +45,8 @@ import java.util.ArrayList;
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
 import static com.example.zone.JoinLogin.LoginActivity.loginStatus;
 
-public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClickListener {
+public class
+Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClickListener {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     IntentResult result;
@@ -260,8 +261,8 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                                             myRef.child("reservation").child(ZONE).child(loginId).removeValue();
                                             showToast("좌석 반납 완료");
                                             cancleNotifi();
-                                            myAdapter.notifyDataSetChanged();
-
+                                            //myAdapter.notifyDataSetChanged();
+                                                finish();
 
 
                                         }
@@ -298,70 +299,70 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
 
     @Override
-    public void onItemClicked_1(int position) {
-       CreateDig(position);
+    public void onItemClicked_1(int position,Button btn) {
+       CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_2(int position) {
-        CreateDig(position);
+    public void onItemClicked_2(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_3(int position) {
-        CreateDig(position);
+    public void onItemClicked_3(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_4(int position) {
-        CreateDig(position);
+    public void onItemClicked_4(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_5(int position) {
-        CreateDig(position);
+    public void onItemClicked_5(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_6(int position) {
-        CreateDig(position);
+    public void onItemClicked_6(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_7(int position) {
-        CreateDig(position);
+    public void onItemClicked_7(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_8(int position) {
-        CreateDig(position);
+    public void onItemClicked_8(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_9(int position) {
-        CreateDig(position);
+    public void onItemClicked_9(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_10(int position) {
-        CreateDig(position);
+    public void onItemClicked_10(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_11(int position) {
-        CreateDig(position);
+    public void onItemClicked_11(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
     @Override
-    public void onItemClicked_12(int position) {
-        CreateDig(position);
+    public void onItemClicked_12(int position,Button btn) {
+        CreateDig(position,btn);
     }
 
 
 
 
 
-    public void CreateDig(final int position)
+    public void CreateDig(final int position,final Button btn)
 
     {
 
@@ -406,7 +407,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
                             } else {
                                 ReservationDialog reservationDialog = new ReservationDialog(context);
                                 // 커스텀 다이얼로그를 호출한다.
-                                reservationDialog.callFunction("QuietZone", SeatNumber);
+                                reservationDialog.callFunction("QuietZone", SeatNumber,btn);
                             }
                         }
 
@@ -560,7 +561,7 @@ public class Activity_Test extends AppCompatActivity implements MyAdapter.MyRecy
 
                                         ReservationDialog reservationDialog = new ReservationDialog(Activity_Test.this);
                                         //커스텀 다이얼로그를 호출한다.
-                                        reservationDialog.callFunction("QuietZone", result.getContents());
+                                        reservationDialog.callFunctionPos("QuietZone", result.getContents());
 
                                         //Toast.makeText(getApplicationContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 

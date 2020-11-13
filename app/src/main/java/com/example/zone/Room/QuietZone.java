@@ -301,7 +301,7 @@ public class QuietZone extends AppCompatActivity implements View.OnClickListener
 
                                         ReservationDialog reservationDialog = new ReservationDialog(QuietZone.this);
                                         //커스텀 다이얼로그를 호출한다.
-                                        reservationDialog.callFunction("QuietZone", result.getContents());
+                                       // reservationDialog.callFunction("QuietZone", result.getContents());
 
                                         //Toast.makeText(getApplicationContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
 

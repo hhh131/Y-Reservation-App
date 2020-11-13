@@ -35,9 +35,6 @@
             android:name=".Adapter.Activity_Test"
             android:parentActivityName=".List" />
         <activity
-            android:name=".Room.Willow"
-            android:parentActivityName=".List" />
-        <activity
             android:name=".Room.PcZoneActivity"
             android:parentActivityName=".List" />
         <activity

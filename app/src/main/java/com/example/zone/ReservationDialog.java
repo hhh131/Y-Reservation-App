@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.zone.Adapter.MyAdapter;
 import com.example.zone.Vo.ReservationVO;
@@ -53,7 +54,7 @@ public class ReservationDialog {
     }
 
     // 호출할 다이얼로그 함수를 정의한다.
-    public void callFunction(final String Zone, final String SeatNum) {
+    public void callFunction(final String Zone, final String SeatNum,final Button btn) {
 
 
         utill = new Utill();
@@ -96,7 +97,7 @@ public class ReservationDialog {
                 database = FirebaseDatabase.getInstance();
                 myRef = database.getReference();
 
-                ZoneRe(Zone, SeatNum);
+                ZoneRe(Zone, SeatNum,btn);
 
 
             }
@@ -112,8 +113,65 @@ public class ReservationDialog {
         });
     }
 
+    public void callFunctionPos(final String Zone, final String SeatNum) {
 
-    public void ZoneRe(final String Zone, final String seatNum) {
+
+        utill = new Utill();
+
+        // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
+
+        dlg = new Dialog(context);
+
+        // 액티비티의 타이틀바를 숨긴다.
+        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        // 커스텀 다이얼로그의 레이아웃을 설정한다.
+        dlg.setContentView(R.layout.custom_dialog);
+        dlg.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        WindowManager.LayoutParams params = dlg.getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        // params.height=WindowManager.LayoutParams.MATCH_PARENT;
+
+
+        // 커스텀 다이얼로그를 노출한다.
+        dlg.show();
+
+
+        // 커스텀 다이얼로그의 각 위젯들을 정의한다.
+
+        final TextView message = (TextView) dlg.findViewById(R.id.mesgase);
+        final TextView ZoneName = (TextView) dlg.findViewById(R.id.ZoneName);
+        final TextView Seat = (TextView) dlg.findViewById(R.id.SeatNum);
+        final Button OKbtn = (Button) dlg.findViewById(R.id.okButton);
+        final Button back = (Button) dlg.findViewById(R.id.back);
+        AgreeCB = (CheckBox) dlg.findViewById(R.id.AgreeCB);
+
+        Seat.setText(SeatNum);
+        ZoneName.setText(Zone);
+        OKbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database = FirebaseDatabase.getInstance();
+                myRef = database.getReference();
+
+                ZoneRePos(Zone, SeatNum);
+
+
+            }
+        });
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dlg.dismiss();
+
+            }
+        });
+    }
+    public void ZoneRePos(final String Zone, final String seatNum) {
 
         if (AgreeCB.isChecked() == true) {
 
@@ -139,6 +197,96 @@ public class ReservationDialog {
                                         Log.e(TAG, "좌석예약 성공");
                                         Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
                                         createNotificationChannel(seatNum);
+                                        //btn.setBackground(ContextCompat.getDrawable(btn.getContext(), R.drawable.round_bg_seat_my));
+                                        // small.notifyDataSetChanged();
+                                        //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
+                                        //createNotificationChannel(Integer.toString(position));
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                                        Log.e(TAG, "좌석예약 실패");
+
+
+                                    }
+                                });
+
+
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "예약 실패", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+
+
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+
+                }
+            });
+
+
+
+        }
+        else {
+            Toast.makeText(context, "동의 하셔야 좌석 예약이 가능합니다.", Toast.LENGTH_SHORT).show();
+        }
+        dlg.dismiss();
+
+
+
+
+
+
+        //showMsg();
+
+
+
+
+
+
+
+
+
+    }
+    public void ZoneRe(final String Zone, final String seatNum,final Button btn) {
+
+        if (AgreeCB.isChecked() == true) {
+
+
+
+            final Query query = myRef.child("Seat").child(Zone).child(seatNum);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    status =Boolean.parseBoolean(snapshot.child("status").getValue().toString());
+
+                    if (status.equals(false)) {
+                        SeatVO seatVO = new SeatVO(loginId, seatNum, utill.getDate(),true);
+                        myRef.child("Seat").child(Zone).child(seatNum).setValue(seatVO)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        ReservationVO reservationVO = new ReservationVO(Zone, seatNum, loginId, utill.getDate());
+
+                                        myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
+                                        Log.e(TAG, "좌석예약 성공");
+                                        Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
+                                        createNotificationChannel(seatNum);
+                                        btn.setBackground(ContextCompat.getDrawable(btn.getContext(), R.drawable.round_bg_seat_my));
                                        // small.notifyDataSetChanged();
                                         //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
                                         //createNotificationChannel(Integer.toString(position));

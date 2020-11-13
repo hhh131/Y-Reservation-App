@@ -9,8 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zone.R;
+import com.example.zone.seminarImgDialog;
 
-public class SeminarRoomSel extends AppCompatActivity implements View.OnClickListener{
+public class SeminarRoomSel extends AppCompatActivity implements View.OnClickListener,View.OnLongClickListener{
     Button Sbutton;
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9;
     int buttons[] = {R.id.seminar1, R.id.seminar2, R.id.seminar3, R.id.seminar4, R.id.seminar5, R.id.seminar6,
@@ -27,10 +28,22 @@ public class SeminarRoomSel extends AppCompatActivity implements View.OnClickLis
             ButtonArray[i] = (Button) findViewById(buttons[i]);
             buttonIndex[i] = ButtonArray[i].getText().toString();
             ButtonArray[i].setOnClickListener(this);
+            //ButtonArray[i].setOnLongClickListener(this);
         }
 
 
     }
+    @Override
+    public boolean onLongClick(View v) {
+
+        seminarImgDialog reservationDialog = new seminarImgDialog(getApplicationContext());
+        //커스텀 다이얼로그를 호출한다.
+        reservationDialog.callFunction("Seminar");
+        return false;
+    }
+
+
+
     @Override
     public void onClick(View v){
         Sbutton = (Button) v;
@@ -78,4 +91,6 @@ public class SeminarRoomSel extends AppCompatActivity implements View.OnClickLis
         }*/
 
     }
+
+
 }
