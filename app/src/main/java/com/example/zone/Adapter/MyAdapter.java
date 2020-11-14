@@ -32,18 +32,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
     String MySeatNum;
     Context context;
     public interface MyRecyclerViewClickListener {
-        void onItemClicked_1(int position,Button btn);
-        void onItemClicked_2(int position,Button btn);
-        void onItemClicked_3(int position,Button btn);
-        void onItemClicked_4(int position,Button btn);
-        void onItemClicked_5(int position,Button btn);
-        void onItemClicked_6(int position,Button btn);
-        void onItemClicked_7(int position,Button btn);
-        void onItemClicked_8(int position,Button btn);
-        void onItemClicked_9(int position,Button btn);
-        void onItemClicked_10(int position,Button btn);
-        void onItemClicked_11(int position,Button btn);
-        void onItemClicked_12(int position,Button btn);
+        void onItemClicked_1(int position, Button btn);
+        void onItemClicked_2(int position, Button btn);
+        void onItemClicked_3(int position, Button btn);
+        void onItemClicked_4(int position, Button btn);
+        void onItemClicked_5(int position, Button btn);
+        void onItemClicked_6(int position, Button btn);
+        void onItemClicked_7(int position, Button btn);
+        void onItemClicked_8(int position, Button btn);
+        void onItemClicked_9(int position, Button btn);
+        void onItemClicked_10(int position, Button btn);
+        void onItemClicked_11(int position, Button btn);
+        void onItemClicked_12(int position, Button btn);
     }
 
     private MyRecyclerViewClickListener mListener;

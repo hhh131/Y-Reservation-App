@@ -82,7 +82,8 @@
             android:id="@+id/crimer"
             android:layout_width="260dp"
             android:layout_height="40dp"
-            android:background="#ffffff" />
+            android:background="@drawable/round_bg"
+             />
 
     </LinearLayout>
     <LinearLayout
@@ -112,13 +113,28 @@
             android:textColor="#000000"
             android:textSize="17dp"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/reportbtn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/round_bg_btn"
+        android:layout_marginRight="5dp"
         android:text="신고하기">
 
     </Button>
+    <Button
+        android:id="@+id/waring"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_bg_btn"
+        android:text="신고내역">
+
+    </Button>
+    </LinearLayout>
 </LinearLayout>

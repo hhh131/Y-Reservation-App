@@ -1,5 +1,6 @@
 package com.example.zone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +42,7 @@ public class ReportActivity extends AppCompatActivity {
     List<String> uselist = new ArrayList<String>();
     TextView id, date;
     EditText reportEditText;
-    Button reportBtn;
+    Button reportBtn,waring;
     String reportText;
     int noCnt;
     @Override
@@ -53,11 +54,12 @@ public class ReportActivity extends AppCompatActivity {
         date = (TextView) findViewById(R.id.date);
         reportEditText = (EditText) findViewById(R.id.report);
         crimer = (Spinner)findViewById(R.id.crimer);
+        waring=(Button)findViewById(R.id.waring);
         long now = System.currentTimeMillis();
         Date mDate = new Date(now);
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
         final String getTime = simpleDate.format(mDate);
-        uselist.add("0");
+        uselist.add("--선택--");
                     //uselist.add("12");
        final Query query = myRef.child("Seat").child("QuietZone");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,7 +85,13 @@ public class ReportActivity extends AppCompatActivity {
 
 
 
-
+        waring.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), WarnigActivity.class);
+                startActivity(intent);
+            }
+        });
 
      /*   for (int i =1;i<85;i++) {
             uselist.add(Integer.toString(i));
@@ -104,48 +112,52 @@ public class ReportActivity extends AppCompatActivity {
         reportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //uselist.
-                if(reportEditText.getText().toString().equals(""))
+
+                if(crimer.getSelectedItem().equals("--선택--"))
                 {
-                    showToast("신고내용을 입력 해 주세요");
-                }//좌석선택 안했을시 if 추가 하기
-                else {
-                    reportText = reportEditText.getText().toString();
-
-                    Query query = myRef.child("Report");
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot datasnapshot) {
-
-                            noCnt = (int) datasnapshot.getChildrenCount();
-                            ReportVO reportVO = new ReportVO(noCnt, loginId, getTime, reportText, false, crimer.getSelectedItem().toString());
-                            myRef.child("Report").push().setValue(reportVO)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Log.e(TAG, "신고 성공");
-                                            showToast("신고 완료");
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.e(TAG, "신고 에러");
-                                            showToast("신고하는 도중에 에러가 발생하였습니다.");
-
-                                        }
-                                    });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                    showToast("좌석을 선택 해 주세요");
                 }
+                else {
+                    if (reportEditText.getText().toString().equals("")) {
+                        showToast("신고내용을 입력 해 주세요");
+                    }//좌석선택 안했을시 if 추가 하기
+                    else {
+                        reportText = reportEditText.getText().toString();
 
+                        Query query = myRef.child("Report");
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot datasnapshot) {
+
+                                noCnt = (int) datasnapshot.getChildrenCount();
+                                ReportVO reportVO = new ReportVO(noCnt, loginId, getTime, reportText, false, crimer.getSelectedItem().toString());
+                                myRef.child("Report").push().setValue(reportVO)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.e(TAG, "신고 성공");
+                                                showToast("신고 완료");
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e(TAG, "신고 에러");
+                                                showToast("신고하는 도중에 에러가 발생하였습니다.");
+
+                                            }
+                                        });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
             }
         });
 

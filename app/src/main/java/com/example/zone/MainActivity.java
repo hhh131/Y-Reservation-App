@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("도서관 시설 예약");
         setTheme(android.R.style.Theme_NoTitleBar);
-        loginbtn = (Button) findViewById(R.id.loginButton);
+
         report = (Button) findViewById(R.id.reportbtn);
         zone = (Button) findViewById(R.id.mainReadingRoomSelectButton);
-        loginTv = (TextView) findViewById(R.id.loginText);
 
        // img = (ImageView) findViewById(R.id.imageView1);
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -86,26 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(loginStatus==true) {
 
-            loginTv.setText("로그아웃");
 
-            Query query = myRef.child("reservation").child("QuietZone");
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot datasnapshot) {
-                        if(datasnapshot.hasChild(loginId))
-                        {
-                            reverInfo=datasnapshot.child(loginId).child("reservationType").getValue().toString();
-                            SeatNum=datasnapshot.child(loginId).child("seatNum").getValue().toString();
 
-                        }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.w("loadUser:onCancelled", databaseError.toException());
-                }
-            });
 
 
 
@@ -135,10 +119,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
-        else {
-            loginTv.setText("로그인");
 
-        }
 
 
     zone.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(loginStatus==true) {
                 if (BlackCheck == false) {
-                    Intent intent = new Intent(getApplicationContext(), List.class);
+                    Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
                     startActivity(intent);
                 } else {
                     showToast("블랙 리스트에 등록되어 3개월간 이용하실 수 없습니다.");
@@ -204,27 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     });
-        loginbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if(loginStatus==true)
-                {
-                    loginStatus=false;
-                    loginId="";
-                    showToast("로그아웃 되었습니다.");
-                   // loginTv.setText("로그인");
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.putExtra("login",1);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-
-                }
-                }
-
-        });
     }
 /*
     @Override
@@ -260,6 +221,33 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        if(loginStatus==true)
+        {
+            loginStatus=false;
+            loginId="";
+            showToast("로그아웃 되었습니다.");
+            // loginTv.setText("로그인");
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.putExtra("login",1);
+            startActivity(intent);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
 
 

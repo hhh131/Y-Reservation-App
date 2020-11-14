@@ -469,7 +469,9 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
                                         Toast.makeText(getApplicationContext(), "좌석 변경 완료", Toast.LENGTH_SHORT).show();
                                         createNotificationChannel(SeatNumber);
                                         //myAdapter.notifyDataSetChanged();
+                                        Intent intent = getIntent();
                                         finish();
+                                        startActivity(intent);
 
                                     }
                                 });

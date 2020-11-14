@@ -1,12 +1,10 @@
 package com.example.zone.Room;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -187,76 +185,6 @@ public class PcZoneActivity extends AppCompatActivity {
         return true;
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if(item.getItemId()== R.id.menu1) {
-            Query query = myRef.child("reservation").child("PcZone").child(loginId);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                    try {
-
-                        if(datasnapshot.getValue()!=null) {
-                            SeatNum = datasnapshot.child("seatNum").getValue().toString();
-                        }
-                        else
-                        {
-                            showToast("반납 할 좌석이 없습니다.");
-                        }
-                    } catch (Exception e) {
-
-                    }
-
-                    Query query = myRef.child("Seat").child("PcZone").child(SeatNum);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-                        @Override
-                        public void onDataChange(DataSnapshot datasnapshot) {
-
-                            try {
-                                if (datasnapshot.child("id").getValue().equals(loginId)) {
-                                   // SeatVO seatVO = new SeatVO(null, datasnapshot.child("seatNum").getValue().toString(), false);
-
-                                    //myRef.child("Seat").child("PcZone").child(SeatNum).setValue(seatVO);
-                                    myRef.child("reservation").child("PcZone").child(loginId).removeValue();
-
-                                    Intent intent = getIntent();
-                                    finish();
-                                    startActivity(intent);
-                                }
-                            } catch (Exception e) {
-                                showToast("반납할 좌석이 없습니다.");
-                            }
-                        }
-
-
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.w("loadUser:onCancelled", databaseError.toException());
-                        }
-                    });
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
-        else
-        {
-            finish();
-        }
-
-
-
-        return true;
-    }
     public void CreateDig(Button btn)
     {
         ReservationDialog reservationDialog = new ReservationDialog(PcZoneActivity.this);

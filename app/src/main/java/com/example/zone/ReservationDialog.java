@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.zone.Adapter.Activity_Test;
 import com.example.zone.Adapter.MyAdapter;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
@@ -201,7 +203,9 @@ public class ReservationDialog {
                                         // small.notifyDataSetChanged();
                                         //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
                                         //createNotificationChannel(Integer.toString(position));
-
+                                      Intent  intent = new Intent(context, Activity_Test.class);
+                                        ((Activity_Test)context).finish();
+                                        context.startActivity(intent);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

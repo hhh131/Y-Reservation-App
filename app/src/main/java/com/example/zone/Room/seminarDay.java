@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,7 +60,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     private TextView[] arraytimeinfo = {timeinfo1, timeinfo2, timeinfo3, timeinfo4, timeinfo5, timeinfo6, timeinfo7, timeinfo8, timeinfo9, timeinfo10, timeinfo11, timeinfo12, timeinfo13};
     private TextView[] arrayuntilinfo = {untilinfo1, untilinfo2, untilinfo3};
     private Button btncheckin,btnCancel;
-    private TextView status;
+    private Button status;
     TextView tempview;
     private String[] hour = {"09:00 \n- 10:00", "10:00\n- 11:00", "11:00\n- 12:00", "12:00\n- 13:00", "13:00\n- 14:00", "14:00\n- 15:00",
                     "15:00\n- 16:00", "16:00\n- 17:00", "17:00\n- 18:00", "18:00\n- 19:00", "19:00\n- 20:00", "20:00\n- 21:00", "21:00\n- 22:00"};
@@ -104,7 +105,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabmenu);
         //ShowToast(utill.getDate());
-        status = (TextView) findViewById(R.id.status);
+        status = (Button) findViewById(R.id.status);
 
 
         btncheckin = (Button) findViewById(R.id.btncheckin);
@@ -227,7 +228,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         untildata.add(new ListData(untilinfo2));
         untildata.add(new ListData(untilinfo3));
 
-        status.setText(time + "");
+
 
         /*if(biglist.getSelectedItem() == null){
             middlelist.setVisibility(View.INVISIBLE);
@@ -350,17 +351,25 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                        for (int i = 9; i < 23; i++) {
 
                            if (snapshot.child(YearString).child(Today).hasChild(Integer.toString(i))) {
+                               String month, day;
+                               month = Today.substring(0, 2);
+                               day = Today.substring(3,5);
+                               sdftime2 = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+                               String strdate2 = YearString+"-"+month + "-" + day + " " + Integer.toString(i-1) + ":50";
 
-                               serCal.set(Calendar.HOUR, i-12);
-                               serCal.set(Calendar.MINUTE, 00);
-                               date1 = serCal.getTime();
+                               long now = System.currentTimeMillis();
+                               date1 = new Date(now);
+                               Log.e("시간", strdate2);
+                               try {
+                                   date2 = sdftime2.parse(strdate2);
 
-                               serCal.add(Calendar.MINUTE, -10);
-                               date2 = serCal.getTime();
+                               } catch (ParseException e) {
+                                   e.printStackTrace();
+                               }
 
-                               serCal = Calendar.getInstance();
-                               date1 = serCal.getTime();
-                                //showMsg(date1.toString()+date2.toString());
+                               //date2.setTime(date2.getTime() - 600000);
+
+                                showMsg(date1.toString()+date2.toString());
                                if (date1.after(date2)) {
                                    if (i != 9) {
                                        if (snapshot.child(YearString).child(Today).child(Integer.toString(i)).child("id").getValue().toString().equals(loginId)) {

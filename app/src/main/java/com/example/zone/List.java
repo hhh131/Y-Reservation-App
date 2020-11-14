@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,8 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +28,7 @@ public class List extends AppCompatActivity {
     ArrayList<String> midList;
     ArrayAdapter<String> adapter;
     LinearLayout QuietZoneLay,SeminarLay,DvdZoneLay,PCZoneLay;
-    TextView quietTv,dvdZoneTv,PcZoneTv,SeminarTv;
+    TextView quietTv,SeminarTv;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
@@ -51,10 +48,9 @@ public class List extends AppCompatActivity {
         setTitle("목록");
         QuietZoneLay = (LinearLayout)findViewById(R.id.QuietZoneLay);
         SeminarLay = (LinearLayout)findViewById(R.id.SeminarZoneLay);
-        PCZoneLay = (LinearLayout)findViewById(R.id.PCZoneLay);
+
         quietTv = (TextView)findViewById(R.id.tvstatus);
         SeminarTv=(TextView)findViewById(R.id.SeminarTv);
-        PcZoneTv = (TextView)findViewById(R.id.PcZoneTv);
 
 
 
@@ -105,16 +101,7 @@ public class List extends AppCompatActivity {
 
 
 
-        PCZoneLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), ReportActivity.class);
-                startActivity(intent);
-
-
-            }
-        });
 
 
         final Query query2 = myRef.child("Seat");
