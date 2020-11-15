@@ -14,34 +14,31 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".NotifiService"
-            android:enabled="true"
-            android:exported="true"></service>
-        <service
+            <service
             android:name=".FirebaseInstanceIDService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
+            </service>
+        <activity android:name=".WarnigActivity"
+            android:parentActivityName=".ReportActivity"  />
+        <activity android:name=".PCZone.PC"
+            android:parentActivityName=".List"        />
 
-        <activity android:name=".WarnigActivity" />
         <activity android:name=".MyInfoActivity" />
         <activity
-            android:name=".Room.seminarDay"
-            android:parentActivityName=".Room.SeminarRoomSel" />
+            android:name=".SeminarRoom.seminarDay"
+            android:parentActivityName=".SeminarRoom.seminarDay" />
         <activity
-            android:name=".Adapter.Activity_Test"
+            android:name=".QuietZone.Activity_Test"
             android:parentActivityName=".List" />
-        <activity
-            android:name=".Room.PcZoneActivity"
-            android:parentActivityName=".List" />
+
         <activity
             android:name=".ReportActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Room.SeminarRoomSel"
+            android:name=".SeminarRoom.SeminarRoomSel"
             android:parentActivityName=".List" />
         <activity
             android:name=".List"
@@ -53,9 +50,8 @@
             android:name=".JoinLogin.JoinActivity"
             android:parentActivityName=".JoinLogin.LoginActivity" />
         <activity
-            android:name=".Room.QuietZone"
-            android:parentActivityName=".List" />
-        <activity android:name=".MainActivity" />
+            android:name=".MainActivity"
+          />
         <activity
             android:name=".SplashActivity"
             android:label="유예시">

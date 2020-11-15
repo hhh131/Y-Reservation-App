@@ -1,4 +1,4 @@
-package com.example.zone.Adapter;
+package com.example.zone.PCZone;
 
 
 import android.content.Context;
@@ -24,9 +24,9 @@ import java.util.ArrayList;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
+public class PCAdapter extends RecyclerView.Adapter<PCAdapter.CustomViewHolder> {
 
-    private ArrayList<MainData> arrayList;
+    private ArrayList<PCMainData> arrayList;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     String MySeatNum;
@@ -52,22 +52,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         mListener = listener;
     }
 
-    public MyAdapter(ArrayList<MainData> arrayList) {
+    public PCAdapter(ArrayList<PCMainData> arrayList) {
         this.arrayList = arrayList;
     }
 
     @NonNull
     @Override
-    public MyAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_testitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_testitem_pc, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CustomViewHolder holder, int position) {
         holder.L_seat1.setText(arrayList.get(position).getL_seat1().getText());
         holder.L_seat2.setText(arrayList.get(position).getL_seat2().getText());
         holder.L_seat3.setText(arrayList.get(position).getL_seat3().getText());
@@ -82,7 +82,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         holder.R_seat6.setText(arrayList.get(position).getR_seat6().getText());
 
 
-        Query query = myRef.child("reservation").child("QuietZone").child(loginId);
+        Query query = myRef.child("reservation").child("PCZone").child(loginId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,7 +96,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             {
                 e.printStackTrace();
             }
-                Query query = myRef.child("Seat").child("QuietZone");
+                Query query = myRef.child("Seat").child("PCZone");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
 
 

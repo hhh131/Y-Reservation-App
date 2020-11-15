@@ -21,7 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.zone.Adapter.MyAdapter;
+import com.example.zone.QuietZone.MyAdapter;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;

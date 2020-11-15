@@ -1,4 +1,4 @@
-package com.example.zone.Adapter;
+package com.example.zone.QuietZone;
 
 import android.app.Activity;
 import android.app.Notification;

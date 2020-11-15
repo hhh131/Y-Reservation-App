@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.zone.JoinLogin.LoginActivity;
+import com.example.zone.PCZone.PC;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    private GpsTracker gpsTracker;
+
     Button loginbtn, zone, report;
     TextView loginTv, myZone, mySeatNum;
     Boolean BlackCheck = false;

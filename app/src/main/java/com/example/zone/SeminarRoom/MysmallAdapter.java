@@ -1,4 +1,4 @@
-package com.example.zone.Room;
+package com.example.zone.SeminarRoom;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
-import static com.example.zone.Room.seminarDay.RoomNum;
-import static com.example.zone.Room.seminarDay.dayString;
+import static com.example.zone.SeminarRoom.seminarDay.RoomNum;
+import static com.example.zone.SeminarRoom.seminarDay.dayString;
 
 public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomViewHolder> {
     private ArrayList<ListData> smalldata;

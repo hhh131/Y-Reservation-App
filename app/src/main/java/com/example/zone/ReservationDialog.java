@@ -23,8 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.zone.Adapter.Activity_Test;
-import com.example.zone.Adapter.MyAdapter;
+import com.example.zone.QuietZone.Activity_Test;
+import com.example.zone.QuietZone.MyAdapter;
 import com.example.zone.Vo.ReservationVO;
 import com.example.zone.Vo.SeatVO;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -198,7 +198,7 @@ public class ReservationDialog {
                                         myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석예약 성공");
                                         Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-                                        createNotificationChannel(seatNum);
+                                        createNotificationChannel(seatNum,Zone);
                                         //btn.setBackground(ContextCompat.getDrawable(btn.getContext(), R.drawable.round_bg_seat_my));
                                         // small.notifyDataSetChanged();
                                         //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
@@ -289,7 +289,7 @@ public class ReservationDialog {
                                         myRef.child("reservation").child(Zone).child(loginId).setValue(reservationVO);
                                         Log.e(TAG, "좌석예약 성공");
                                         Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
-                                        createNotificationChannel(seatNum);
+                                        createNotificationChannel(seatNum,Zone);
                                         btn.setBackground(ContextCompat.getDrawable(btn.getContext(), R.drawable.round_bg_seat_my));
                                        // small.notifyDataSetChanged();
                                         //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
@@ -353,7 +353,7 @@ public class ReservationDialog {
 
 
     }
-    private void createNotificationChannel(String num) {
+    private void createNotificationChannel(String num,String Room) {
 
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -365,7 +365,7 @@ public class ReservationDialog {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.logo))
                //BitMap 이미지 요구
-                .setContentTitle("QuietZone "+num+"번 좌석 사용 중")
+                .setContentTitle(Room+num+"번 좌석 사용 중")
                 .setContentText("퇴실 전 반드시 좌석 반납처리 해주세요")
                 .setDefaults(Notification.FLAG_FOREGROUND_SERVICE)
                 // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌

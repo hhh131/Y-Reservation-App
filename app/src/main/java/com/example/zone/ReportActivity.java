@@ -38,8 +38,9 @@ public class ReportActivity extends AppCompatActivity {
     DatabaseReference myRef = database.getReference();
 
     private static final String TAG = "ReportActivity";
-    private Spinner crimer;
+    private Spinner crimer,Zone;
     List<String> uselist = new ArrayList<String>();
+    List<String> useZone = new ArrayList<String>();
     TextView id, date;
     EditText reportEditText;
     Button reportBtn,waring;

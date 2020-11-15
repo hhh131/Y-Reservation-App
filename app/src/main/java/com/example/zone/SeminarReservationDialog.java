@@ -21,9 +21,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.zone.Adapter.MyAdapter;
-import com.example.zone.Room.MysmallAdapter;
-import com.example.zone.Room.MyuntilAdapter;
+import com.example.zone.QuietZone.MyAdapter;
+import com.example.zone.SeminarRoom.MysmallAdapter;
+import com.example.zone.SeminarRoom.MyuntilAdapter;
 import com.example.zone.Vo.SeminarVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

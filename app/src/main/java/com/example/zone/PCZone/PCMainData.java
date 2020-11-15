@@ -1,8 +1,8 @@
-package com.example.zone.Adapter;
+package com.example.zone.PCZone;
 
 import android.widget.Button;
 
-public class MainData {
+public class PCMainData {
     private Button L_seat1;
     private Button L_seat2;
     private Button L_seat3;
@@ -16,7 +16,7 @@ public class MainData {
     private Button R_seat5;
     private Button R_seat6;
 
-    public MainData(Button l_seat1, Button l_seat2, Button l_seat3, Button r_seat1, Button r_seat2, Button r_seat3, Button l_seat4, Button l_seat5, Button l_seat6, Button r_seat4, Button r_seat5, Button r_seat6) {
+    public PCMainData(Button l_seat1, Button l_seat2, Button l_seat3, Button r_seat1, Button r_seat2, Button r_seat3, Button l_seat4, Button l_seat5, Button l_seat6, Button r_seat4, Button r_seat5, Button r_seat6) {
         L_seat1 = l_seat1;
         L_seat2 = l_seat2;
         L_seat3 = l_seat3;
