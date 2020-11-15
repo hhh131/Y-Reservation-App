@@ -43,7 +43,7 @@ public class seminarImgDialog {
     CheckBox AgreeCB;
     Dialog dlg;
     FirebaseDatabase database;
-    DatabaseReference myRef;
+    DatabaseReference myRef,test;
     Utill utill;
     Boolean status;
     MyAdapter myAdapter;

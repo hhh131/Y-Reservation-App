@@ -274,7 +274,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         protected Button R_seat4;
         protected Button R_seat5;
         protected Button R_seat6;
-
+//test
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
 
