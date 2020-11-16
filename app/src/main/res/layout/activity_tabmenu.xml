@@ -26,6 +26,7 @@
             android:layout_width="140dp"
             android:layout_height="600dp"
             android:fontFamily="@font/gmarketfont"
+
            />
 
         <androidx.recyclerview.widget.RecyclerView

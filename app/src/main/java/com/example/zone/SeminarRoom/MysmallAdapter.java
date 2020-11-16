@@ -74,6 +74,7 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
         holder.subject.setText(smalldata.get(position).getSubject().getText());
         //Typeface face = Typeface.createFromAsset(context.getAssets(),"font/cafe24font.ttf");
         //holder.subject.setTypeface(face);
+        holder.subject.setTextSize(20);
         final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -89,14 +90,14 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
                     {
                         if(datasnapshot.child("2020").child(dayString).child(TimeString).child("id").getValue().toString().equals(loginId)) {
                             //holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_reser));
-                            holder.subject.setTextColor(Color.parseColor("#28df99"));
+                            holder.subject.setTextColor(Color.parseColor("#00ff00"));
                             holder.subject.setTypeface(holder.subject.getTypeface(), Typeface.BOLD);
                             holder.subject.setEnabled(false);
                         }
                         else
                         {
                             //holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_list));
-                            holder.subject.setTextColor(Color.parseColor("#ffff00"));
+                            holder.subject.setTextColor(Color.parseColor("#0000ff"));
                             holder.subject.setTypeface(holder.subject.getTypeface(), Typeface.BOLD);
                             holder.subject.setEnabled(false);
                         }

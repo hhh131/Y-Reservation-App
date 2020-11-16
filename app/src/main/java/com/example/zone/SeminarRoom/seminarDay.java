@@ -51,7 +51,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
     public static String dayString="",timeString="",untillString="";
     private RecyclerView recyclerday, recyclertime, recycleruntil;
     private LinearLayoutManager linearLayoutManager1, linearLayoutManager2, linearLayoutManager3;
-    static int j=0;
+    int j=0;
     private TextView dayinfo1, dayinfo2, dayinfo3, dayinfo4, dayinfo5;
     private TextView timeinfo1, timeinfo2, timeinfo3, timeinfo4, timeinfo5, timeinfo6, timeinfo7, timeinfo8, timeinfo9, timeinfo10, timeinfo11, timeinfo12, timeinfo13, timeinfoover;
     private TextView untilinfo1, untilinfo2, untilinfo3;
@@ -253,7 +253,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         checkdayinfo = dayinfo1;
         dayinfo1.setBackgroundColor(Color.RED);
 
-
+        status.setVisibility(View.GONE);
 
         middleadapter.setOnClickListener(this);
         smalladapter.setOnClickListener(this);
@@ -262,24 +262,47 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
             @Override
             public void onClick(View v) {
 
-                showMsg(dayString);
-                /*final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
 
+                final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         for (int i = 9; i < 23; i++) {
-                            if (datasnapshot.child(YearString).child(Today).hasChild(Integer.toString(i))) {
+                            if (i == 9) {
 
+                                if (snapshot.child(YearString).child(dayString).hasChild("09")) {
+                                    if (snapshot.child(YearString).child(dayString).child("09").child("id").getValue().equals(loginId)) {
+                                        j++;
+
+
+                                    }
+                                }
+                            } else {
+                                if (snapshot.child(YearString).child(dayString).hasChild(Integer.toString(i))) {
+                                    if (snapshot.child(YearString).child(dayString).child(Integer.toString(i)).child("id").getValue().equals(loginId)) {
+                                        j++;
+
+                                    }
+                                }
                             }
                         }
+
+
+                        if(j!=0)
+                        {
+                           showMsg(Today);
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "취소 할 예약이 없습니다.", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-            });*/
+                });
             }
         });
         btncheckin.setOnClickListener(new View.OnClickListener() {
@@ -989,7 +1012,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                j = 0;
+
                 final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -997,18 +1020,20 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
                         for (int i = 9; i < 23; i++) {
                             if (i == 9) {
+
                                 if (snapshot.child(YearString).child(dayString).hasChild("09")) {
                                     if (snapshot.child(YearString).child(dayString).child("09").child("id").getValue().equals(loginId)) {
-
+                                        j++;
                                         myRef.child("Seat").child(Zone).child(RoomNum).child(YearString).child(dayString).child("09").removeValue()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
+
                                                         Log.e(Zone, "취소 성공");
                                                         Toast.makeText(getApplicationContext(), "취소 완료", Toast.LENGTH_SHORT).show();
                                                         // finish();
                                                         smalladapter.notifyDataSetChanged();
-                                                        j++;
+
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
@@ -1026,16 +1051,17 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
                                 if (snapshot.child(YearString).child(dayString).hasChild(Integer.toString(i))) {
 
                                     if (snapshot.child(YearString).child(dayString).child(Integer.toString(i)).child("id").getValue().equals(loginId)) {
-
+                                        j++;
                                         myRef.child("Seat").child(Zone).child(RoomNum).child(YearString).child(dayString).child(Integer.toString(i)).removeValue()
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
+
                                                         Log.e(Zone, "취소 성공");
                                                         Toast.makeText(getApplicationContext(), "취소 완료", Toast.LENGTH_SHORT).show();
                                                         // finish();
                                                         smalladapter.notifyDataSetChanged();
-                                                        j++;
+
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
@@ -1054,7 +1080,7 @@ public class seminarDay extends AppCompatActivity implements MyListAdapter.Mymid
 
                         if(j==0)
                         {
-                            Toast.makeText(getApplicationContext(), "취소 할 예약이 없습니다."+j, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "취소 할 예약이 없습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
 

@@ -228,24 +228,13 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
         MySeatReturnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Query query = myRef.child("reservation").child(ZONE);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
-                 Query query = myRef.child("reservation").child(ZONE).child(loginId);
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                            try {
-
-                                if(datasnapshot.getValue()!=null) {
-                                    SeatNum = datasnapshot.child("seatNum").getValue().toString();
-                                }
-                                else
-                                {
-                                    showToast("반납 할 좌석이 없습니다.");
-                                }
-                            } catch (Exception e) {
-
-                            }
-
+                        if(datasnapshot.hasChild(loginId)) {
+                            SeatNum = datasnapshot.child(loginId).child("seatNum").getValue().toString();
                             Query query = myRef.child("Seat").child(ZONE).child(SeatNum);
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -253,21 +242,15 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
                                 @Override
                                 public void onDataChange(DataSnapshot datasnapshot) {
 
-                                    try {
+
+                                    if(datasnapshot.hasChild("id")){
                                         if (datasnapshot.child("id").getValue().equals(loginId)) {
-                                            SeatVO seatVO = new SeatVO("0", datasnapshot.child("seatNum").getValue().toString(),"0" ,false);
+                                            returnMsg();
 
-                                            myRef.child("Seat").child(ZONE).child(SeatNum).setValue(seatVO);
-                                            myRef.child("reservation").child(ZONE).child(loginId).removeValue();
-                                            showToast("좌석 반납 완료");
-                                            cancleNotifi();
-                                            //myAdapter.notifyDataSetChanged();
-                                                finish();
+                                        }else {
 
-
+                                            showToast("반납할 좌석이 없습니다.");
                                         }
-                                    } catch (Exception e) {
-                                        showToast("반납할 좌석이 없습니다.");
                                     }
                                 }
 
@@ -277,14 +260,25 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
                                 }
                             });
 
+                        }
+                        else
+                        {
 
+                            showToast("반납 할 좌석이 없습니다.");
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
             }
         });
 
@@ -366,17 +360,6 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
 
     {
 
-        /*GpsTracker gpsTracker = new GpsTracker(Activity_Test.this);
-        double latitude = gpsTracker.getLatitude();
-        double longitude = gpsTracker.getLongitude();
-
-        if(latitude>(37.487712)||latitude<(37.486998))
-        {
-            Toast.makeText(Activity_Test.this, "학교 내에서만 예약이 가능합니다." + latitude + "\n벗어난 경도 " + longitude, Toast.LENGTH_LONG).show();
-        }
-        else {
-        }*/
-           // Toast.makeText(Activity_Test.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
 
         final Query query = myRef.child("Seat").child(ZONE);
         final String SeatNumber=Integer.toString(position);
@@ -438,7 +421,7 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
         final Utill utill = new Utill();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("안내");
-        builder.setMessage("좌석을 변경하시겠습니까?");
+        builder.setMessage(SeatNumber+"번으로 좌석을 변경하시겠습니까?");
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
@@ -495,6 +478,101 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
             public void onClick(DialogInterface dialog, int which) {
                 Log.e(ZONE, "좌석변경 취소");
                 Toast.makeText(getApplicationContext(), "좌석 변경을 취소했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void returnMsg() {
+        final Utill utill = new Utill();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("안내");
+
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                Query query = myRef.child("reservation").child(ZONE);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+
+                        if(datasnapshot.hasChild(loginId)) {
+                            SeatNum = datasnapshot.child(loginId).child("seatNum").getValue().toString();
+                            Query query = myRef.child("Seat").child(ZONE).child(SeatNum);
+                            query.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                                @Override
+                                public void onDataChange(DataSnapshot datasnapshot) {
+
+
+                                    if(datasnapshot.hasChild("id")){
+                                        if (datasnapshot.child("id").getValue().equals(loginId)) {
+                                            SeatVO seatVO = new SeatVO("0", datasnapshot.child("seatNum").getValue().toString(),"0" ,false);
+
+                                            myRef.child("Seat").child(ZONE).child(SeatNum).setValue(seatVO);
+                                            myRef.child("reservation").child(ZONE).child(loginId).removeValue();
+                                            showToast("좌석 반납 완료");
+                                            cancleNotifi();
+                                            //myAdapter.notifyDataSetChanged();
+                                            Intent intent = getIntent();
+                                            finish();
+                                            startActivity(intent);
+
+
+                                        }else {
+
+                                            showToast("반납할 좌석이 없습니다.");
+                                        }
+                                    }
+                                }
+
+
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Log.w("loadUser:onCancelled", databaseError.toException());
+                                }
+                            });
+
+                        }
+                        else
+                        {
+
+                            showToast("반납 할 좌석이 없습니다.");
+                        }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+            }
+        });
+        builder.setMessage(SeatNum+"번 좌석을 반납 하시겠습니까?");
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.e(ZONE, "좌석반납 취소");
+                Toast.makeText(getApplicationContext(), "좌석 반납을 취소했습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -587,9 +665,13 @@ Activity_Test extends AppCompatActivity implements MyAdapter.MyRecyclerViewClick
                     }
                 });
             }
+            else if(Integer.parseInt(result.getContents()) > 84){
+                Toast.makeText(getApplicationContext(), "잘못된 QR코드 입니다.", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            super.onActivityResult(requestCode, resultCode, data);
             Toast.makeText(getApplicationContext(), "잘못된 QR코드 입니다.", Toast.LENGTH_SHORT).show();
+            super.onActivityResult(requestCode, resultCode, data);
+
         }
     }
     private void cancleNotifi()

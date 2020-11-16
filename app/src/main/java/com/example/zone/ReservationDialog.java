@@ -290,10 +290,9 @@ public class ReservationDialog {
                                         Log.e(TAG, "좌석예약 성공");
                                         Toast.makeText(context, "예약 완료", Toast.LENGTH_SHORT).show();
                                         createNotificationChannel(seatNum,Zone);
-                                        btn.setBackground(ContextCompat.getDrawable(btn.getContext(), R.drawable.round_bg_seat_my));
-                                       // small.notifyDataSetChanged();
-                                        //btn.setBackground(ContextCompat.getDrawable(dlg.getContext(),R.drawable.round_bg_seat_my));
-                                        //createNotificationChannel(Integer.toString(position));
+                                        Intent  intent = new Intent(context, Activity_Test.class);
+                                        ((Activity_Test)context).finish();
+                                        context.startActivity(intent);
 
                                     }
                                 })

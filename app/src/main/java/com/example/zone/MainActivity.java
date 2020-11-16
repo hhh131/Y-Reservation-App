@@ -244,6 +244,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        else
+        {
+            loginStatus=false;
+            loginId="";
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.putExtra("login",1);
+            startActivity(intent);
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }
