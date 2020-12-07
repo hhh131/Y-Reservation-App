@@ -1,4 +1,4 @@
-package com.example.zone.Room;
+package com.example.zone.SeminarRoom;
 
 
 import android.view.LayoutInflater;

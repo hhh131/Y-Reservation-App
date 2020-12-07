@@ -34,7 +34,7 @@
             android:textColor="#000000"
             android:textStyle="bold"
             android:background="@drawable/round_bg"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -82,7 +82,8 @@
             android:id="@+id/crimer"
             android:layout_width="260dp"
             android:layout_height="40dp"
-            android:background="#ffffff" />
+            android:background="@drawable/round_bg"
+             />
 
     </LinearLayout>
     <LinearLayout
@@ -97,7 +98,7 @@
             android:gravity="center_vertical"
             android:layout_weight="3"
             android:textColor="#ffffff"
-            android:text="신고내용"
+            android:text="경고 내용"
             android:textSize="17dp" />
 
         <EditText
@@ -107,17 +108,33 @@
             android:layout_height="307dp"
             android:layout_weight="7"
             android:background="@drawable/round_bg"
+            android:maxLength="100"
             android:hint="내용을 입력하세요(100자 이하)"
             android:textColor="#000000"
             android:textSize="17dp"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/reportbtn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/round_bg_btn"
+        android:layout_marginRight="5dp"
         android:text="신고하기">
 
     </Button>
+    <Button
+        android:id="@+id/waring"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_bg_btn"
+        android:text="신고내역">
+
+    </Button>
+    </LinearLayout>
 </LinearLayout>

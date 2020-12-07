@@ -51,7 +51,7 @@ public class WarnigActivity extends AppCompatActivity {
                     {
                             if(datasnapshot.child(Integer.toString(i)).child("id").getValue().toString().equals(loginId))
                             {
-                                waringMsg+="신고내역"+"\n\n"
+                                waringMsg+=""
                                          +datasnapshot.child(Integer.toString(i)).child("message").getValue().toString()+"\n\n";
                                 WaringMsg.setText(waringMsg);
                             }

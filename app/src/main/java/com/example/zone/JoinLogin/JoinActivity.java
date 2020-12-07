@@ -122,7 +122,7 @@ public class JoinActivity extends Activity {
         Toast toast = Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
         toast.show();
     }
-
+//test
 
 
 

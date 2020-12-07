@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu1"
-        android:title="좌석 반납"
 
-        >
+        android:id="@+id/logout"
+        android:title="로그아웃"
+        android:drawable="@drawable/logo"
+        app:showAsAction="always">
     </item>
 
 </menu>

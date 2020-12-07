@@ -87,8 +87,14 @@
                 android:hint=" 비밀번호"
                 android:inputType="textPassword"
                 android:textColor="#ffffff"
-
                 android:textColorHint="#ffffff" />
+
+            <CheckBox
+                android:id="@+id/cb_save"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="로그인 정보 기억하기" />
 
 
             <LinearLayout

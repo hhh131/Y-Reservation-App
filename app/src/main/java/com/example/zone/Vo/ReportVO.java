@@ -6,13 +6,16 @@ public class ReportVO {
     String date;
     String ReportText;
     boolean process;
+    String ReportingSeat;
 
-    public ReportVO(int no, String id, String date, String reportText, boolean process) {
+
+    public ReportVO(int no, String id, String date, String reportText, boolean process, String reportingSeat) {
         this.no = no;
         this.id = id;
         this.date = date;
         ReportText = reportText;
         this.process = process;
+        ReportingSeat = reportingSeat;
     }
 
     public int getNo() {
@@ -53,5 +56,13 @@ public class ReportVO {
 
     public void setProcess(boolean process) {
         this.process = process;
+    }
+
+    public String getReportingSeat() {
+        return ReportingSeat;
+    }
+
+    public void setReportingSeat(String reportingSeat) {
+        ReportingSeat = reportingSeat;
     }
 }

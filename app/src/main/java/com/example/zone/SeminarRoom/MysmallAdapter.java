@@ -1,14 +1,15 @@
-package com.example.zone.Room;
+package com.example.zone.SeminarRoom;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zone.R;
@@ -22,8 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
-import static com.example.zone.Room.seminarDay.RoomNum;
-import static com.example.zone.Room.seminarDay.dayString;
+import static com.example.zone.SeminarRoom.seminarDay.RoomNum;
+import static com.example.zone.SeminarRoom.seminarDay.dayString;
 
 public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomViewHolder> {
     private ArrayList<ListData> smalldata;
@@ -47,7 +48,7 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
 
 
     public interface MysmallViewClickListener {
-        void onSmallItemClicked(int position, TextView textView, int alpha);
+        void onSmallItemClicked(int position, TextView textView);
     }
 
     private MysmallViewClickListener sListener;
@@ -67,20 +68,20 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
     }
 
 
-    void testMethod(DataSnapshot dataSnapshot)
-    {
 
-    }
 
     public void onBindViewHolder(@NonNull final MysmallAdapter.CustomViewHolder holder, int position){
         holder.subject.setText(smalldata.get(position).getSubject().getText());
-
+        //Typeface face = Typeface.createFromAsset(context.getAssets(),"font/cafe24font.ttf");
+        //holder.subject.setTypeface(face);
+        holder.subject.setTextSize(20);
         final Query query = myRef.child("Seat").child(Zone).child(RoomNum);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+
                 try {
                         dayString = dayString.substring(0,5);
                         String TimeString=holder.subject.getText().toString().substring(0,2);
@@ -88,17 +89,28 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
                     if(datasnapshot.child("2020").child(dayString).hasChild(TimeString))
                     {
                         if(datasnapshot.child("2020").child(dayString).child(TimeString).child("id").getValue().toString().equals(loginId)) {
-                            holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_reser));
-                            holder.alpha = 1;
+                            //holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_reser));
+                            holder.subject.setTextColor(Color.parseColor("#00ff00"));
+                            holder.subject.setTypeface(holder.subject.getTypeface(), Typeface.BOLD);
+                            holder.subject.setEnabled(false);
                         }
                         else
                         {
-                            holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_list));
-                            holder.alpha = 0;
+                            //holder.subject.setBackground(ContextCompat.getDrawable(holder.subject.getContext(), R.drawable.round_textview_list));
+                            holder.subject.setTextColor(Color.parseColor("#0000ff"));
+                            holder.subject.setTypeface(holder.subject.getTypeface(), Typeface.BOLD);
+                            holder.subject.setEnabled(false);
                         }
-                    }else{
-                        holder.alpha = 0;
                     }
+
+                 /*   holder.subject.setTextColor(Color.parseColor("#28df99"));
+                    holder.subject.setTypeface(holder.subject.getTypeface(), Typeface.BOLD);
+                }
+                        else
+                {
+                    holder.subject.setTextColor(Color.parseColor("#FFFFFF"));
+                    holder.subject.setTypeface(holder.subject.getTypeface(), Typeface.NORMAL);
+                }*/
 
                 }catch (Exception e)
                 {
@@ -131,7 +143,7 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
             holder.subject.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    sListener.onSmallItemClicked(pos,holder.subject, holder.alpha);
+                    sListener.onSmallItemClicked(pos,holder.subject);
                 }
             });
         }
@@ -146,13 +158,11 @@ public class MysmallAdapter extends RecyclerView.Adapter<MysmallAdapter.CustomVi
     public class CustomViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView subject;
-        protected int alpha;
 
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.subject = (TextView) itemView.findViewById(R.id.btnday);
-            alpha = 0;
 
         }
     }

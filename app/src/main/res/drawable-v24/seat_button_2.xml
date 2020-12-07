@@ -5,7 +5,6 @@
 
 
         <shape android:shape="rectangle">
-            <corners android:radius="2dp"/>
 
             <stroke
                 android:width="2dp"

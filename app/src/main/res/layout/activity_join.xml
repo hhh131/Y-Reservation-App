@@ -62,10 +62,13 @@
 
 
     <Button
+
         android:id="@+id/Signbtn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="완료">
+        android:background="@drawable/round_bg_btn"
+
+        android:text="회원가입">
 
     </Button>
 </LinearLayout>

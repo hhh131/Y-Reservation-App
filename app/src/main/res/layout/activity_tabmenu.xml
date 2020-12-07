@@ -7,13 +7,6 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gmarketfont"
-        android:text="세미나실 예약" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="600dp"
@@ -33,6 +26,7 @@
             android:layout_width="140dp"
             android:layout_height="600dp"
             android:fontFamily="@font/gmarketfont"
+
            />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -51,23 +45,26 @@
 
         android:orientation="horizontal">
 
-        <TextView
+        <Button
             android:id="@+id/status"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="테스트"
-            android:textSize="30dp"
-            android:fontFamily="@font/gmarketfont"
+            android:background="@drawable/round_bg_seat"
+            android:fontFamily="@font/cafe24font"
             android:gravity="center_vertical|center"
-            android:textColor="#000000" />
+            android:text="체크 인"
+            android:textColor="#000000"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/btncheckin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="완료"
+            android:text="예약"
             android:textSize="20dp"
             android:textColor="#000000"
+            android:fontFamily="@font/cafe24font"
+            android:background="@drawable/round_bg_seat"
             android:layout_gravity="center_horizontal|center_vertical"/>
 
         <Button
@@ -77,6 +74,8 @@
             android:text="예약취소"
             android:textSize="20dp"
             android:textColor="#000000"
+            android:fontFamily="@font/cafe24font"
+            android:background="@drawable/round_bg_seat"
             android:layout_gravity="center_horizontal|center_vertical"/>
 
     </LinearLayout>

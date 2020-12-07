@@ -1,4 +1,4 @@
-package com.example.zone.Adapter;
+package com.example.zone.PCZone;
 
 
 import android.content.Context;
@@ -24,26 +24,26 @@ import java.util.ArrayList;
 
 import static com.example.zone.JoinLogin.LoginActivity.loginId;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
+public class PCAdapter extends RecyclerView.Adapter<PCAdapter.CustomViewHolder> {
 
-    private ArrayList<MainData> arrayList;
+    private ArrayList<PCMainData> arrayList;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     String MySeatNum;
     Context context;
     public interface MyRecyclerViewClickListener {
-        void onItemClicked_1(int position);
-        void onItemClicked_2(int position);
-        void onItemClicked_3(int position);
-        void onItemClicked_4(int position);
-        void onItemClicked_5(int position);
-        void onItemClicked_6(int position);
-        void onItemClicked_7(int position);
-        void onItemClicked_8(int position);
-        void onItemClicked_9(int position);
-        void onItemClicked_10(int position);
-        void onItemClicked_11(int position);
-        void onItemClicked_12(int position);
+        void onItemClicked_1(int position, Button btn);
+        void onItemClicked_2(int position, Button btn);
+        void onItemClicked_3(int position, Button btn);
+        void onItemClicked_4(int position, Button btn);
+        void onItemClicked_5(int position, Button btn);
+        void onItemClicked_6(int position, Button btn);
+        void onItemClicked_7(int position, Button btn);
+        void onItemClicked_8(int position, Button btn);
+        void onItemClicked_9(int position, Button btn);
+        void onItemClicked_10(int position, Button btn);
+        void onItemClicked_11(int position, Button btn);
+        void onItemClicked_12(int position, Button btn);
     }
 
     private MyRecyclerViewClickListener mListener;
@@ -52,22 +52,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         mListener = listener;
     }
 
-    public MyAdapter(ArrayList<MainData> arrayList) {
+    public PCAdapter(ArrayList<PCMainData> arrayList) {
         this.arrayList = arrayList;
     }
 
     @NonNull
     @Override
-    public MyAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_testitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_testitem_pc, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CustomViewHolder holder, int position) {
         holder.L_seat1.setText(arrayList.get(position).getL_seat1().getText());
         holder.L_seat2.setText(arrayList.get(position).getL_seat2().getText());
         holder.L_seat3.setText(arrayList.get(position).getL_seat3().getText());
@@ -82,7 +82,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         holder.R_seat6.setText(arrayList.get(position).getR_seat6().getText());
 
 
-        Query query = myRef.child("reservation").child("QuietZone").child(loginId);
+        Query query = myRef.child("reservation").child("PCZone").child(loginId);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,7 +96,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             {
                 e.printStackTrace();
             }
-                Query query = myRef.child("Seat").child("QuietZone");
+                Query query = myRef.child("Seat").child("PCZone");
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
@@ -156,73 +156,73 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
             holder.L_seat1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_1(1 + pos);
+                    mListener.onItemClicked_1(1 + pos, holder.L_seat1);
                 }
             });
             holder.L_seat2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_2(2 + pos);
+                    mListener.onItemClicked_2(2 + pos, holder.L_seat2);
                 }
             });
             holder.L_seat3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_3(3 + pos);
+                    mListener.onItemClicked_3(3 + pos, holder.L_seat3);
                 }
             });
             holder.R_seat1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_4(4 + pos);
+                    mListener.onItemClicked_4(4 + pos, holder.R_seat1);
                 }
             });
             holder.R_seat2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_5(5 + pos);
+                    mListener.onItemClicked_5(5 + pos, holder.R_seat2);
                 }
             });
             holder.R_seat3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_6(6 + pos);
+                    mListener.onItemClicked_6(6 + pos, holder.R_seat3);
                 }
             });
             holder.L_seat4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_7(7 + pos);
+                    mListener.onItemClicked_7(7 + pos, holder.L_seat4);
                 }
             });
             holder.L_seat5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_8(8 + pos);
+                    mListener.onItemClicked_8(8 + pos, holder.L_seat5);
                 }
             });
             holder.L_seat6.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_9(9 + pos);
+                    mListener.onItemClicked_9(9 + pos, holder.L_seat6);
                 }
             });
             holder.R_seat4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_10(10 + pos);
+                    mListener.onItemClicked_10(10 + pos, holder.R_seat1);
                 }
             });
             holder.R_seat5.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_11(11 + pos);
+                    mListener.onItemClicked_11(11 + pos, holder.R_seat2);
                 }
             });
             holder.R_seat6.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onItemClicked_12(12 + pos);
+                    mListener.onItemClicked_12(12 + pos, holder.R_seat3);
                 }
             });
 
@@ -274,7 +274,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         protected Button R_seat4;
         protected Button R_seat5;
         protected Button R_seat6;
-
+//test
         public CustomViewHolder(@NonNull View itemView) {
             super(itemView);
 
